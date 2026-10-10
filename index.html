@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>绿洲 · OASIS LEGACY</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/screens.css">
+  <link rel="stylesheet" href="css/world.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="world-reality">
+
+  <!-- 全局氛围画布（粒子/尘埃背景，双世界切换） -->
+  <canvas id="fx-canvas" aria-hidden="true"></canvas>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <!-- 角落问号 · 帮助入口（所有界面常驻） -->
+  <button id="help-corner" class="help-corner" title="帮助" aria-label="打开帮助" data-i18n-title="help_corner_aria">?</button>
+
+  <main id="app">
+
+    <!-- ========== 登录 ========== -->
+    <section id="screen-login" class="screen active" data-world="reality">
+      <div class="auth-card">
+        <div class="game-title">
+          <div class="title-en">OASIS LEGACY</div>
+          <h1 class="title-cn">绿洲</h1>
+          <div class="title-sub">// A LEGACY IS A QUESTION</div>
+        </div>
+        <form id="form-login" autocomplete="off">
+          <label class="field">
+            <span class="field-label" data-i18n="login_username">玩家代号</span>
+            <input type="text" id="login-username" name="username" autocomplete="username" placeholder="输入你的代号" data-i18n-ph="login_username_ph" required>
+          </label>
+          <label class="field">
+            <span class="field-label" data-i18n="login_password">通行密语</span>
+            <input type="password" id="login-password" name="password" autocomplete="current-password" placeholder="输入密码" data-i18n-ph="login_password_ph" required>
+          </label>
+          <label class="checkbox-line">
+            <input type="checkbox" id="login-remember" name="remember"> <span data-i18n="login_remember">记住我的登录状态</span>
+          </label>
+          <p class="form-msg" id="login-msg" role="alert"></p>
+          <button type="submit" class="btn btn-primary" data-i18n="login_submit">进入现实 → 绿洲</button>
+          <div class="form-alt"><span data-i18n="login_no_account">还没有账号？</span><a href="#" data-goto="register" data-i18n="login_register">注册新玩家</a></div>
+        </form>
+      </div>
+      <div class="world-caption reality" data-i18n="login_caption">2135 年 · 叠楼区 · 断电倒计时仍在继续</div>
+    </section>
+
+    <!-- ========== 注册 ========== -->
+    <section id="screen-register" class="screen" data-world="reality">
+      <div class="auth-card">
+        <h2 class="screen-heading"><span data-i18n="reg_heading_cn">建立玩家档案</span><span class="en">NEW PLAYER REGISTRY</span></h2>
+        <form id="form-register" autocomplete="off">
+          <label class="field">
+            <span class="field-label" data-i18n="login_username">玩家代号</span>
+            <input type="text" id="reg-username" name="username" autocomplete="username" placeholder="给自己起个代号（必填）" data-i18n-ph="reg_username_ph" required>
+          </label>
+          <label class="field">
+            <span class="field-label" data-i18n="login_password">通行密语</span>
+            <input type="password" id="reg-password" name="new-password" autocomplete="new-password" placeholder="至少 4 位" data-i18n-ph="reg_password_ph" required>
+          </label>
+          <label class="field">
+            <span class="field-label" data-i18n="reg_confirm_label">确认密语</span>
+            <input type="password" id="reg-password2" name="new-password2" autocomplete="new-password" placeholder="再输入一次" data-i18n-ph="reg_password2_ph" required>
+          </label>
+          <p class="form-msg" id="register-msg" role="alert"></p>
+          <button type="submit" class="btn btn-primary" data-i18n="reg_submit">建立档案</button>
+          <div class="form-alt"><span data-i18n="reg_to_login">已有账号？</span><a href="#" data-goto="login" data-i18n="reg_back_login">返回登录</a></div>
+        </form>
+        <p class="privacy-note" data-i18n="privacy_note">* 所有账号信息仅保存在本机浏览器（localStorage），不会上传任何服务器。</p>
+      </div>
+    </section>
+
+    <!-- ========== 主菜单 ========== -->
+    <section id="screen-menu" class="screen" data-world="reality">
+      <header class="menu-header">
+        <div class="menu-title">
+          <span class="title-en small">OASIS </span>
+          <span class="title-cn small">绿洲</span>
+        </div>
+        <div class="user-badge" id="menu-user-badge">
+          <span class="dot"></span><span id="menu-username">--</span>
+          <button class="btn-ghost" id="btn-logout" title="退出登录" data-i18n-title="logout" data-i18n="logout">登出</button>
+        </div>
+      </header>
+      <div class="menu-grid">
+        <button class="menu-card" id="btn-new-game">
+          <span class="mc-icon">↻</span>
+          <span class="mc-name" data-i18n="menu_new">新游戏</span>
+          <span class="mc-en" data-i18n="menu_new_sub">NEW GAME · 从头开始</span>
+        </button>
+        <button class="menu-card menu-card-primary" id="btn-continue-story" data-i18n-title="menu_continue_no_save">
+          <span class="mc-icon">▶</span>
+          <span class="mc-name" data-i18n="menu_continue">继续旅程</span>
+          <span class="mc-en" data-i18n="menu_continue_sub">CONTINUE · 读取最近记录</span>
+        </button>
+        <!-- 次要入口（B2 降级）：图鉴 / 设置 / 制作档案 -->
+        <button class="menu-card menu-card--minor" data-goto-screen="achievements">
+          <span class="mc-icon">◈</span>
+          <span class="mc-name" data-i18n="menu_records">旅程图鉴</span>
+          <span class="mc-en" data-i18n="menu_records_sub">RECORDS · ENDINGS</span>
+        </button>
+        <button class="menu-card menu-card--minor" data-goto-screen="settings">
+          <span class="mc-icon">⚙</span>
+          <span class="mc-name" data-i18n="menu_settings">设置</span>
+          <span class="mc-en" data-i18n="menu_settings_sub">SETTINGS</span>
+        </button>
+        <button class="menu-card menu-card--minor" data-goto-screen="about">
+          <span class="mc-icon">✦</span>
+          <span class="mc-name" data-i18n="menu_about">制作档案</span>
+          <span class="mc-en" data-i18n="menu_about_sub">THE CREW</span>
+        </button>
+      </div>
+      <div class="menu-footer" data-i18n="menu_footer">键盘操作：←→/AD 移动 · W/↑/空格 跳跃（二段跳同键）· Shift 冲刺 · E 交互 · S 下梯</div>
+    </section>
+
+    <!-- ========== 设置 ========== -->
+    <section id="screen-settings" class="screen" data-world="reality">
+      <button class="btn-back" data-back data-i18n="back">← BACK</button>
+      <div class="panel">
+        <h2 class="screen-heading"><span data-i18n="set_heading_cn">游戏设置</span><span class="en">SETTINGS</span></h2>
+        <div class="settings-list">
+          <div class="setting-row">
+            <label class="s-label" id="lbl-masterVolume" for="set-masterVolume"><span data-i18n="set_master_volume">主音量</span><span class="s-en">MASTER VOLUME</span></label>
+            <input type="range" min="0" max="100" data-setting="masterVolume" class="slider" id="set-masterVolume">
+            <output class="s-val" data-for="masterVolume"></output>
+          </div>
+          <div class="setting-row">
+            <label class="s-label" id="lbl-bgmVolume" for="set-bgmVolume"><span data-i18n="set_bgm">背景音乐</span><span class="s-en">BGM</span></label>
+            <input type="range" min="0" max="100" data-setting="bgmVolume" class="slider" id="set-bgmVolume">
+            <output class="s-val" data-for="bgmVolume"></output>
+          </div>
+          <div class="setting-row">
+            <label class="s-label" id="lbl-sfxVolume" for="set-sfxVolume"><span data-i18n="set_sfx">音效</span><span class="s-en">SFX</span></label>
+            <input type="range" min="0" max="100" data-setting="sfxVolume" class="slider" id="set-sfxVolume">
+            <output class="s-val" data-for="sfxVolume"></output>
+          </div>
+          <div class="setting-row">
+            <div class="s-label" id="lbl-textSpeed"><span data-i18n="set_text_speed">文字显示速度</span><span class="s-en">TEXT SPEED</span></div>
+            <div class="seg" data-setting="textSpeed" role="group" aria-labelledby="lbl-textSpeed">
+              <button data-val="slow" data-i18n="set_speed_slow" aria-pressed="false">慢</button>
+              <button data-val="normal" data-i18n="set_speed_normal" aria-pressed="false">中</button>
+              <button data-val="fast" data-i18n="set_speed_fast" aria-pressed="false">快</button>
+            </div>
+          </div>
+          <div class="setting-row">
+            <div class="s-label" id="lbl-typewriter"><span data-i18n="set_typewriter">打字机效果</span><span class="s-en">TYPEWRITER</span></div>
+            <label class="switch"><input type="checkbox" data-setting="typewriter" aria-labelledby="lbl-typewriter"><span class="knob"></span></label>
+          </div>
+          <div class="setting-row">
+            <div class="s-label" id="lbl-motionFx"><span data-i18n="set_motion">画面动效</span><span class="s-en">MOTION FX</span></div>
+            <label class="switch"><input type="checkbox" data-setting="motionFx" aria-labelledby="lbl-motionFx"><span class="knob"></span></label>
+          </div>
+          <div class="setting-row">
+            <div class="s-label" id="lbl-scanlines"><span data-i18n="set_scanlines">扫描线滤镜</span><span class="s-en">SCANLINES</span></div>
+            <label class="switch"><input type="checkbox" data-setting="scanlines" aria-labelledby="lbl-scanlines"><span class="knob"></span></label>
+          </div>
+          <div class="setting-row">
+            <div class="s-label" id="lbl-shake"><span data-i18n="set_shake">屏幕震动</span><span class="s-en">SCREEN SHAKE</span></div>
+            <label class="switch"><input type="checkbox" data-setting="shake" aria-labelledby="lbl-shake"><span class="knob"></span></label>
+          </div>
+          <div class="setting-row">
+            <div class="s-label" id="lbl-highContrast"><span data-i18n="set_high_contrast">高对比度文字</span><span class="s-en">HIGH CONTRAST</span></div>
+            <label class="switch"><input type="checkbox" data-setting="highContrast" aria-labelledby="lbl-highContrast"><span class="knob"></span></label>
+          </div>
+          <div class="setting-row">
+            <div class="s-label" id="lbl-skipReadIntro"><span data-i18n="set_skip_intro">跳过已读背景</span><span class="s-en">SKIP READ INTRO</span></div>
+            <label class="switch"><input type="checkbox" data-setting="skipReadIntro" aria-labelledby="lbl-skipReadIntro"><span class="knob"></span></label>
+          </div>
+          <div class="setting-row">
+            <div class="s-label" id="lbl-lang"><span data-i18n="set_lang">语言</span><span class="s-en">LANGUAGE</span></div>
+            <div class="seg" data-setting="lang" role="group" aria-labelledby="lbl-lang">
+              <button data-val="zh" data-i18n="set_lang_zh" aria-pressed="false">中文</button>
+              <button data-val="en" data-i18n="set_lang_en" aria-pressed="false">English</button>
+            </div>
+          </div>
+          <div class="setting-row">
+            <div class="s-label"><span data-i18n="set_fullscreen">全屏模式</span><span class="s-en">FULLSCREEN</span></div>
+            <button class="btn btn-ghost-light" id="btn-fullscreen" data-i18n="set_toggle_fullscreen">切换全屏</button>
+          </div>
+        </div>
+        <div class="settings-actions">
+          <button class="btn btn-danger-ghost" id="btn-reset-settings" data-i18n="set_reset">恢复默认设置</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 制作档案 / 关于我们 ========== -->
+    <section id="screen-about" class="screen" data-world="reality">
+      <button class="btn-back" data-back data-i18n="back">← BACK</button>
+      <div class="panel wide">
+        <h2 class="screen-heading"><span data-i18n="about_heading_cn">关于我们</span><span class="en">THE CREW</span></h2>
+        <p class="about-intro" data-i18n-html="about_intro">我们是《绿洲遗产》开发小组。这个世界由这几个人一砖一瓦搭建 —— 后续加入的成员，会在同一面「成员墙」上自动亮起。</p>
+        <div class="team-wall" id="team-wall"><!-- 由 js/data/team.js 数据渲染 --></div>
+        <p class="about-api" data-i18n-html="about_api">* 新成员接入接口：编辑 <code>js/data/team.js</code> 追加一条成员数据，将头像放入 <code>assets/team/</code> 即可，无需改动页面代码。</p>
+      </div>
+    </section>
+
+    <!-- ========== 帮助 ========== -->
+    <section id="screen-help" class="screen" data-world="reality">
+      <button class="btn-back" data-back data-i18n="back">← BACK</button>
+      <div class="panel">
+        <h2 class="screen-heading"><span data-i18n="help_heading_cn">行动指引</span><span class="en">FIELD GUIDE</span></h2>
+        <div class="help-stub">
+          <div class="help-big">?</div>
+          <p class="help-title" data-i18n="help_title">先观察，再选择；每一条路都会留下回响。</p>
+          <ul class="help-faq">
+            <li><b data-i18n="help_q_continue">如何继续？</b><span data-i18n="help_a_continue">主菜单选择「继续旅程」会直接回到你上次离开的房间；新玩家从断电小屋开始。</span></li>
+            <li><b data-i18n="help_q_controls">基础操作？</b><span data-i18n="help_a_controls">←→/AD 移动，W/↑/空格 跳跃，空格 二段跳，Shift 冲刺，E 交互，S/↓ 下梯，Esc 暂停。</span></li>
+            <li><b data-i18n="help_q_save">存档在哪里？</b><span data-i18n="help_a_save">关键节点会自动存档；全部资料仅保存在当前浏览器。</span></li>
+            <li><b data-i18n="help_q_endings">结局会被锁死吗？</b><span data-i18n="help_a_endings">结局与关键终局会写入图鉴；之后可重新开始旅程体验其他结局。</span></li>
+          </ul>
+          <p class="help-todo" data-i18n="help_tip">TIP：不要急着追终点。路标、回声和身后的人，都会说话。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 背景介绍（绿洲世界 · 4 页信件） ========== -->
+    <section id="screen-intro" class="screen" data-world="oasis">
+      <div class="intro-stage" id="intro-stage">
+        <div class="intro-page" id="intro-page">
+          <div class="intro-tag" id="intro-tag"></div>
+          <h2 class="intro-title" id="intro-title"></h2>
+          <div class="intro-rule"></div>
+          <div class="intro-body" id="intro-body"></div>
+        </div>
+        <div class="intro-dots" id="intro-dots"></div>
+        <div class="intro-hint" id="intro-hint" data-i18n="intro_hint">点击 或 按 空格/→ 继续</div>
+      </div>
+      <button class="btn-back" id="intro-skip" data-i18n="intro_skip">跳过背景 ✕</button>
+    </section>
+
+    <!-- ========== 旅程图鉴 ========== -->
+    <section id="screen-achievements" class="screen" data-world="reality">
+      <button class="btn-back" data-back data-i18n="back">← BACK</button>
+      <div class="panel wide">
+        <h2 class="screen-heading"><span data-i18n="ach_heading_cn">旅程图鉴</span><span class="en">RECORDS <span id="ach-count">0/0</span></span></h2>
+        <div class="ach-grid" id="ach-grid"><!-- 由 js/data/achievements.js 渲染 --></div>
+        <div class="archive-heading">
+          <h3 data-i18n="archive_heading">发现档案</h3>
+          <span id="clue-count">0/0</span>
+        </div>
+        <p class="archive-intro" data-i18n="archive_intro">旅途中保存的年鉴残页、现实锚点与选择记录会出现在这里。</p>
+        <div class="clue-grid" id="clue-grid"><!-- 由 js/achievements.js 渲染 --></div>
+        <div class="archive-heading"><h3 data-i18n="ending_replay_heading">结局回放</h3></div>
+        <div class="replay-grid" id="ending-replay-list"><!-- 由 js/achievements.js 渲染 --></div>
+        <div class="archive-heading"><h3 data-i18n="chapter_replay_heading">章节重玩</h3></div>
+        <p class="archive-intro" data-i18n="chapter_replay_hint">以该章出生点重新进入；旅程进度与图鉴记录保留。</p>
+        <div class="replay-grid" id="chapter-replay-list"><!-- 由 js/achievements.js 渲染 --></div>
+      </div>
+    </section>
+
+    <!-- 结局回放覆盖层（E8 / G11）：只读展示已解锁结局的正文 -->
+    <div id="replay-overlay" class="replay-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="replay-title">
+      <div class="replay-card">
+        <h3 id="replay-title"></h3>
+        <p id="replay-text"></p>
+        <button class="btn" id="replay-close" data-i18n="replay_close">关闭</button>
+      </div>
+    </div>
+
+    <!-- ========== 游戏画面（我们的 Canvas 游戏内核，保留原有逻辑） ========== -->
+    <section id="screen-game" class="screen" data-world="oasis">
+      <div id="game">
+        <canvas id="canvas" width="1280" height="720" role="img" aria-label="绿洲游戏画面" data-i18n-title="canvas_label"></canvas>
+
+        <div id="hud" class="hidden">
+          <div class="hud-top-row">
+            <div id="hud-keys"></div>
+            <div id="hud-level"></div>
+          </div>
+          <div id="hud-objective"></div>
+          <div id="hud-kills"></div>
+          <div id="hud-shield" class="hidden"></div>
+          <!-- E3·S1：逆流维护点进度（仅 oasis 支线激活时显示） -->
+          <div id="hud-maintenance" class="hidden"></div>
+          <div class="hud-controls" id="hud-controls">
+            <span class="hud-kbd"><kbd>A/D</kbd><span data-i18n="hud_move">移动</span></span>
+            <span class="hud-kbd"><kbd>空格/W/↑</kbd><span data-i18n="hud_jump">跳跃</span></span>
+            <span class="hud-kbd"><kbd>Shift</kbd><span data-i18n="hud_dash">冲刺</span></span>
+            <span class="hud-kbd"><kbd>S</kbd><span data-i18n="hud_climb">下梯</span></span>
+            <span class="hud-kbd"><kbd>E</kbd><span data-i18n="hud_interact">交互</span></span>
+            <span class="hud-kbd"><kbd>J</kbd><span data-i18n="hud_log">日志</span></span>
+            <span class="hud-kbd"><kbd>Esc</kbd><span data-i18n="hud_pause">暂停</span></span>
+          </div>
+        </div>
+
+        <div id="fade"></div>
+
+        <!-- 发车演出：Home 戴 VR 首次进入 OASIS 前顺序播放三张红灯图 + 中央文案 -->
+        <div id="race-start" class="race-start hidden" aria-hidden="true">
+          <img class="rs-img" id="race-img-0" alt="" aria-hidden="true">
+          <img class="rs-img" id="race-img-1" alt="" aria-hidden="true">
+          <img class="rs-img" id="race-img-2" alt="" aria-hidden="true">
+          <div class="rs-text" id="race-text"></div>
+        </div>
+
+        <!-- 赛道尽头 → 年鉴馆接待前厅：单张转场图（可跳过）；埃尔结语已改为进入前厅前的标准对白 -->
+        <div id="archive-transition" class="archive-transition hidden" aria-hidden="true">
+          <img class="at-img" id="archive-img" alt="" aria-hidden="true">
+          <div class="at-text" id="archive-text"></div>
+        </div>
+
+        <!-- 阶段4·邀请验证：程序 UI 结果面板（验证通过后显示，不画进图片） -->
+        <div id="invite-result" class="invite-result hidden" role="dialog" aria-modal="true">
+          <div class="iv-panel">
+            <div class="iv-title" id="invite-result-title"></div>
+            <ul class="iv-lines" id="invite-result-lines"></ul>
+            <button id="invite-result-btn" class="iv-btn" type="button"></button>
+          </div>
+        </div>
+
+        <!-- 底部可交互提示条 -->
+        <div id="context-prompt" class="hidden">
+          <span class="cp-key">E</span>
+          <span class="cp-label" id="cp-label" data-i18n="ctx_interact">交互</span>
+          <span class="cp-arrow">▶</span>
+        </div>
+
+        <!-- E3·S1：鼠标扫描按钮（按住扫描维护标记；键盘可用 E，二者等价） -->
+        <button id="scan-hold" class="scan-hold" type="button" hidden data-i18n="maint_scan_mouse">按住扫描</button>
+
+        <!-- 首次学会技能的提示（画面下方黑色小字） -->
+        <div id="skill-hint" class="skill-hint hidden"></div>
+
+        <!-- 走廊引导：告知玩家可学习技能的深色小字 -->
+        <div id="gate-hint" class="gate-hint hidden"></div>
+
+        <!-- 序章动态目标 / 下一步要求：画面最下方金色小字，呈现 3 秒 -->
+        <div id="goal-hint" class="goal-hint hidden"></div>
+
+        <!-- 任务日志（B2）：点击常驻目标条或按 J 展开 / 收起 -->
+        <div id="objective-log" class="objective-log hidden">
+          <div class="ol-head">
+            <span class="ol-title" data-i18n="log_title">任务日志</span>
+            <span class="ol-en">OBJECTIVE LOG</span>
+            <button class="ol-close" id="objective-log-close" data-i18n-title="log_close" aria-label="关闭日志">✕</button>
+          </div>
+          <div class="ol-area" id="ol-area"></div>
+          <div class="ol-current">
+            <span class="ol-mark" id="ol-now-mark" data-kind="reward">◆</span>
+            <span class="ol-now-label" data-i18n="log_now">当前目标</span>
+            <span class="ol-now" id="ol-now"></span>
+          </div>
+          <div class="ol-section" data-i18n="log_keys_title">三钥进度</div>
+          <ul class="ol-list" id="ol-keys"></ul>
+          <div class="ol-section" data-i18n="log_clues_title">已发现的线索</div>
+          <ul class="ol-list" id="ol-clues"></ul>
+          <div class="ol-hint"><kbd>J</kbd><span data-i18n="log_hint">按 J 或点击目标条展开 / 收起</span></div>
+        </div>
+
+        <!-- 章节过渡卡 -->
+        <div id="chapter-card" class="hidden">
+          <div class="chapter-card-inner">
+            <div class="chapter-ordinal" id="chapter-ordinal">CHAPTER</div>
+            <div class="chapter-title" id="chapter-title"></div>
+            <div class="chapter-subtitle" id="chapter-subtitle"></div>
+            <div class="chapter-save-hint" id="chapter-save-hint"><span class="save-dot"></span><span id="chapter-save-text">CHECKPOINT SAVED</span></div>
+          </div>
+        </div>
+
+        <!-- 场景物件检视面板（家/阳台：gry 同款 标题+叙述+动作按钮） -->
+        <div id="interact-panel" class="interact-panel" hidden>
+          <div class="ip-title" id="ip-title"></div>
+          <div class="ip-context" id="ip-context"></div>
+          <div class="ip-actions" id="ip-actions"></div>
+        </div>
+
+        <div id="dialog" class="hidden">
+          <div id="dialog-portrait"><div class="portrait-silhouette"></div></div>
+          <div id="dialog-main">
+            <div id="dialog-name"></div>
+            <div id="dialog-text"></div>
+            <div id="dialog-continue">▼</div>
+          </div>
+        </div>
+
+        <!-- 暂停菜单 -->
+        <div id="pause-menu" class="hidden">
+          <div class="pause-card">
+            <h3><span data-i18n="pause_title">已暂停</span><span>PAUSED</span></h3>
+            <button class="pause-btn primary" id="pause-resume" data-i18n="pause_resume">继续游戏</button>
+            <button class="pause-btn" id="pause-restart" data-i18n="pause_restart">重新开始本关</button>
+            <button class="pause-btn" id="pause-settings" data-i18n="pause_settings">设置</button>
+            <button class="pause-btn danger" id="pause-quit" data-i18n="pause_quit">返回主菜单</button>
+          </div>
+        </div>
+
+        <!-- 失败·检查点复生面板 -->
+        <div id="respawn-panel" class="hidden">
+          <div class="respawn-card">
+            <div class="respawn-icon">✕</div>
+            <div class="respawn-title" id="respawn-title" data-i18n="respawn_title">连接已暂停</div>
+            <div class="respawn-reason" id="respawn-reason" data-i18n="respawn_reason_default">数据连接中断</div>
+            <div class="respawn-quote" id="respawn-quote" data-i18n="respawn_quote">"失败也是旅程的一部分。"</div>
+            <div class="respawn-actions">
+              <button class="respawn-btn primary" id="respawn-again" data-i18n="respawn_again">回到这关开头</button>
+              <button class="respawn-btn secondary" id="respawn-menu" data-i18n="respawn_back_menu">返回主菜单</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="choice" class="hidden">
+          <div id="choice-prompt"></div>
+          <div id="choice-options"></div>
+        </div>
+
+        <!-- 旧标题界面：已被参考项目主菜单取代，保持隐藏（引擎 boot 仍会引用这些 id） -->
+        <div id="title" class="hidden">
+          <h1 id="title-name">THE OASIS</h1>
+          <p id="title-sub" data-i18n="legacy_sub">— 绿 洲 —</p>
+          <p id="title-quote" data-i18n="legacy_quote">“你不是来赢的。你是来理解的。”</p>
+          <div id="title-buttons">
+            <button id="btn-new" class="cyber-btn" data-i18n="legacy_start">开始游戏</button>
+            <button id="btn-continue" class="cyber-btn hidden" data-i18n="legacy_continue">继续游戏</button>
+          </div>
+          <div id="title-controls" data-i18n="legacy_controls">A / D 移动 · 空格 跳跃 · Shift 冲刺 · S 向下 · E 交互</div>
+        </div>
+
+        <div id="ending" class="hidden">
+          <div class="ending-badge" id="ending-badge">ENDING</div>
+          <h2 id="ending-title"></h2>
+          <p id="ending-text"></p>
+          <div class="ending-stats">
+            <div class="ending-stat"><div class="es-num" id="ending-keys">0/3</div><div class="es-label" data-i18n="ending_stat_keys">钥匙 KEYS</div></div>
+            <div class="ending-stat"><div class="es-num" id="ending-ach">0</div><div class="es-label" data-i18n="ending_stat_ach">成就 ACHIEVEMENTS</div></div>
+            <div class="ending-stat"><div class="es-num" id="ending-name">-</div><div class="es-label" data-i18n="ending_stat_ending">结局 ENDING</div></div>
+          </div>
+          <div id="ending-actions">
+            <button id="btn-ending-replay" class="cyber-btn" data-i18n="chapter_replay_heading">章节重玩</button>
+            <button id="btn-ending-menu" class="cyber-btn" data-i18n="ending_back_menu">回到主菜单</button>
+          </div>
+        </div>
+
+        <!-- 跑酷3次死亡结语界面（打字机效果逐字显示）：
+             涡流跑酷关（绿洲入口 oasis / 失重舞厅 treasure）保留按钮「进入数据恢复区」→ 数据蛇；
+             其余关卡该按钮彻底隐藏，结语播完由 showParkourDeathEnding() 直接回初始菜单。 -->
+        <div id="parkour-death" class="parkour-death hidden">
+          <div class="parkour-death-bg"></div>
+          <div class="parkour-death-inner">
+            <div class="parkour-death-text" id="parkour-death-text"></div>
+            <button class="parkour-death-btn" id="parkour-death-btn" data-i18n="parkour_death_continue">进入数据恢复区</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="toast" class="toast" role="status"></div>
+
+  <!-- 存档失败提示条：提供「重新保存」路径（显隐由 js/shell.js 控制） -->
+  <div id="save-failed" class="save-failed hidden" role="alert">
+    <span class="save-failed-icon">!</span>
+    <span class="save-failed-text" data-i18n="save_failed_banner">进度未能保存</span>
+    <button id="save-retry" class="save-failed-retry" data-i18n="save_retry">重新保存</button>
+  </div>
+
+  <!-- 迷失页面：失败时短暂显示（背景图可在 css/style.css 里更换） -->
+  <div id="lost" class="lost-screen hidden">
+    <div class="lost-title" data-i18n="respawn_title">连接已暂停</div>
+  </div>
+
+  <!-- 游戏场景右上角：回到主菜单（保留进度） -->
+  <button id="btn-back-menu" class="btn-back-menu hidden" data-i18n-title="back_menu_title" title="回到主菜单" aria-label="回到主菜单">🏠</button>
+
+  <!-- 公共工具（无依赖，最先加载） -->
+  <script src="js/util.js"></script>
+  <script src="js/i18n.js"></script>
+  <!-- G2（2026-09-17）：js/core/registry.js（Svc 注册中心）全项目零注册零调用，
+       已随死资产清理删除；若将来需要注册中心，重建该文件并在此处加回 script 标签。 -->
+  <!-- 数据层（菜单外壳数据） -->
+  <script src="js/data/team.js"></script>
+  <script src="js/data/achievements.js"></script>
+  <script src="js/data/intro.js"></script>
+  <!-- 运行时空间数据（AI-02）：路线/导航是普通 JS 数据模块，注册到
+       window.ROUTE_DATA / window.NAV_DATA；必须早于 store.js 与引擎。
+       禁运行时 JSON 取数 —— file:// 双击可运行（verify-boot ⑩ / verify-lint ③⑤ 守卫）。 -->
+  <script src="js/data/route-oasis.js"></script>
+  <script src="js/data/route-library-gate.js"></script>
+  <script src="js/data/route-library.js"></script>
+  <script src="js/data/route-corridor.js"></script>
+  <script src="js/data/route-treasure.js"></script>
+  <script src="js/data/route-road.js"></script>
+  <script src="js/data/nav-castle-anorak.js"></script>
+  <!-- 菜单外壳逻辑 -->
+  <script src="js/store.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/fx.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/scoreboard.js"></script>
+  <script src="js/achievements.js"></script>
+  <script src="js/about.js"></script>
+  <script src="js/intro.js"></script>
+  <!-- 外壳路由 + 把主菜单按钮接到我们的游戏内核 -->
+  <script src="js/shell.js"></script>
+  <!-- 游戏内核：原 js/engine.js 按职责拆分为 js/engine/ 下的 15 个文件。
+       顺序 = 依赖顺序，不可打乱：
+       ① 先基础设施 → ② 关卡/角色/对话 → ③ 三个小游戏
+       ④ 再 class Game 本体（必须早于所有 game-*.js，它们靠 Object.assign
+          往 Game.prototype 上挂方法）→ ⑤ 最后是 Game 的各个方法组 -->
+  <script src="js/engine/core.js"></script>
+  <!-- D0：小游戏会话公共契约；须早于各具体小游戏模块加载。 -->
+  <script src="js/engine/minigame-session.js"></script>
+  <script src="js/engine/level.js"></script>
+  <!-- AI-04A：路线数据解析 / 校验 / 投影 / 区间查询；必须夹在 level.js 与
+       level-navigation.js 之间（verify-boot ⑩A 守卫；缺失时 level-navigation 用
+       typeof 守卫退化，关卡走旧 tile 回退）。 -->
+  <script src="js/engine/level-surfaces.js"></script>
+  <!-- E1/AI-04B：构成区间（compose）校验 / 物理跳距上限 / 六项几何检查 / 灰盒叠加层。
+       自包含 IIFE（只写 window.LevelCompose），运行期才被消费；须早于 level-gen.js。 -->
+  <script src="js/engine/level-compose.js"></script>
+  <!-- AI-02：路线 / 导航数据的取得与可用性探测；必须夹在 level.js 与 level-gen.js
+       之间（verify-boot ⑩A 守卫此顺序；缺失时 level.js 用 typeof 守卫自动回退）。 -->
+  <script src="js/engine/level-navigation.js"></script>
+  <script src="js/engine/level-gen.js"></script>
+  <script src="js/engine/level-gen-archive.js"></script>
+  <script src="js/engine/player.js"></script>
+  <script src="js/engine/dialog.js"></script>
+  <script src="js/engine/minigame-tetris.js"></script>
+  <script src="js/engine/minigame-minesweeper.js"></script>
+  <script src="js/engine/minigame-snake.js"></script>
+  <script src="js/engine/minigame-relay-defense.js"></script>
+  <script src="js/engine/game.js"></script>
+  <!-- E3/AI-20+90A：guided 路线参数骨架（routeT/投影/提示）与分层资源生命周期
+       （清单 window.LAYER_MANIFEST 驱动，无清单即全回退旧画面）。须在 game.js 之后、
+       game-scene.js 之前（verify-boot ⑩A 顺序三元组守卫）。 -->
+  <script src="js/engine/game-guided-route.js"></script>
+  <script src="js/engine/game-layered-render.js"></script>
+  <!-- E3·S1：oasis 可选逆流维护点（消费 route-oasis.maintenance 锚点）。
+       与其它 Game 方法组一致：须在 game.js 之后、game-scene.js 之前。 -->
+  <script src="js/engine/game-oasis-maintenance.js"></script>
+  <!-- 发车演出：Home 戴 VR 首次进入 OASIS 前（须在 game.js 之后） -->
+  <script src="js/engine/game-race-start.js"></script>
+  <!-- 赛道尽头 → 年鉴馆接待前厅转场（须在 game.js 之后） -->
+  <script src="js/engine/game-archive-transition.js"></script>
+  <!-- AI-06：图书馆前廊双阶段镜像谜题（镜像台/翻转/过渡；须在 game.js 之后、
+       game-loop.js 之前——tick 用存在性守卫挂钩） -->
+  <script src="js/engine/game-gate-mirror.js"></script>
+  <!-- 失重舞厅 · 遗失索引场（treasure）：安全桥/索引门的条件几何与每帧对账，
+       以及终端/桥面/索引门的程序化画面。均须在 game.js 之后、game-loop.js 之前
+       （tick / drawIndexField 两条挂钩都用存在性守卫，模块缺失时自动回退旧路径）。 -->
+  <script src="js/engine/game-index-field.js"></script>
+  <script src="js/engine/game-index-field-art.js"></script>
+  <!-- 阶段4：莫罗接待台 · 邀请验证演出（须在 game.js 之后） -->
+  <script src="js/engine/game-invite-verify.js"></script>
+  <!-- E2/AI-05：构成件渲染（成片顶面/侧壁/支撑 + maze nav 轮廓成片）。
+       需在 class Game 之后；按 TILE_SHAPE_THEMES 登记的地图生效，未登记自动回退。 -->
+  <script src="js/engine/game-tile-shapes.js"></script>
+  <script src="js/engine/game-scene.js"></script>
+  <script src="js/engine/game-loop.js"></script>
+  <script src="js/engine/game-interact.js"></script>
+  <script src="js/engine/game-events.js"></script>
+  <script src="js/engine/image-gate.js"></script>
+  <script src="js/engine/game-minigames.js"></script>
+  <script src="js/engine/game-progress.js"></script>
+  <script src="js/engine/game-log.js"></script>
+  <script src="js/engine/game-render-tiles.js"></script>
+  <script src="js/engine/game-tile-art.js"></script>
+  <script src="js/engine/game-tile-art-tex.js"></script>
+  <script src="js/engine/game-platform-art.js"></script>
+  <!-- 记忆档案井（library）：黄铜攀爬架素材拼装 + 三处档案调查点（固定高度感应带）标记 -->
+  <script src="js/engine/game-archive-frame-art.js"></script>
+  <!-- 记忆档案井：右上角「损坏的存档槽」门（与背景同步滚动的独立素材） -->
+  <script src="js/engine/game-memory-well-art.js"></script>
+  <script src="js/engine/game-archive-hall.js"></script>
+  <!-- 阶段5：访客索引册 → 原地二段跳（接待台档案槽推出索引册；领取即解锁二段跳）。
+       须在 game.js 之后（与其它 Game 方法组一致），绘制由 drawArchiveHall 末尾调用。 -->
+  <script src="js/engine/game-index-book.js"></script>
+  <!-- 阶段6：主档案门 → 进入记忆档案井（开门条件 + 门扇两态/门内记忆井渲染 + 门口交互） -->
+  <script src="js/engine/game-archive-door.js"></script>
+  <!-- 俄罗斯方块之后：共同校验廊（全息信号 / 终端状态 / 分支视觉反馈） -->
+  <script src="js/engine/game-archive-exchange.js"></script>
+  <script src="js/engine/game-render-actors.js"></script>
+  <script src="js/story_config.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

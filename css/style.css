@@ -1,0 +1,1677 @@
+/* ============================================================================
+ * The OASIS —— 游戏画面专用样式（只作用于 #screen-game / #game 内部）
+ * ----------------------------------------------------------------------------
+ * 遵循《OASIS_UI设计与AI美术提示词整合文档》P0/P1 视觉规范：
+ *   - 绿洲侧：深空黑 + 霓虹青(#00e5ff) + 尊贵金(#f0c869/#ffd97a) + 洋红(#e040fb)
+ *   - 玻璃面板：半透明深蓝 + backdrop-blur + 细扫描线 + 柔和辉光
+ *   - 圆角 8-12px；键帽深底青框等宽字形；Toast 金色描边
+ * ==========================================================================*/
+
+#screen-game {
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+#game {
+  position: relative;
+  width: 1280px;
+  height: 720px;
+  /* 由 engine.scaleCanvas() 写入 --game-scale，统一等比缩放整块游戏画面
+     （含画布与覆盖层）；以容器中心为缩放原点，保证游戏居中并四周留边。
+     屏幕震动动画也读取同一变量，避免动画期间丢失缩放比例。 */
+  transform: scale(var(--game-scale, 1));
+  transform-origin: center center;
+}
+
+/* 屏幕震动：由 engine.shake() 触发（受「屏幕震动」设置门控） */
+@keyframes game-shake {
+  0%, 100% { transform: translate(0, 0) scale(var(--game-scale, 1)); }
+  20% { transform: translate(calc(var(--shake-mag, 5) * -1px), calc(var(--shake-mag, 5) * 0.6px)) scale(var(--game-scale, 1)); }
+  40% { transform: translate(calc(var(--shake-mag, 5) * 0.8px), calc(var(--shake-mag, 5) * -0.8px)) scale(var(--game-scale, 1)); }
+  60% { transform: translate(calc(var(--shake-mag, 5) * -0.6px), calc(var(--shake-mag, 5) * -0.4px)) scale(var(--game-scale, 1)); }
+  80% { transform: translate(calc(var(--shake-mag, 5) * 0.6px), calc(var(--shake-mag, 5) * 0.4px)) scale(var(--game-scale, 1)); }
+}
+#game.shake { animation: game-shake 0.3s ease; }
+
+/* ------------------------------- 画布 ------------------------------- */
+#canvas {
+  display: block;
+  background: #070b18;
+  box-shadow:
+    0 0 0 1px rgba(0, 229, 255, 0.35),
+    0 0 30px rgba(0, 229, 255, 0.22),
+    0 0 80px rgba(224, 64, 251, 0.10);
+}
+
+/* ------------------------------- HUD -------------------------------- */
+/* HUD 覆盖整个 #game，但整体不拦截指针；内部各区块用绝对定位分区，
+   呈现方式对齐 gry 的 level-hud（眉标 + 标题 / 目标 / 状态）。 */
+#hud {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+}
+
+/* 顶部左区：钥匙槽 + 关卡眉标（透明玻璃条） */
+.hud-top-row {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: 62%;
+  padding: 6px 14px;
+  background: linear-gradient(180deg, rgba(8, 12, 22, 0.72), rgba(5, 8, 16, 0.5));
+  border: 1px solid rgba(0, 229, 255, 0.18);
+  border-radius: 10px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.35);
+}
+
+#hud-keys {
+  display: flex;
+  gap: 8px;
+}
+
+.key-slot {
+  width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  background: rgba(5, 8, 16, 0.6);
+  border-radius: 8px;
+  font-size: 18px;
+  position: relative;
+  transition: all 0.4s ease;
+  backdrop-filter: blur(3px);
+}
+
+.key-slot .key-label {
+  position: absolute;
+  bottom: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  letter-spacing: 0;
+  color: rgba(180, 200, 215, 0.45);
+  white-space: nowrap;
+  font-family: var(--font-en, monospace);
+}
+
+/* 三钥主题：智慧=暖金 / 过程=钢蓝 / 勇气=镜白（对齐 gry --theme-* 令牌） */
+.key-slot[data-key="1"].has {
+  border-color: var(--theme-gold, #f0c869);
+  background: rgba(255, 217, 122, 0.14);
+  box-shadow:
+    0 0 12px rgba(255, 217, 122, 0.55),
+    inset 0 0 10px rgba(255, 217, 122, 0.18);
+  animation: keyGlow 0.6s ease;
+}
+.key-slot[data-key="1"].has .key-label {
+  color: var(--theme-gold, #f0c869);
+  text-shadow: 0 0 6px rgba(255, 217, 122, 0.7);
+}
+
+.key-slot[data-key="2"].has {
+  border-color: var(--theme-steel, #4a7fb8);
+  background: rgba(74, 127, 184, 0.18);
+  box-shadow:
+    0 0 12px rgba(74, 127, 184, 0.55),
+    inset 0 0 10px rgba(74, 127, 184, 0.18);
+  animation: keyGlow 0.6s ease;
+}
+.key-slot[data-key="2"].has .key-label {
+  color: var(--theme-steel, #4a7fb8);
+  text-shadow: 0 0 6px rgba(74, 127, 184, 0.7);
+}
+
+.key-slot[data-key="3"].has {
+  border-color: var(--theme-mirror, #c8dcff);
+  background: rgba(200, 220, 255, 0.14);
+  box-shadow:
+    0 0 12px rgba(200, 220, 255, 0.5),
+    inset 0 0 10px rgba(200, 220, 255, 0.16);
+  animation: keyGlow 0.6s ease;
+}
+.key-slot[data-key="3"].has .key-label {
+  color: var(--theme-mirror, #c8dcff);
+  text-shadow: 0 0 6px rgba(200, 220, 255, 0.7);
+}
+
+@keyframes keyGlow {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+
+/* 关卡行：眉标（KEY I · WISDOM）+ 关卡名，层级参考 gry .lh-en / .lh-title */
+#hud-level {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding-left: 14px;
+  border-left: 1px solid rgba(0, 229, 255, 0.2);
+  min-width: 0;
+}
+
+#hud-level .lvl-eyebrow {
+  font-family: var(--font-en, monospace);
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--neon-cyan-dim, #0891a6);
+  white-space: nowrap;
+}
+
+#hud-level .lvl-cn {
+  font-size: 15px;
+  letter-spacing: 2px;
+  color: var(--gold-bright, #ffd97a);
+  text-shadow: 0 0 8px rgba(255, 217, 122, 0.4);
+  white-space: nowrap;
+}
+
+/* 顶部中区：当前目标常驻条（B2）
+   —— 只显示短目标并一直留在画面上；长目标、三钥进度与已发现线索进任务日志
+   （点击本条或按 J 展开）。色形编码：颜色 + 形状双重区分，不依赖单一色彩：
+     danger   危险  橙红三角 ▲
+     reward   奖励  金色菱形 ◆
+     interact 交互  青色圆点 ●                                     */
+#hud-objective {
+  position: absolute;
+  top: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: rgba(220, 235, 245, 0.85);
+  background: rgba(5, 8, 16, 0.5);
+  border-left: 2px solid var(--gold, #f0c869);
+  padding: 5px 14px;
+  border-radius: 0 8px 8px 0;
+  max-width: 52%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  backdrop-filter: blur(2px);
+  pointer-events: auto;
+  cursor: pointer;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+#hud-objective::before {
+  margin-right: 8px;
+  font-size: 11px;
+}
+#hud-objective[data-kind="danger"] { border-left-color: #ff7a5c; }
+#hud-objective[data-kind="danger"]::before { content: "▲"; color: #ff7a5c; }
+#hud-objective[data-kind="reward"] { border-left-color: var(--gold, #f0c869); }
+#hud-objective[data-kind="reward"]::before { content: "◆"; color: var(--gold, #f0c869); }
+#hud-objective[data-kind="interact"] { border-left-color: var(--neon-cyan, #00e5ff); }
+#hud-objective[data-kind="interact"]::before { content: "●"; color: var(--neon-cyan, #00e5ff); }
+/* 展开提示：J 键小方片（纯装饰，不进入 textContent） */
+#hud-objective::after {
+  content: "J";
+  margin-left: 10px;
+  padding: 0 5px;
+  border: 1px solid rgba(240, 200, 105, 0.45);
+  border-radius: 4px;
+  font-size: 10px;
+  color: var(--gold, #f0c869);
+}
+#hud-objective:hover { box-shadow: 0 0 14px rgba(0, 229, 255, 0.25); }
+/* 目标变化时闪一次，此后常驻不再消失 */
+#hud-objective.pulse { animation: objPulse 0.9s ease-out 1; }
+@keyframes objPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(240, 200, 105, 0.55); }
+  100% { box-shadow: 0 0 0 14px rgba(240, 200, 105, 0); }
+}
+/* 场景模式（家 / 阳台）：画布热区要接收鼠标移动，目标条让出指针事件；J 键仍可展开 */
+#hud-objective.scene-mode { pointer-events: none; cursor: default; }
+#hud-objective.scene-mode::after { display: none; }
+
+/* ---------------------------- 任务日志（B2） ----------------------------
+   常驻目标条的可展开版：当前区域 + 当前目标 + 三钥进度 + 已发现线索。
+   展开时引擎冻结（由 game-log.js 走统一暂停入口）。 */
+.objective-log {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(560px, 88%);
+  max-height: 78%;
+  overflow-y: auto;
+  z-index: 60;   /* W1：游戏屏内最顶层（高于 pause-menu 35 / interact-panel 50），修复 Esc 后按 J 被压住 */
+  padding: 18px 20px 14px;
+  background: linear-gradient(180deg, rgba(8, 12, 22, 0.95), rgba(5, 8, 16, 0.9));
+  border: 1px solid rgba(0, 229, 255, 0.28);
+  border-radius: 12px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  color: rgba(220, 235, 245, 0.9);
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  pointer-events: auto;
+}
+.ol-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(0, 229, 255, 0.18);
+}
+.ol-title { font-size: 16px; letter-spacing: 4px; color: var(--gold-bright, #ffd97a); }
+.ol-en {
+  flex: 1;
+  font-family: var(--font-en, "Consolas", monospace);
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: rgba(170, 178, 191, 0.6);
+}
+.ol-close {
+  background: transparent;
+  border: 1px solid rgba(0, 229, 255, 0.32);
+  border-radius: 6px;
+  color: rgba(200, 220, 232, 0.8);
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: border-color 0.25s ease, color 0.25s ease;
+}
+.ol-close:hover { border-color: rgba(0, 229, 255, 0.7); color: #eaffff; }
+.ol-area {
+  margin-top: 10px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: rgba(170, 178, 191, 0.7);
+}
+.ol-current { display: flex; align-items: baseline; gap: 8px; margin-top: 8px; }
+.ol-current .ol-mark { font-size: 11px; }
+.ol-now-label { font-size: 11px; color: rgba(170, 178, 191, 0.7); }
+.ol-now { color: #eaf6ff; }
+#ol-now-mark[data-kind="danger"] { color: #ff7a5c; }
+#ol-now-mark[data-kind="reward"] { color: var(--gold, #f0c869); }
+#ol-now-mark[data-kind="interact"] { color: var(--neon-cyan, #00e5ff); }
+.ol-section { margin-top: 14px; font-size: 11px; letter-spacing: 2px; color: var(--neon-cyan-dim, #0891a6); }
+.ol-list { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.ol-item { display: flex; align-items: baseline; gap: 8px; }
+.ol-mark { flex: 0 0 auto; }
+.ol-item.is-done .ol-mark { color: var(--gold, #f0c869); }
+.ol-item.is-todo .ol-mark { color: rgba(170, 178, 191, 0.45); }
+.ol-item.is-clue .ol-mark { color: var(--neon-cyan, #00e5ff); }
+.ol-name { flex: 0 0 auto; min-width: 84px; color: #e3e9f1; }
+.ol-goal { font-size: 12px; color: rgba(200, 212, 224, 0.7); }
+.ol-item.is-done .ol-goal { color: rgba(200, 212, 224, 0.45); text-decoration: line-through; }
+/* 线索正文（2026-09-20）：标题行 + 正文第二行。
+   .ol-item 默认是 flex 横排，带正文的条目改为纵向块，否则标题与正文会并排。 */
+.ol-item.has-text { display: block; }
+.ol-clue-head { display: flex; align-items: baseline; gap: 8px; }
+.ol-clue-text {
+  margin: 2px 0 0 16px;
+  font-size: 12px;
+  line-height: 1.55;
+  color: rgba(200, 212, 224, 0.72);
+}
+.ol-empty { font-size: 12px; color: rgba(170, 178, 191, 0.55); }
+.ol-hint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(0, 229, 255, 0.12);
+  font-size: 11px;
+  color: rgba(170, 178, 191, 0.6);
+}
+.ol-hint kbd {
+  font-family: var(--font-en, "Consolas", monospace);
+  font-size: 10px;
+  padding: 1px 6px;
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  border-radius: 4px;
+  color: #cfe9f5;
+}
+body.high-contrast .objective-log,
+body.high-contrast .ol-now,
+body.high-contrast .ol-name { color: #ffffff; }
+
+/* 右下角操作键位表（可折叠） */
+.hud-controls {
+  position: absolute;
+  bottom: 18px;
+  right: 18px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  max-width: 55%;
+}
+
+.hud-kbd {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(5, 8, 16, 0.55);
+  border: 1px solid rgba(0, 229, 255, 0.28);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 11px;
+  color: rgba(200, 220, 232, 0.75);
+  backdrop-filter: blur(2px);
+}
+
+.hud-kbd kbd {
+  font-family: var(--font-en, "Consolas", monospace);
+  font-size: 10px;
+  color: #00e5ff;
+  background: rgba(0, 229, 255, 0.08);
+  border: 1px solid rgba(0, 229, 255, 0.4);
+  border-radius: 4px;
+  padding: 1px 6px;
+  letter-spacing: 1px;
+}
+
+/* 顶部右区：状态徽标（迷宫狩猎计数） */
+#hud-kills {
+  position: absolute;
+  top: 20px;
+  right: 18px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #ffb74d;
+  text-shadow: 0 0 8px rgba(255, 152, 0, 0.6);
+  background: rgba(5, 8, 16, 0.5);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 152, 0, 0.25);
+  backdrop-filter: blur(2px);
+}
+
+/* 顶部右区：数据护盾剩余层数（迷宫，扫雷奖励 D3） */
+#hud-shield {
+  position: absolute;
+  top: 52px;
+  right: 18px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #7fd7ff;
+  text-shadow: 0 0 8px rgba(80, 180, 255, 0.6);
+  background: rgba(5, 8, 16, 0.5);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(80, 180, 255, 0.3);
+  backdrop-filter: blur(2px);
+}
+
+/* E3·S1：逆流维护点进度（仅 oasis 支线激活时显示） */
+#hud-maintenance {
+  position: absolute;
+  top: 84px;
+  right: 18px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #ffd97a;
+  text-shadow: 0 0 8px rgba(255, 200, 105, 0.55);
+  background: rgba(5, 8, 16, 0.5);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(240, 200, 105, 0.3);
+  backdrop-filter: blur(2px);
+  z-index: 14;
+}
+
+/* E3·S1：鼠标扫描/交互按钮（按住扫描维护标记；键盘仍可用 E） */
+.scan-hold {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  z-index: 14;
+  padding: 10px 22px;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: #eaf6ff;
+  background: linear-gradient(180deg, rgba(10, 26, 40, 0.94), rgba(6, 16, 28, 0.96));
+  border: 1px solid rgba(127, 215, 255, 0.7);
+  border-radius: 10px;
+  box-shadow: 0 0 0 2px rgba(127, 215, 255, 0.1), 0 0 18px rgba(127, 215, 255, 0.35);
+  cursor: pointer;
+  user-select: none;
+  touch-action: none;
+}
+.scan-hold:active {
+  background: linear-gradient(180deg, #b3e8ff, #7fc9ee);
+  color: #06131f;
+}
+.scan-hold[hidden] { display: none !important; }
+
+/* 现实侧（叠楼区开场等）：HUD 降饱和为灰金，弱化霓虹 */
+.world-reality #hud .hud-top-row {
+  border-color: rgba(170, 178, 191, 0.2);
+  background: linear-gradient(180deg, rgba(24, 27, 34, 0.72), rgba(16, 18, 24, 0.5));
+}
+.world-reality #hud .lvl-cn { color: #d8c49a; text-shadow: none; }
+.world-reality #hud .lvl-eyebrow { color: rgba(170, 178, 191, 0.55); }
+.world-reality #hud-objective { border-left-color: rgba(170, 178, 191, 0.6); color: rgba(214, 222, 232, 0.8); }
+
+/* ----------------------------- 黑场过渡 ----------------------------- */
+#fade {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  opacity: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* 2026-09-20：F4 原创转场（斜向扫描光带 #transition + .t-band/.t-bars/.t-plate
+   与 6 条 keyframes）已整条删除。切图遮蔽改由事件链的 fade 事件承担。 */
+
+/* ----------------------- 底部可交互提示条 (Context Prompt) ----------------------- */
+#context-prompt {
+  position: absolute;
+  left: 50%;
+  bottom: 56px;
+  transform: translateX(-50%) translateY(12px);
+  z-index: 12;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(180deg, rgba(8, 12, 22, 0.92), rgba(6, 9, 18, 0.95));
+  border: 1px solid rgba(240, 200, 105, 0.6);
+  border-radius: 10px;
+  padding: 10px 20px;
+  box-shadow:
+    0 0 0 2px rgba(240, 200, 105, 0.08),
+    0 0 22px rgba(240, 200, 105, 0.3),
+    inset 0 0 18px rgba(0, 229, 255, 0.05);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  white-space: nowrap;
+  backdrop-filter: blur(4px);
+}
+
+#context-prompt.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+#context-prompt .cp-key {
+  font-family: var(--font-en, "Consolas", monospace);
+  font-size: 14px;
+  font-weight: bold;
+  color: #0a0d14;
+  background: linear-gradient(180deg, #ffd97a, #f0c869);
+  border: 1px solid #ffd97a;
+  border-radius: 6px;
+  padding: 3px 10px;
+  box-shadow: 0 0 10px rgba(255, 217, 122, 0.55);
+  min-width: 28px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+#context-prompt .cp-label {
+  font-size: 14px;
+  color: #e8f2f8;
+  letter-spacing: 1px;
+}
+
+#context-prompt .cp-arrow {
+  color: var(--gold, #f0c869);
+  font-size: 12px;
+}
+
+/* ----------------------- 首次学会技能提示（画面下方黑色小字） ----------------------- */
+#skill-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 168px;
+  transform: translateX(-50%) translateY(10px);
+  z-index: 13;
+  color: #000;
+  font-size: 15px;
+  letter-spacing: 1.5px;
+  /* pre-line：保留 showSkillHint 第二行（如「访客移动协议已更新」）的换行，仍不换行折行 */
+  white-space: pre-line;
+  /* 浅色描边保证在较暗的图书馆背景上仍可辨认 */
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.85), 0 0 2px rgba(255, 255, 255, 0.7);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+#skill-hint.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ------------------- 走廊引导：可学习技能的深色小字 ------------------- */
+#gate-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 210px;
+  transform: translateX(-50%) translateY(8px);
+  z-index: 13;
+  color: #000;
+  font-size: 14px;
+  letter-spacing: 1.2px;
+  white-space: nowrap;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.85), 0 0 2px rgba(255, 255, 255, 0.7);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+#gate-hint.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ------------- 序章动态目标 / 下一步要求（画面最下方金色小字） ------------- */
+#goal-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 168px;   /* 位于对话框上沿之上，避免遮挡对白 */
+  transform: translateX(-50%) translateY(10px);
+  z-index: 13;
+  color: var(--gold, #f0c869);
+  font-size: 15px;
+  letter-spacing: 1.5px;
+  white-space: nowrap;
+  text-shadow: 0 0 10px rgba(240, 200, 105, 0.6), 0 0 3px rgba(0, 0, 0, 0.9);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+#goal-hint.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ---------------- 发车演出（Home 戴 VR → OASIS 前） ---------------- */
+.race-start {
+  position: absolute;
+  inset: 0;
+  z-index: 45;
+  overflow: hidden;
+  background: #000;                 /* 纯黑底：不露旧画面、不出现纯白加载底 */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.24s ease;
+}
+.race-start.show { opacity: 1; pointer-events: auto; }
+.race-start.rs-oasis { background: transparent; }   /* 进入 OASIS 后只留中央文字 */
+.race-start.rs-reduced { transition: none; }
+
+.race-start .rs-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;                /* 铺满游戏画面、保持原始宽高比、不变形 */
+  object-position: center;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+  pointer-events: none;
+}
+.race-start.rs-reduced .rs-img { transition: none; }
+.race-start .rs-img.active { opacity: 1; }
+
+.race-start .rs-text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 86%;
+  padding: 10px 26px;
+  text-align: center;
+  color: #fff6df;                   /* 白 / 浅金 */
+  font-family: var(--font-cn, "Noto Sans SC", "Microsoft YaHei", sans-serif);
+  font-size: 24px;
+  letter-spacing: 2px;
+  line-height: 1.5;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);   /* 很轻的黑色阴影 */
+  background: rgba(6, 8, 14, 0.55);             /* 半透明深色底条 */
+  border-radius: 10px;
+  pointer-events: none;
+}
+/* 进入 OASIS 的最后一句：稍大、略高于中心，避免遮挡玩家与第一个平台 */
+.race-start.rs-oasis .rs-text {
+  top: 34%;
+  font-size: 28px;
+  color: #ffe9a8;
+}
+
+/* ---------------- 赛道尽头 → 年鉴馆接待前厅转场 ---------------- */
+.archive-transition {
+  position: absolute;
+  inset: 0;
+  z-index: 45;
+  overflow: hidden;
+  background: #000;                 /* 纯黑底：缺图时退化为黑场 + 文字 */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s ease;
+}
+.archive-transition.show { opacity: 1; pointer-events: auto; }
+.archive-transition.at-reduced { transition: none; }   /* 减少动态：不做长淡入淡出 */
+
+.archive-transition .at-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;              /* 保持原始比例，不拉伸；16:9 图与画面一致时无黑边 */
+  object-position: center;
+  opacity: 0;
+  transition: opacity 0.32s ease;
+  pointer-events: none;
+}
+.archive-transition.at-reduced .at-img { transition: none; }
+.archive-transition .at-img.active { opacity: 1; }
+
+.archive-transition .at-text {
+  position: absolute;
+  left: 50%;
+  bottom: 8%;                       /* 画面下方安全区，避开主体构图 */
+  transform: translateX(-50%);
+  max-width: 86%;
+  padding: 8px 22px;
+  text-align: center;
+  color: #f2ead7;                   /* 浅暖白，压在暗色底条上 */
+  font-family: var(--font-cn, "Noto Sans SC", "Microsoft YaHei", sans-serif);
+  font-size: 22px;
+  letter-spacing: 1px;
+  line-height: 1.5;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.85);
+  background: rgba(6, 8, 14, 0.5);  /* 半透明深色底条，保证可读 */
+  border-radius: 10px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.32s ease;
+}
+.archive-transition.at-reduced .at-text { transition: none; }
+.archive-transition .at-text.show { opacity: 1; }
+
+/* ---------- 阶段4·邀请验证：程序 UI 结果面板（不画进图片） ---------- */
+.invite-result {
+  position: absolute;
+  inset: 0;
+  z-index: 46;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(4, 6, 10, 0.55);   /* 轻压暗画面，聚焦读取结果 */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.24s ease;
+}
+.invite-result.show { opacity: 1; pointer-events: auto; }
+.invite-result .iv-panel {
+  width: min(560px, 86%);
+  padding: 26px 34px 22px;
+  background: linear-gradient(180deg, rgba(24, 20, 12, 0.96), rgba(14, 12, 8, 0.96));
+  border: 1px solid rgba(255, 206, 138, 0.55);
+  border-radius: 12px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6), 0 0 24px rgba(255, 186, 110, 0.15);
+  font-family: var(--font-cn, "Noto Sans SC", "Microsoft YaHei", sans-serif);
+}
+.invite-result .iv-title {
+  color: #ffdfa6;
+  font-size: 17px;
+  letter-spacing: 2px;
+  text-align: center;
+  padding-bottom: 12px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 206, 138, 0.25);
+}
+.invite-result .iv-lines {
+  list-style: none;
+  margin: 0 0 18px;
+  padding: 0;
+}
+.invite-result .iv-lines li {
+  color: #efe6d2;
+  font-size: 16px;
+  line-height: 1.7;
+  letter-spacing: 0.5px;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+.invite-result .iv-lines li:nth-child(odd) { background: rgba(255, 206, 138, 0.06); }
+.invite-result .iv-btn {
+  display: block;
+  margin: 0 auto;
+  padding: 8px 40px;
+  color: #1a140a;
+  background: linear-gradient(180deg, #ffd98f, #e0a95e);
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  letter-spacing: 2px;
+  cursor: pointer;
+}
+.invite-result .iv-btn:hover { filter: brightness(1.08); }
+
+/* 现实侧（家中）提示条：低饱和灰金版 */
+.world-reality #context-prompt {
+  border-color: rgba(138, 111, 60, 0.6);
+  background: linear-gradient(180deg, rgba(30, 33, 41, 0.92), rgba(20, 22, 27, 0.95));
+  box-shadow: 0 0 0 2px rgba(138, 111, 60, 0.08), 0 0 14px rgba(138, 111, 60, 0.2);
+}
+.world-reality #context-prompt .cp-key {
+  background: linear-gradient(180deg, #c9a96a, #8a6f3c);
+  border-color: #a08248;
+  box-shadow: 0 0 8px rgba(138, 111, 60, 0.4);
+}
+
+/* ----------------------------- 剧情对话框 ----------------------------- */
+#dialog {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  width: 82%;
+  max-width: 900px;
+  min-height: 132px;
+  z-index: 10;
+  padding: 16px 22px 16px 22px;
+  display: flex;
+  gap: 16px;
+  background: linear-gradient(180deg, rgba(8, 12, 24, 0.94), rgba(6, 9, 18, 0.97));
+  border: 1px solid rgba(0, 229, 255, 0.45);
+  border-radius: 12px;
+  box-shadow:
+    0 0 0 3px rgba(0, 229, 255, 0.06),
+    0 0 28px rgba(0, 229, 255, 0.22),
+    inset 0 0 40px rgba(0, 229, 255, 0.04);
+  backdrop-filter: blur(6px);
+  animation: dlgSlideUp 0.3s ease;
+}
+
+@keyframes dlgSlideUp {
+  from { opacity: 0; transform: translateX(-50%) translateY(14px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* 头像位 */
+#dialog-portrait {
+  flex: 0 0 72px;
+  height: 72px;
+  border-radius: 8px;
+  border: 1px solid rgba(120, 140, 160, 0.35);
+  background: #060a12;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#dialog-portrait::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, transparent 40%, rgba(0, 0, 0, 0.72));
+}
+
+#dialog-portrait .portrait-silhouette {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.85;
+  filter: blur(1px);
+}
+
+/* 角色立绘头像（真值在 dialog.js 的 SPEAKERS.portrait）：图片压缩进原本的方块框内，
+   旁白/系统无图时保持上面的灰色圆球不变 */
+#dialog-portrait.img {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+}
+#dialog-portrait.img::after { content: none; }
+#dialog-portrait.img .portrait-silhouette { display: none; }
+
+/* 角色配色 */
+#dialog.tone-el {
+  border-color: rgba(0, 229, 255, 0.6);
+  box-shadow:
+    0 0 0 3px rgba(0, 229, 255, 0.08),
+    0 0 28px rgba(0, 229, 255, 0.28),
+    inset 0 0 40px rgba(0, 229, 255, 0.05);
+}
+#dialog.tone-el #dialog-portrait { color: #00e5ff; border-color: rgba(0, 229, 255, 0.55); }
+#dialog.tone-el #dialog-name { color: #00e5ff; text-shadow: 0 0 10px rgba(0, 229, 255, 0.7); }
+
+#dialog.tone-halliday {
+  border-color: rgba(240, 200, 105, 0.6);
+  box-shadow:
+    0 0 0 3px rgba(240, 200, 105, 0.08),
+    0 0 28px rgba(240, 200, 105, 0.26),
+    inset 0 0 40px rgba(240, 200, 105, 0.04);
+}
+#dialog.tone-halliday #dialog-portrait { color: #f0c869; border-color: rgba(240, 200, 105, 0.55); }
+#dialog.tone-halliday #dialog-name { color: #ffd97a; text-shadow: 0 0 10px rgba(240, 200, 105, 0.7); }
+
+/* 莫罗：暖铜色（年鉴馆接待前厅管理员；与哈里迪的金色区分开） */
+#dialog.tone-morrow {
+  border-color: rgba(216, 161, 90, 0.6);
+  box-shadow:
+    0 0 0 3px rgba(216, 161, 90, 0.08),
+    0 0 28px rgba(216, 161, 90, 0.26),
+    inset 0 0 40px rgba(216, 161, 90, 0.04);
+}
+#dialog.tone-morrow #dialog-portrait { color: #d8a15a; border-color: rgba(216, 161, 90, 0.55); }
+#dialog.tone-morrow #dialog-name { color: #e8b877; text-shadow: 0 0 10px rgba(216, 161, 90, 0.7); }
+
+#dialog.tone-sys #dialog-portrait { color: #6b7280; border-color: rgba(107, 114, 128, 0.4); }
+#dialog.tone-sys #dialog-name { color: #aab2bf; }
+
+#dialog-main { flex: 1; position: relative; min-width: 0; }
+
+#dialog-name {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 10px;
+  letter-spacing: 3px;
+  min-height: 20px;
+  /* 说话人名字固定显示在对话框右上角；左侧为头像，正文在名字下方 */
+  text-align: right;
+  padding-right: 2px;
+}
+
+#dialog-name .name-en {
+  font-family: var(--font-en, "Consolas", monospace);
+  font-size: 11px;
+  letter-spacing: 2px;
+  opacity: 0.6;
+  margin-left: 8px;
+  font-weight: 400;
+}
+
+#dialog-text {
+  font-size: 17px;
+  line-height: 1.75;
+  color: #eaf6ff;
+  min-height: 58px;
+  text-shadow: 0 0 6px rgba(120, 200, 255, 0.3);
+  white-space: pre-wrap;
+}
+
+/* 打字光标 */
+#dialog-text.typing::after {
+  content: "▌";
+  color: #00e5ff;
+  margin-left: 1px;
+  animation: caretBlink 0.8s steps(2, start) infinite;
+}
+
+@keyframes caretBlink {
+  50% { opacity: 0; }
+}
+
+#dialog-continue {
+  position: absolute;
+  right: 4px;
+  bottom: 2px;
+  color: var(--gold, #f0c869);
+  font-size: 14px;
+  opacity: 0;
+}
+
+#dialog-continue.blink {
+  animation: blink 0.9s steps(2, start) infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 1; }
+}
+
+/* ------------------------------- 选择题 ------------------------------
+   与其他交互文字统一：锚定屏幕下方，样式对齐 #dialog（深色底 + 青色描边）。 */
+#choice {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  z-index: 20;
+  width: min(900px, 82%);
+  padding: 18px 22px;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(8, 12, 24, 0.95), rgba(6, 9, 18, 0.97));
+  border: 1px solid rgba(0, 229, 255, 0.45);
+  border-radius: 12px;
+  box-shadow:
+    0 0 0 3px rgba(0, 229, 255, 0.06),
+    0 0 28px rgba(0, 229, 255, 0.22);
+  backdrop-filter: blur(6px);
+}
+
+#choice-prompt {
+  font-size: 19px;
+  margin-bottom: 22px;
+  color: #ffe082;
+  text-shadow: 0 0 10px rgba(255, 224, 130, 0.55);
+  line-height: 1.6;
+  letter-spacing: 1px;
+}
+
+#choice-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.choice-btn {
+  min-height: 48px;
+  padding: 12px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  color: #cfe8f0;
+  background: #000;                       /* 初始两行均为黑色底 */
+  border: 1px solid rgba(0, 229, 255, 0.4);
+  border-radius: 8px;
+  transition: all 0.18s ease;
+  letter-spacing: 1px;
+  font-family: inherit;
+  position: relative;
+  text-align: left;
+}
+
+.choice-btn::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 0;
+  background: #ffd97a;
+  transition: height 0.2s ease;
+  border-radius: 0 2px 2px 0;
+}
+
+.choice-btn:hover,
+.choice-btn.focused {
+  color: #000;
+  background: linear-gradient(180deg, #b3e8ff, #7fc9ee);   /* 选中行改为浅蓝色底 */
+  border-color: #8fd3ff;
+  box-shadow: 0 0 18px rgba(143, 211, 255, 0.65);
+}
+
+.choice-btn:hover::before,
+.choice-btn.focused::before {
+  height: 70%;
+}
+
+.choice-btn:focus-visible {
+  outline: none;
+}
+
+/* ----------------- 旧标题界面（已被主菜单取代，保持隐藏） ----------------- */
+#title {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background:
+    linear-gradient(rgba(4, 6, 14, 0.9), rgba(4, 6, 14, 0.96)),
+    repeating-linear-gradient(0deg, rgba(0, 229, 255, 0.04) 0 1px, transparent 1px 4px);
+}
+
+#title-name {
+  margin: 0;
+  font-size: 92px;
+  letter-spacing: 10px;
+  color: #00e5ff;
+  text-shadow:
+    0 0 8px rgba(0, 229, 255, 0.9),
+    0 0 28px rgba(0, 229, 255, 0.6),
+    0 0 70px rgba(224, 64, 251, 0.5);
+}
+
+#title-sub {
+  margin: 4px 0 12px;
+  font-size: 22px;
+  letter-spacing: 8px;
+  color: #e040fb;
+}
+
+#title-quote {
+  margin: 0 0 30px;
+  font-size: 15px;
+  color: rgba(234, 246, 255, 0.6);
+  letter-spacing: 2px;
+}
+
+#title-buttons {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 26px;
+}
+
+.cyber-btn {
+  min-width: 170px;
+  padding: 13px 22px;
+  font-size: 17px;
+  letter-spacing: 3px;
+  cursor: pointer;
+  color: #00e5ff;
+  background: rgba(0, 229, 255, 0.05);
+  border: 1px solid rgba(0, 229, 255, 0.7);
+  border-radius: 8px;
+  transition: all 0.18s ease;
+  font-family: inherit;
+}
+
+.cyber-btn:hover {
+  color: #000;
+  background: #00e5ff;
+  box-shadow: 0 0 24px rgba(0, 229, 255, 0.8);
+}
+
+#title-controls {
+  font-size: 13px;
+  color: rgba(234, 246, 255, 0.55);
+}
+
+/* ------------------------------- 结局界面 ------------------------------ */
+#ending {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 48px 40px;
+  background: rgba(3, 5, 12, 0.96);
+  transition: background 0.6s ease;
+}
+
+/* 结局A：继承者·空王座 —— 空旷孤独的黄金王座厅 */
+#ending.ending-inherit {
+  background:
+    linear-gradient(180deg, rgba(10, 8, 4, 0.55) 0%, rgba(3, 5, 12, 0.75) 100%),
+    url('../image/cg_ending_inherit.jpg') center / cover no-repeat;
+}
+
+/* 结局B：回到现实·天台破晓 —— cg_roof_seed 天台破晓插画 */
+#ending.ending-reality {
+  background:
+    linear-gradient(180deg, rgba(20, 16, 10, 0.45) 0%, rgba(12, 10, 8, 0.72) 100%),
+    url('../image/cg_roof_seed.png') center / cover no-repeat;
+}
+
+.ending-badge {
+  font-family: var(--font-en, "Consolas", monospace);
+  font-size: 12px;
+  letter-spacing: 5px;
+  color: rgba(200, 200, 200, 0.5);
+  margin-bottom: 16px;
+}
+
+#ending-title {
+  font-size: 40px;
+  letter-spacing: 8px;
+  color: #ffe082;
+  text-shadow: 0 0 18px rgba(255, 224, 130, 0.55);
+  margin-bottom: 26px;
+  animation: endingTitleIn 0.9s ease;
+}
+
+@keyframes endingTitleIn {
+  from { opacity: 0; transform: translateY(-10px); letter-spacing: 14px; }
+  to   { opacity: 1; transform: translateY(0); letter-spacing: 8px; }
+}
+
+#ending-text {
+  max-width: 720px;
+  font-size: 17px;
+  line-height: 1.95;
+  color: #eaf6ff;
+  white-space: pre-wrap;
+  margin-bottom: 34px;
+}
+
+.ending-stats {
+  display: flex;
+  gap: 28px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.ending-stat {
+  text-align: center;
+}
+
+.ending-stat .es-num {
+  font-family: var(--font-en, "Consolas", monospace);
+  font-size: 22px;
+  color: var(--gold, #f0c869);
+  text-shadow: 0 0 10px rgba(240, 200, 105, 0.5);
+}
+
+.ending-stat .es-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: rgba(200, 210, 220, 0.55);
+  margin-top: 4px;
+}
+
+/* 2026-09-21：结算回顾面板（原 .ending-recap，V4 §11.5「旅程复盘」）已整块删除——
+   结局页只呈现徽标 / 标题 / 正文 / 统计 / 按钮，不再弹出任何总结性窗口。
+   对应 i18n 键 recap_* 保留为零引用（按本项目「保留定义、勿删文案」惯例）。 */
+
+#ending-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ----------------------------- 暂停菜单 ------------------------------ */
+#pause-menu {
+  position: absolute;
+  inset: 0;
+  z-index: 35;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(3, 5, 10, 0.72);
+  backdrop-filter: blur(5px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+#pause-menu.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.pause-card {
+  width: min(320px, 84%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: linear-gradient(180deg, rgba(10, 16, 28, 0.95), rgba(6, 9, 18, 0.97));
+  border: 1px solid rgba(0, 229, 255, 0.38);
+  border-radius: 12px;
+  padding: 28px 24px;
+  box-shadow:
+    0 0 0 3px rgba(0, 229, 255, 0.06),
+    0 0 36px rgba(0, 229, 255, 0.2);
+  transform: translateY(8px);
+  transition: transform 0.25s ease;
+}
+
+#pause-menu.show .pause-card {
+  transform: translateY(0);
+}
+
+.pause-card h3 {
+  color: #e8f6fa;
+  letter-spacing: 8px;
+  text-align: center;
+  margin-bottom: 6px;
+  font-size: 20px;
+}
+
+.pause-card h3 span {
+  display: block;
+  font-family: var(--font-en, "Consolas", monospace);
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: var(--neon-cyan-dim, #0891a6);
+  margin-top: 6px;
+  font-weight: 400;
+}
+
+.pause-btn {
+  min-height: 46px;
+  padding: 11px 16px;
+  font-size: 15px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  color: #cfe8f0;
+  background: rgba(10, 16, 30, 0.6);
+  border: 1px solid rgba(0, 229, 255, 0.32);
+  border-radius: 8px;
+  transition: all 0.18s ease;
+  font-family: inherit;
+  position: relative;
+  text-align: left;
+  padding-left: 18px;
+}
+
+.pause-btn::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 0;
+  background: var(--gold, #f0c869);
+  transition: height 0.2s ease;
+  border-radius: 0 2px 2px 0;
+}
+
+.pause-btn:hover,
+.pause-btn.focused {
+  color: #000;
+  background: linear-gradient(180deg, #00e5ff, #00b8d4);
+  border-color: #00e5ff;
+  box-shadow: 0 0 16px rgba(0, 229, 255, 0.5);
+}
+
+.pause-btn:hover::before,
+.pause-btn.focused::before { height: 65%; }
+
+.pause-btn.primary {
+  border-color: rgba(0, 229, 255, 0.6);
+  color: #eaffff;
+}
+
+.pause-btn.danger {
+  border-color: rgba(255, 107, 107, 0.4);
+  color: #ffb3b3;
+}
+
+.pause-btn.danger:hover {
+  background: linear-gradient(180deg, #ff6b6b, #d44);
+  border-color: #ff6b6b;
+  color: #fff;
+  box-shadow: 0 0 16px rgba(255, 107, 107, 0.5);
+}
+
+/* ----------------------- 失败·检查点复生面板 ----------------------- */
+#respawn-panel {
+  position: absolute;
+  inset: 0;
+  z-index: 45;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(900px 500px at 50% 50%, rgba(0, 229, 255, 0.06) 0%, transparent 65%),
+    rgba(2, 4, 9, 0.88);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+#respawn-panel.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.respawn-card {
+  width: min(460px, 88%);
+  background: linear-gradient(180deg, rgba(10, 16, 28, 0.96), rgba(6, 9, 18, 0.98));
+  border: 1px solid rgba(255, 107, 107, 0.4);
+  border-radius: 14px;
+  padding: 32px 28px;
+  text-align: center;
+  box-shadow:
+    0 0 0 3px rgba(255, 107, 107, 0.06),
+    0 0 40px rgba(0, 0, 0, 0.6);
+  transform: translateY(10px);
+  transition: transform 0.35s ease;
+}
+
+#respawn-panel.show .respawn-card { transform: translateY(0); }
+
+.respawn-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 107, 107, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ff8a8a;
+  font-size: 26px;
+  box-shadow: 0 0 16px rgba(255, 107, 107, 0.3);
+  animation: respawnPulse 1.6s ease-in-out infinite;
+}
+
+@keyframes respawnPulse {
+  0%, 100% { box-shadow: 0 0 12px rgba(255, 107, 107, 0.3); }
+  50%      { box-shadow: 0 0 22px rgba(255, 107, 107, 0.55); }
+}
+
+.respawn-title {
+  font-size: 24px;
+  letter-spacing: 4px;
+  color: #ffb3b3;
+  margin-bottom: 10px;
+  text-shadow: 0 0 10px rgba(255, 107, 107, 0.4);
+}
+
+.respawn-reason {
+  font-size: 14px;
+  color: rgba(220, 228, 238, 0.75);
+  line-height: 1.7;
+  margin-bottom: 8px;
+}
+
+.respawn-quote {
+  font-size: 13px;
+  color: rgba(240, 200, 105, 0.7);
+  font-style: italic;
+  margin-bottom: 24px;
+  letter-spacing: 1px;
+}
+
+.respawn-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.respawn-btn {
+  min-height: 46px;
+  padding: 11px 22px;
+  font-size: 15px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.18s ease;
+  font-family: inherit;
+}
+
+.respawn-btn.primary {
+  color: #000;
+  background: linear-gradient(180deg, #00e5ff, #00b8d4);
+  border: 1px solid #00e5ff;
+  box-shadow: 0 0 16px rgba(0, 229, 255, 0.45);
+}
+
+.respawn-btn.primary:hover {
+  box-shadow: 0 0 24px rgba(0, 229, 255, 0.7);
+  transform: translateY(-1px);
+}
+
+.respawn-btn.secondary {
+  color: #aab2bf;
+  background: rgba(20, 26, 38, 0.7);
+  border: 1px solid rgba(120, 140, 160, 0.35);
+}
+
+.respawn-btn.secondary:hover {
+  color: #e8ecf2;
+  border-color: rgba(170, 178, 191, 0.6);
+}
+
+/* --------------------------- 章节过渡卡 --------------------------- */
+#chapter-card {
+  position: absolute;
+  inset: 0;
+  z-index: 28;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(800px 500px at 50% 50%, rgba(10, 18, 38, 0.6) 0%, rgba(3, 5, 12, 0.92) 70%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+#chapter-card.show {
+  opacity: 1;
+}
+
+.chapter-card-inner {
+  text-align: center;
+  padding: 30px 40px;
+  animation: chapterIn 0.6s ease;
+}
+
+@keyframes chapterIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.chapter-ordinal {
+  font-family: var(--font-en, "Consolas", monospace);
+  font-size: 12px;
+  letter-spacing: 6px;
+  color: var(--neon-cyan-dim, #0891a6);
+  margin-bottom: 14px;
+}
+
+.chapter-title {
+  font-size: 36px;
+  letter-spacing: 8px;
+  color: #eaffff;
+  text-shadow: 0 0 18px rgba(0, 229, 255, 0.5);
+  margin-bottom: 14px;
+}
+
+.chapter-subtitle {
+  font-size: 15px;
+  letter-spacing: 2px;
+  color: var(--gold-bright, #ffd97a);
+  text-shadow: 0 0 8px rgba(240, 200, 105, 0.4);
+  margin-bottom: 20px;
+}
+
+.chapter-save-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-en, "Consolas", monospace);
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: rgba(200, 210, 220, 0.5);
+  padding: 6px 14px;
+  border: 1px solid rgba(240, 200, 105, 0.3);
+  border-radius: 20px;
+}
+
+.chapter-save-hint .save-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ffd97a;
+  box-shadow: 0 0 8px #ffd97a;
+  animation: beacon 1.4s ease-in-out infinite;
+}
+
+/* 落盘失败：章节卡不再宣称「已保存」，改用红色警示态 */
+.chapter-save-hint.save-failed-state {
+  color: rgba(255, 150, 160, 0.85);
+  border-color: rgba(255, 82, 104, 0.5);
+}
+.chapter-save-hint.save-failed-state .save-dot {
+  background: #ff5268;
+  box-shadow: 0 0 8px #ff5268;
+  animation: none;
+}
+
+@keyframes beacon {
+  0%, 100% { opacity: 0.5; }
+  50%      { opacity: 1; box-shadow: 0 0 14px #ffd97a; }
+}
+
+/* ------------------------------- 通用 -------------------------------- */
+.hidden { display: none !important; }
+
+/* --------------------------- 迷失页面（失败提示） --------------------------- */
+.lost-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(900px 500px at 50% 50%, rgba(0, 229, 255, 0.08) 0%, transparent 65%),
+    url('../image/bg_cyberspace.png') center / cover no-repeat,
+    #04050c;
+}
+
+.lost-title {
+  font-family: Consolas, "Microsoft YaHei", monospace;
+  font-size: 56px;
+  letter-spacing: 10px;
+  color: #e8ecf0;
+  text-shadow: 0 0 22px rgba(0, 229, 255, 0.7), 0 0 60px rgba(224, 64, 251, 0.5);
+}
+
+/* ---------------------- 游戏场景右上角：回到主菜单 ---------------------- */
+.btn-back-menu {
+  position: fixed;
+  top: 18px;
+  right: 22px;
+  z-index: 100;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 229, 255, 0.4);
+  background: rgba(10, 16, 26, 0.78);
+  color: #bdf3ff;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+  backdrop-filter: blur(4px);
+}
+
+.btn-back-menu:hover {
+  box-shadow: 0 0 16px rgba(0, 229, 255, 0.45);
+  transform: scale(1.06);
+  color: #eaffff;
+}
+
+/* ---------------------- 高对比度辅助 ---------------------- */
+body.high-contrast #hud-objective,
+body.high-contrast .hud-kbd,
+body.high-contrast #hud-level .lvl-cn,
+body.high-contrast #hud-level .lvl-eyebrow,
+body.high-contrast #hud-kills,
+body.high-contrast #hud-shield,
+body.high-contrast #context-prompt .cp-label {
+  color: #ffffff;
+}
+
+body.high-contrast #dialog-text {
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+}
+
+/* ---------------------- 响应式：小屏/竖屏 ---------------------- */
+@media (max-width: 768px) {
+  #dialog { width: 92%; padding: 12px 14px; bottom: 12px; gap: 10px; }
+  #dialog-portrait { flex: 0 0 54px; height: 54px; }
+  #dialog-text { font-size: 14px; min-height: 46px; }
+  #dialog-name { font-size: 14px; margin-bottom: 6px; }
+
+  .key-slot { width: 36px; height: 36px; font-size: 16px; }
+  .key-slot .key-label { font-size: 9px; }
+  #hud-level { gap: 0; }
+  #hud-level .lvl-cn { font-size: 12px; }
+  #hud-level .lvl-eyebrow { font-size: 8px; }
+
+  .hud-controls { display: none; }
+  #hud-objective { font-size: 11px; max-width: 60%; top: 16px; }
+  #hud-kills { top: 16px; right: 12px; }
+  #hud-shield { top: 44px; right: 12px; }
+
+  #choice { padding: 20px 18px; }
+  #choice-prompt { font-size: 16px; }
+  .choice-btn { font-size: 14px; min-height: 42px; }
+
+  #ending-title { font-size: 28px; letter-spacing: 5px; }
+  #ending-text { font-size: 15px; }
+  .ending-stats { gap: 18px; }
+  .ending-stat .es-num { font-size: 18px; }
+}
+
+/* ----------------- 跑酷3次死亡结束界面（打字机效果） ----------------- */
+.parkour-death {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+
+.parkour-death.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.parkour-death-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(700px 400px at 50% 50%, rgba(156, 95, 255, 0.10) 0%, transparent 70%),
+    rgba(2, 2, 8, 0.95);
+  backdrop-filter: blur(6px);
+}
+
+.parkour-death-inner {
+  position: relative;
+  z-index: 1;
+  width: min(680px, 90%);
+  text-align: center;
+  padding: 40px 30px;
+}
+
+.parkour-death-text {
+  font-size: 22px;
+  line-height: 1.8;
+  white-space: pre-line;   /* 3 次死亡结语为多行文案（\n 换行） */
+  color: #c8b3ff;
+  text-shadow: 0 0 18px rgba(156, 95, 255, 0.6), 0 0 40px rgba(0, 0, 0, 0.8);
+  letter-spacing: 2px;
+  min-height: 120px;
+  font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+  border-right: 2px solid rgba(156, 95, 255, 0.6);
+  padding-right: 4px;
+  animation: pkDeathCursor 0.8s steps(1) infinite;
+}
+
+@keyframes pkDeathCursor {
+  0%, 100% { border-right-color: rgba(156, 95, 255, 0.6); }
+  50% { border-right-color: transparent; }
+}
+
+.parkour-death-btn {
+  margin-top: 36px;
+  padding: 12px 36px;
+  font-size: 15px;
+  color: #bdf3ff;
+  background: rgba(10, 16, 28, 0.8);
+  border: 1px solid rgba(0, 229, 255, 0.4);
+  border-radius: 8px;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s;
+  letter-spacing: 2px;
+}
+
+.parkour-death-btn.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.parkour-death-btn:hover {
+  box-shadow: 0 0 18px rgba(0, 229, 255, 0.4);
+  color: #eaffff;
+}

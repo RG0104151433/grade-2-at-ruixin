@@ -1,0 +1,249 @@
+/* ============================================================
+   world.css —— 漫游世界 UI 样式（§3.8 交互面板 + §3.9 命数 HUD + 进度浮字）
+   依赖: base.css 的双世界变量（--real-* / --oasis-*）
+   ============================================================ */
+
+/* ==================== §3.8 交互面板 ====================
+   与其他交互文字统一：锚定屏幕下方，样式对齐 #dialog（深色底 + 青色描边）。 */
+.interact-panel {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  width: min(900px, 82%);
+  background: linear-gradient(180deg, rgba(8, 12, 24, 0.94), rgba(6, 9, 18, 0.97));
+  border: 1px solid rgba(0, 229, 255, 0.45);
+  border-radius: 12px;
+  padding: 16px 22px;
+  z-index: 50;
+  backdrop-filter: blur(6px);
+  box-shadow:
+    0 0 0 3px rgba(0, 229, 255, 0.06),
+    0 0 28px rgba(0, 229, 255, 0.22),
+    inset 0 0 40px rgba(0, 229, 255, 0.04);
+  font-family: var(--font-cn, "Noto Sans SC", sans-serif);
+  color: #e8ecf0;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.interact-panel:not([hidden]) {
+  opacity: 1;
+}
+/* 文字颜色统一 + 各背景下可读（现实/绿洲双世界共用同一套面板） */
+.interact-panel {
+  color: #eef2f6;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+.ip-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #eef2f6;
+  border-bottom: 1px solid rgba(170, 178, 191, 0.25);
+  padding-bottom: 6px;
+}
+
+.ip-context {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #c0c8d4;
+  margin-bottom: 16px;
+}
+
+.ip-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.ip-actions button {
+  flex: 1;
+  min-width: 100px;
+  padding: 8px 16px;
+  border: 1px solid rgba(170, 178, 191, 0.3);
+  border-radius: 4px;
+  background: rgba(30, 36, 44, 0.6);
+  color: #d0d8e0;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.ip-actions button:hover {
+  background: rgba(50, 60, 72, 0.8);
+  border-color: rgba(170, 178, 191, 0.6);
+  color: #eef2f6;
+}
+
+/* ==================== §3.9 命数 HUD ==================== */
+/* [团队可改] 命数显示样式：图标/位置/颜色均可在此调整 */
+.lives-hud {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.85rem;
+  color: #e8ecf0;
+  background: rgba(10, 14, 20, 0.6);
+  padding: 4px 10px;
+  border-radius: 4px;
+  pointer-events: none;
+}
+.lives-hud .lives-icon {
+  color: #e06a6a;
+  font-size: 0.9rem;
+}
+.lives-hud .lives-count {
+  font-weight: 600;
+  color: #f0d0d0;
+}
+
+/* ==================== §3.8 进度浮字 ==================== */
+.progress-toast {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 45;
+  background: rgba(10, 14, 20, 0.78);
+  color: #d0d8e0;
+  font-size: 0.82rem;
+  padding: 6px 16px;
+  border-radius: 4px;
+  border: 1px solid rgba(170, 178, 191, 0.25);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.progress-toast:not([hidden]) {
+  opacity: 1;
+}
+
+/* ==================== 感叹号标记（Canvas 绘制，此处为调试辅助） ==================== */
+.interact-hint-debug {
+  position: absolute;
+  color: #ffd700;
+  font-size: 1.2rem;
+  font-weight: bold;
+  pointer-events: none;
+  z-index: 35;
+}
+
+/* ==================== §3.9 隐藏死亡结局（坠入虚空 · ending-death） ==================== */
+/* 背景图已交付：image/ending_void_bg.png（见 背景图设计说明.md #17） */
+.ending-death {
+  position: fixed;
+  inset: 0;
+  z-index: 9980;
+  background: #03040a;
+  font-family: var(--font-cn, "Noto Sans SC", sans-serif);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.ed-bg {
+  position: absolute;
+  inset: 0;
+  background: url('../image/ending_void_bg.png') center/cover no-repeat;
+}
+.ed-void {
+  position: absolute;
+  inset: 0;
+  /* 数据噪点/扫描微效层（半透明，压暗边缘制造下坠纵深感） */
+  background:
+    radial-gradient(ellipse at 50% 55%, rgba(5, 7, 15, 0.06), transparent 55%),
+    repeating-linear-gradient(180deg, rgba(5, 7, 15, 0.16) 0 2px, rgba(7, 10, 20, 0.1) 2px 4px);
+  animation: edVoidDrift 9s linear infinite;
+}
+.ed-card {
+  position: relative;
+  z-index: 2;
+  max-width: min(560px, 86vw);
+  text-align: center;
+  color: #e8ecf0;
+  padding: 28px;
+  border: 1px solid rgba(170, 178, 191, 0.25);
+  border-radius: 10px;
+  background: rgba(8, 10, 18, 0.82);
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.7);
+}
+.ed-mark {
+  font-size: 54px;
+  line-height: 1;
+  color: #e06a6a;
+  text-shadow: 0 0 26px rgba(224, 106, 106, 0.8);
+  margin-bottom: 10px;
+}
+.ed-title {
+  font-size: 1.35rem;
+  letter-spacing: 0.1em;
+  margin-bottom: 14px;
+}
+.ed-sub {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: #c0c8d4;
+  margin-bottom: 10px;
+}
+.ed-line {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: #9aa6b2;
+  margin-bottom: 22px;
+}
+.ed-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+@keyframes edVoidDrift {
+  0%   { background-position: 0 0, 0 0; }
+  100% { background-position: 0 0, 0 -120px; }
+}
+
+/* ==================== §1.7.2 独白/背景演出（narration 自动段） ==================== */
+.narration-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9970;
+  background: #04060d center/cover no-repeat;
+  font-family: var(--font-cn, "Noto Sans SC", sans-serif);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.35s ease;
+}
+.narration-overlay.fade-out { opacity: 0; }
+.narration-shade {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 62%, rgba(0, 0, 0, 0.25) 0%, rgba(4, 6, 13, 0.82) 100%);
+}
+.narration-box {
+  position: relative;
+  z-index: 2;
+  max-width: min(680px, 88vw);
+  text-align: center;
+  color: #eef2f6;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.92);
+  padding: 0 24px;
+}
+.narration-text {
+  font-size: clamp(16px, 2.2vw, 20px);
+  line-height: 2.1;
+  letter-spacing: 1.5px;
+  min-height: 4.2em;
+  color: #f2f6fb;
+}
+.narration-hint {
+  margin-top: 26px;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: rgba(224, 232, 240, 0.6);
+}

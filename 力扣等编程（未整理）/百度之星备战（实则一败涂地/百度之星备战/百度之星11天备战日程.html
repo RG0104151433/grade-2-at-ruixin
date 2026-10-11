@@ -1,0 +1,729 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>百度之星初赛 · 11天备战日程（9/9-9/19）</title>
+<style>
+:root{
+  --bg:#F7F8FF;
+  --card:#FFFFFF;
+  --ink:#1F2433;
+  --muted:#5A6178;
+  --primary:#5B6CFF;
+  --yellow:#FFD166;
+  --pink:#FF7AB6;
+  --green:#55C59D;
+  --line:#E4E7F5;
+  --radius:16px;
+  --shadow:0 4px 16px rgba(31,36,51,.06);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",Inter,Nunito,sans-serif;
+  line-height:1.65;
+  font-size:16px;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px;}
+a{color:var(--primary);text-decoration:none;overflow-wrap:break-word;}
+a:hover{text-decoration:underline;}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--yellow);outline-offset:2px;border-radius:4px;}
+
+/* Header */
+.hero{
+  background:linear-gradient(135deg,#5B6CFF 0%,#7A8CFF 55%,#9BA8FF 100%);
+  color:#fff;
+  padding:52px 0 56px;
+}
+.eyebrow{
+  display:inline-block;
+  background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.35);
+  border-radius:999px;
+  padding:4px 14px;
+  font-size:13px;
+  letter-spacing:.06em;
+  margin:0 0 16px;
+}
+.hero h1{
+  margin:0 0 10px;
+  font-size:clamp(30px,5vw,46px);
+  line-height:1.15;
+  letter-spacing:.01em;
+}
+.subtitle{
+  margin:0 0 28px;
+  font-size:clamp(15px,2vw,18px);
+  opacity:.95;
+}
+.hero-stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:12px;
+  max-width:760px;
+}
+.stat{
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.3);
+  border-radius:14px;
+  padding:14px 16px;
+  font-size:15px;
+}
+.stat b{display:block;font-size:22px;margin-bottom:2px;color:#fff;}
+
+/* Sections */
+main{padding:36px 0 64px;}
+section{margin-bottom:44px;}
+h2{
+  font-size:clamp(21px,3vw,26px);
+  margin:0 0 6px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+h2 .idx{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:34px;height:34px;
+  border-radius:10px;
+  background:var(--primary);
+  color:#fff;
+  font-size:16px;
+  flex:none;
+}
+.sec-note{color:var(--muted);font-size:14px;margin:0 0 18px;}
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:22px 24px;
+}
+
+/* Summary */
+.summary-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:14px;
+  margin-bottom:16px;
+}
+.sum-card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:18px 20px;
+  box-shadow:var(--shadow);
+}
+.sum-card .tag{
+  display:inline-block;
+  font-size:12px;
+  font-weight:600;
+  padding:2px 10px;
+  border-radius:999px;
+  margin-bottom:8px;
+}
+.tag-blue{background:#E7EAFF;color:#4A5AE8;}
+.tag-green{background:#DFF5EC;color:#2C9C74;}
+.tag-yellow{background:#FFF3D1;color:#B07D1F;}
+.tag-pink{background:#FFE4F1;color:#D2508B;}
+.sum-card p{margin:4px 0 0;font-size:15px;}
+
+/* Timeline */
+.timeline{list-style:none;margin:0;padding:0;position:relative;}
+.timeline::before{
+  content:"";
+  position:absolute;
+  left:27px;top:12px;bottom:12px;
+  width:3px;
+  background:linear-gradient(var(--primary),var(--pink));
+  border-radius:3px;
+  opacity:.35;
+}
+.day-card{
+  position:relative;
+  margin:0 0 14px;
+  padding-left:70px;
+}
+.day-rail{
+  position:absolute;
+  left:0;top:0;
+  width:56px;height:56px;
+  border-radius:16px;
+  background:var(--card);
+  border:1px solid var(--line);
+  box-shadow:var(--shadow);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  z-index:1;
+}
+.day-rail .d{font-weight:700;font-size:18px;line-height:1.1;}
+.day-rail .w{font-size:11px;color:var(--muted);}
+.day-card .body{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:16px 20px;
+}
+.day-card h3{
+  margin:0 0 6px;
+  font-size:17px;
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:8px;
+}
+.pill{
+  display:inline-block;
+  font-size:12px;
+  font-weight:600;
+  padding:2px 10px;
+  border-radius:999px;
+  white-space:nowrap;
+}
+.pill-num{background:#E7EAFF;color:#4A5AE8;}
+.pill-sim{background:#1F2433;color:#fff;}
+.pill-light{background:#EEEFF5;color:#5A6178;}
+.pill-match{background:#FF5D5D;color:#fff;}
+.day-card .tasks{margin:6px 0 0;font-size:15px;}
+.day-card .tasks li{margin:3px 0;}
+.day-card .src{font-size:13px;color:var(--muted);margin-top:8px;}
+.day-card .check{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:10px;
+  font-size:14px;
+  color:var(--muted);
+  cursor:pointer;
+  user-select:none;
+}
+.day-card input[type="checkbox"]{
+  width:18px;height:18px;
+  accent-color:var(--green);
+  cursor:pointer;
+}
+.day-card.done .body{opacity:.62;}
+.day-card.done .day-rail{background:var(--green);border-color:var(--green);color:#fff;}
+.day-card.done .day-rail .w{color:rgba(255,255,255,.85);}
+.day-card.done .check{color:var(--green);font-weight:600;}
+
+/* Daily rhythm */
+.rhythm-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:14px;
+}
+.rhythm-item{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:16px 18px;
+  box-shadow:var(--shadow);
+}
+.rhythm-item b{display:block;margin-bottom:4px;color:var(--primary);}
+
+/* Topics */
+.topic-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:14px;
+}
+.topic{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:18px 20px;
+  box-shadow:var(--shadow);
+}
+.topic h3{margin:0 0 10px;font-size:16px;}
+.topic ul{margin:0;padding-left:18px;font-size:14.5px;}
+.topic li{margin:5px 0;}
+.topic .why{font-size:13px;color:var(--muted);border-top:1px dashed var(--line);margin-top:10px;padding-top:8px;}
+
+/* Strategy table */
+.table-scroll{overflow-x:auto;}
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  font-size:14.5px;
+}
+caption{
+  text-align:left;
+  font-weight:600;
+  padding:10px 4px;
+  color:var(--ink);
+}
+th,td{
+  text-align:left;
+  padding:11px 14px;
+  border-bottom:1px solid var(--line);
+  vertical-align:top;
+}
+th{background:#F0F2FF;font-weight:600;white-space:nowrap;}
+tr:last-child td{border-bottom:none;}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.warn{
+  border-left:4px solid var(--yellow);
+  background:#FFFBF0;
+  border-radius:0 12px 12px 0;
+  padding:14px 18px;
+  margin:14px 0;
+  font-size:15px;
+}
+.warn b{color:#B07D1F;}
+
+/* Resources */
+ul.links{margin:0;padding:0;list-style:none;}
+ul.links li{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:12px 16px;
+  margin:8px 0;
+  font-size:15px;
+  box-shadow:var(--shadow);
+}
+ul.links .lbl{display:block;font-weight:600;font-size:13px;color:var(--muted);margin-bottom:2px;}
+
+/* Checklist */
+.checklist{list-style:none;margin:0;padding:0;}
+.checklist li{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:13px 16px;
+  margin:8px 0;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:15px;
+  box-shadow:var(--shadow);
+}
+.checklist input[type="checkbox"]{
+  width:19px;height:19px;
+  accent-color:var(--green);
+  flex:none;
+  cursor:pointer;
+}
+.checklist li:has(input:checked){opacity:.6;text-decoration:line-through;}
+
+footer{
+  border-top:1px solid var(--line);
+  padding:28px 0 44px;
+  color:var(--muted);
+  font-size:13px;
+  text-align:center;
+}
+
+/* Print */
+@media print{
+  body{background:#fff;font-size:12px;}
+  .hero{padding:24px 0;background:#5B6CFF !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .card,.sum-card,.day-card .body,.topic,.rhythm-item,table{box-shadow:none;}
+  .timeline::before{display:none;}
+  .day-card{padding-left:0;page-break-inside:avoid;}
+  .day-rail{position:static;width:auto;height:auto;flex-direction:row;gap:8px;margin-bottom:6px;border:none;box-shadow:none;}
+  .day-rail .d{font-size:14px;}
+  .day-card input[type="checkbox"],.checklist input[type="checkbox"]{display:none;}
+  .checklist li:has(input:checked){text-decoration:none;opacity:1;}
+  a{color:var(--ink);text-decoration:none;}
+  section{page-break-inside:avoid;}
+}
+@media (max-width:560px){
+  .day-card{padding-left:0;}
+  .day-rail{position:static;width:auto;height:auto;flex-direction:row;gap:8px;margin-bottom:8px;border:none;box-shadow:none;}
+  .day-rail .d{font-size:15px;}
+  .wrap{padding:0 14px;}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">2026 第二十二届百度之星 · 初赛第二场</p>
+    <h1>11天备战日程</h1>
+    <p class="subtitle">9/9（周三）— 9/19（周六） · 主攻数论三件套与线段树 · 目标稳定 AC 5 题</p>
+    <div class="hero-stats">
+      <div class="stat"><b>4 题</b>晋级 + 银奖的现实门槛（2025 真实数据：4题≈前5%–10%）</div>
+      <div class="stat"><b>5 题</b>安全垫，覆盖晋级线（前8%–13%）与银奖线（前10%）</div>
+      <div class="stat"><b>3+3+2</b>每届稳定结构：签到3 + 中档3 + 难题2</div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- 1. 结论先行 -->
+  <section id="summary">
+    <h2><span class="idx">1</span>结论先行</h2>
+    <p class="sec-note">基于 2023–2026 四届 36 道可确认真题的调研结论，完整论证见<a href="https://www.coze.cn/s/Jr2HUbYRB-Q/" target="_blank" rel="noopener noreferrer">调研报告</a>。</p>
+    <div class="summary-grid">
+      <div class="sum-card">
+        <span class="tag tag-blue">主攻</span>
+        <p><b>数论三件套</b>（组合数/Lucas/逆元）与<b>线段树基础应用</b>——近三届每届在 T2–T5 区间出现 1–2 题，是从 4 题档升 5–6 题档的最短路径。</p>
+      </div>
+      <div class="sum-card">
+        <span class="tag tag-green">强项直接用</span>
+        <p><b>DP + 二分</b>命中高频考点前二，中档题"二分答案+check、基础计数DP"应在 25 分钟内稳定拿下。</p>
+      </div>
+      <div class="sum-card">
+        <span class="tag tag-yellow">不安排</span>
+        <p><b>单调栈</b>在 36 题样本中 0 题；<b>计算几何、后缀数组</b>近四届几乎绝迹——不为它们单独开专题，只留每天 30 分钟手感。</p>
+      </div>
+      <div class="sum-card">
+        <span class="tag tag-pink">平台</span>
+        <p>比赛在<b>码蹄集</b>（matiji.net）进行，与你 8 月打完的码蹄杯同平台，评测与 I/O 习惯无需重新适应。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. 赛制速览 -->
+  <section id="rules">
+    <h2><span class="idx">2</span>赛制速览</h2>
+    <p class="sec-note">来源：<a href="https://m.saikr.com/vse/59405" target="_blank" rel="noopener noreferrer">赛氪2026页面</a>、<a href="https://cxcy.nuc.edu.cn/info/1040/7272.htm" target="_blank" rel="noopener noreferrer">中北大学通知</a>、<a href="https://ai.zjgsu.edu.cn/?news/363.html" target="_blank" rel="noopener noreferrer">浙江工商大学战报</a>。</p>
+    <div class="card">
+      <ul style="margin:0;padding-left:20px;">
+        <li><b>时间：</b>9/19（周六）14:00–17:00，线上，3 小时 8 题。</li>
+        <li><b>排名：</b>ACM 赛制——AC 题数优先，同题数比总用时，错误提交有罚时。</li>
+        <li><b>晋级：</b>每场约 400 人晋级决赛，按 2025 年实际参赛规模约前 8%–13%。</li>
+        <li><b>获奖：</b>省赛奖约 30%（金 5% / 银 10% / 铜 15%），AC 为 0 不予得奖。</li>
+        <li><b>报名：</b>码蹄集报名，截止开赛前 1–2 小时——<b>如果还没报，这两天就确认</b>。</li>
+        <li><b>场次独立：</b>"可参加任意场次、取最佳成绩"，第二场不背第一场包袱。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 3. 11天日程 -->
+  <section id="schedule">
+    <h2><span class="idx">3</span>11天日程</h2>
+    <p class="sec-note">每个专题日约 1.5–2 小时主任务 + 30 分钟手感题；模拟赛日完整 3 小时并尽量排在 14:00–17:00，对齐比赛时段。勾选可记录完成状态（保存在本机浏览器）。</p>
+    <ol class="timeline">
+
+      <li class="day-card" data-day="1">
+        <div class="day-rail"><span class="d">9/9</span><span class="w">周三</span></div>
+        <div class="body">
+          <h3>数论三件套 ① <span class="pill pill-num">专题</span></h3>
+          <ul class="tasks">
+            <li>组合数预处理、Lucas 定理、线性逆元、998244353 约定俗成</li>
+            <li>练：2025 Odd Occurrence（Lucas 应用）、2023 糖果促销（公式/二分）</li>
+          </ul>
+          <p class="src">参考：<a href="https://blog.csdn.net/2401_84097724/article/details/149275096" target="_blank" rel="noopener noreferrer">2025第一场题解</a>、<a href="https://jishuzhan.net/article/1796902329182588929" target="_blank" rel="noopener noreferrer">2023八题合集</a></p>
+          <label class="check"><input type="checkbox" data-key="bd-day1">已完成</label>
+        </div>
+      </li>
+
+      <li class="day-card" data-day="2">
+        <div class="day-rail"><span class="d">9/10</span><span class="w">周四</span></div>
+        <div class="body">
+          <h3>数论三件套 ② <span class="pill pill-num">专题</span></h3>
+          <ul class="tasks">
+            <li>练：2024 跑步（1~n LCM + 线性逆元，n≤1e7）、2025 GCD Xor MEX（数论构造，读懂思路即可）</li>
+          </ul>
+          <p class="src">参考：<a href="https://blog.csdn.net/m0_74123546/article/details/139663453" target="_blank" rel="noopener noreferrer">2024跑步题解</a>、<a href="https://blog.csdn.net/2401_84097724/article/details/149275096" target="_blank" rel="noopener noreferrer">2025第一场题解</a></p>
+          <label class="check"><input type="checkbox" data-key="bd-day2">已完成</label>
+        </div>
+      </li>
+
+      <li class="day-card" data-day="3">
+        <div class="day-rail"><span class="d">9/11</span><span class="w">周五</span></div>
+        <div class="body">
+          <h3>线段树 / BIT ① <span class="pill pill-num">专题</span></h3>
+          <ul class="tasks">
+            <li>区间赋值 / 置换模板、懒标记写法</li>
+            <li>练：2024 小度的01串（区间 01 置换 + 查询，答案取变 1010… 或 0101… 的最小修改数）</li>
+          </ul>
+          <p class="src">参考：<a href="https://blog.csdn.net/fanshui682/article/details/140023266" target="_blank" rel="noopener noreferrer">2024 01串题解</a></p>
+          <label class="check"><input type="checkbox" data-key="bd-day3">已完成</label>
+        </div>
+      </li>
+
+      <li class="day-card" data-day="4">
+        <div class="day-rail"><span class="d">9/12</span><span class="w">周六</span></div>
+        <div class="body">
+          <h3>线段树 / BIT ② <span class="pill pill-num">专题</span></h3>
+          <ul class="tasks">
+            <li>动态开点、离散化 + BIT 维护</li>
+            <li>练：2024 三场 T6（离散化+BIT）、2023 二场 T4（矩阵乘+动态开点线段树，理解思路为主）</li>
+          </ul>
+          <p class="src">参考：<a href="https://jishuzhan.net/article/1811885090586759169" target="_blank" rel="noopener noreferrer">2024数星星题解</a>、<a href="https://blog.csdn.net/djx2021/article/details/132292803" target="_blank" rel="noopener noreferrer">2023 T4题解</a></p>
+          <label class="check"><input type="checkbox" data-key="bd-day4">已完成</label>
+        </div>
+      </li>
+
+      <li class="day-card" data-day="5">
+        <div class="day-rail"><span class="d">9/13</span><span class="w">周日</span></div>
+        <div class="body">
+          <h3>树上问题 ① <span class="pill pill-num">专题</span></h3>
+          <ul class="tasks">
+            <li>换根 DP 框架（二次扫描换根）</li>
+            <li>练：2026 T3（树上换根 DP + 线段树，题解已公开可对照）</li>
+          </ul>
+          <p class="src">参考：<a href="https://www.cnblogs.com/chrysalism/p/22643682" target="_blank" rel="noopener noreferrer">2026第一场题解</a></p>
+          <label class="check"><input type="checkbox" data-key="bd-day5">已完成</label>
+        </div>
+      </li>
+
+      <li class="day-card" data-day="6">
+        <div class="day-rail"><span class="d">9/14</span><span class="w">周一</span></div>
+        <div class="body">
+          <h3>树上问题 ② <span class="pill pill-num">专题</span></h3>
+          <ul class="tasks">
+            <li>"度数–配对"类计数：双阶乘、叶子乘法原理 + 容斥</li>
+            <li>练：2025 Bus Station（树上组合计数）、2025 Pair Counting（叶子计数）</li>
+          </ul>
+          <p class="src">参考：<a href="https://www.cnblogs.com/arin876/p/19030560" target="_blank" rel="noopener noreferrer">Bus Station题解</a>、<a href="https://blog.csdn.net/2401_84097724/article/details/151793433" target="_blank" rel="noopener noreferrer">2025第二场题解</a></p>
+          <label class="check"><input type="checkbox" data-key="bd-day6">已完成</label>
+        </div>
+      </li>
+
+      <li class="day-card" data-day="7">
+        <div class="day-rail"><span class="d">9/15</span><span class="w">周二</span></div>
+        <div class="body">
+          <h3>整卷模拟 ① <span class="pill pill-sim">模拟赛</span></h3>
+          <ul class="tasks">
+            <li>2025 第一场 8 题，3 小时严格计时，尽量安排在 14:00–17:00</li>
+            <li>完整走一遍开题顺序 + 罚时控制，赛后记录 WA 清单</li>
+          </ul>
+          <p class="src">题目在码蹄集题集补题：<a href="https://matiji.net/baiduzhixing" target="_blank" rel="noopener noreferrer">matiji.net/baiduzhixing</a></p>
+          <label class="check"><input type="checkbox" data-key="bd-day7">已完成</label>
+        </div>
+      </li>
+
+      <li class="day-card" data-day="8">
+        <div class="day-rail"><span class="d">9/16</span><span class="w">周三</span></div>
+        <div class="body">
+          <h3>观察性质 + DP <span class="pill pill-num">专题</span></h3>
+          <ul class="tasks">
+            <li>练：2026 T4（权值拆矩形和 + 区间 DP，n=1500 小常数 O(n³)）、2023 蛋糕划分（二分 + 状压枚举横切 + 贪心竖切）</li>
+            <li>复盘模拟①的 WA 清单</li>
+          </ul>
+          <p class="src">参考：<a href="https://www.cnblogs.com/chrysalism/p/22643682" target="_blank" rel="noopener noreferrer">2026第一场题解</a>、<a href="https://jishuzhan.net/article/1796902329182588929" target="_blank" rel="noopener noreferrer">2023八题合集</a></p>
+          <label class="check"><input type="checkbox" data-key="bd-day8">已完成</label>
+        </div>
+      </li>
+
+      <li class="day-card" data-day="9">
+        <div class="day-rail"><span class="d">9/17</span><span class="w">周四</span></div>
+        <div class="body">
+          <h3>整卷模拟 ② <span class="pill pill-sim">模拟赛</span></h3>
+          <ul class="tasks">
+            <li>2024 第三场（数星星 / 高精度 / DP / BIT 全是真考点），3 小时严格计时</li>
+            <li>重点练 1e18 数据范围的细节处理</li>
+          </ul>
+          <p class="src">参考：<a href="https://jishuzhan.net/article/1811885090586759169" target="_blank" rel="noopener noreferrer">数星星题解</a>、<a href="https://www.luogu.com/article/1iwa0isx" target="_blank" rel="noopener noreferrer">2024洛谷游记</a></p>
+          <label class="check"><input type="checkbox" data-key="bd-day9">已完成</label>
+        </div>
+      </li>
+
+      <li class="day-card" data-day="10">
+        <div class="day-rail"><span class="d">9/18</span><span class="w">周五</span></div>
+        <div class="body">
+          <h3>轻量日 + 赛前准备 <span class="pill pill-light">复盘</span></h3>
+          <ul class="tasks">
+            <li>复盘两场模拟的 WA 清单，整理成"易错单"</li>
+            <li>模板默写：线段树、逆元、快读、对拍脚本</li>
+            <li>码蹄集客户端 + 浏览器双端登录，试提交一道历史题</li>
+          </ul>
+          <p class="src">赛前检查清单见下方第 8 节</p>
+          <label class="check"><input type="checkbox" data-key="bd-day10">已完成</label>
+        </div>
+      </li>
+
+      <li class="day-card" data-day="11">
+        <div class="day-rail"><span class="d">9/19</span><span class="w">周六</span></div>
+        <div class="body">
+          <h3>比赛日 <span class="pill pill-match">开赛</span></h3>
+          <ul class="tasks">
+            <li>14:00–17:00，线上 8 题，按第 6 节节奏执行</li>
+            <li>中午前不安排重活，保持状态</li>
+          </ul>
+          <p class="src">比赛入口：<a href="https://www.matiji.net/exam/contest/contestdetail/548" target="_blank" rel="noopener noreferrer">码蹄集 2026 第二场</a></p>
+          <label class="check"><input type="checkbox" data-key="bd-day11">已完成</label>
+        </div>
+      </li>
+
+    </ol>
+  </section>
+
+  <!-- 4. 每日节奏 -->
+  <section id="rhythm">
+    <h2><span class="idx">4</span>每日节奏</h2>
+    <p class="sec-note">贴合你的作息：晚间 10 点后是写作时段，训练不占用。</p>
+    <div class="rhythm-grid">
+      <div class="rhythm-item"><b>主任务 1.5–2h</b>专题学习 + 真题练习，放白天或晚上 8–10 点。</div>
+      <div class="rhythm-item"><b>手感 30min</b>每天留一组二分 / 单调栈 / 简单 DP，防强项钝化。</div>
+      <div class="rhythm-item"><b>模拟赛 3h</b>整卷模拟固定 14:00–17:00，对齐比赛生物钟。</div>
+      <div class="rhythm-item"><b>弹性</b>周中课多时保核心模块（专题题），手感题可砍。</div>
+    </div>
+  </section>
+
+  <!-- 5. 专题清单 -->
+  <section id="topics">
+    <h2><span class="idx">5</span>补强专题与真题</h2>
+    <p class="sec-note">真题频次统计基于 2023–2026 四届 36 道可确认题目，详见<a href="https://www.coze.cn/s/Jr2HUbYRB-Q/" target="_blank" rel="noopener noreferrer">调研报告</a>。</p>
+    <div class="topic-grid">
+      <div class="topic">
+        <h3>数论三件套 <span class="pill pill-num">6 题 / 36 题</span></h3>
+        <ul>
+          <li>组合数预处理、Lucas、线性逆元、998244353</li>
+          <li>2025 Odd Occurrence（Lucas）</li>
+          <li>2024 跑步（LCM + 线性逆元）</li>
+          <li>2023 糖果促销（公式）</li>
+          <li>2025 GCD Xor MEX（数论构造，思路向）</li>
+        </ul>
+        <p class="why">近三年高频出现在 T2–T5 区间，是你最划算的补强点。</p>
+      </div>
+      <div class="topic">
+        <h3>线段树 / BIT <span class="pill pill-num">3 题 / 36 题</span></h3>
+        <ul>
+          <li>区间赋值/置换、动态开点、离散化</li>
+          <li>2024 小度的01串（区间置换）</li>
+          <li>2024 三场 T6（离散化 + BIT）</li>
+          <li>2023 二场 T4（矩阵乘 + 动态开点）</li>
+        </ul>
+        <p class="why">连续三届出现，是 4 题档升 5–6 题档的门槛技能。</p>
+      </div>
+      <div class="topic">
+        <h3>树上问题 <span class="pill pill-num">3 题 / 36 题</span></h3>
+        <ul>
+          <li>换根 DP 框架、"度数–配对"计数</li>
+          <li>2026 T3（换根 DP + 线段树）</li>
+          <li>2025 Bus Station（树上组合计数）</li>
+          <li>2025 Pair Counting（叶子计数 + 容斥）</li>
+        </ul>
+        <p class="why">难档画像主力，晋级后冲名次用，学框架即可、不必深挖。</p>
+      </div>
+      <div class="topic">
+        <h3>观察性质 + DP <span class="pill pill-num">6 题 / 36 题</span></h3>
+        <ul>
+          <li>你的强项，直接覆盖频次第一类</li>
+          <li>2026 T4（观察 + 区间 DP）</li>
+          <li>2023 蛋糕划分（二分 + 状压 + 贪心）</li>
+          <li>2025 Yummy（三状态计数 DP）</li>
+        </ul>
+        <p class="why">中档 ①④ 类题应做到 25 分钟一题，这是你的抢分主线。</p>
+      </div>
+      <div class="topic">
+        <h3>二分 / 双指针（每日手感）</h3>
+        <ul>
+          <li>二分答案 + 线性 check</li>
+          <li>2024 数星星（二分答案，1e18）</li>
+          <li>2026 T2（双指针 + set/multiset）</li>
+          <li>2023 第五维度（二分答案）</li>
+        </ul>
+        <p class="why">每天 30 分钟保持手感，不单独开大块专题。</p>
+      </div>
+      <div class="topic">
+        <h3>不安排（明确取舍）</h3>
+        <ul>
+          <li>单调栈：36 题样本 0 题</li>
+          <li>计算几何：近四届几乎绝迹</li>
+          <li>后缀数组：仅 2023 出现一次且存争议</li>
+        </ul>
+        <p class="why">由真题频次直接推导的取舍，不是泛泛经验。时间留给数论与线段树。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. 赛时策略 -->
+  <section id="strategy">
+    <h2><span class="idx">6</span>赛时策略</h2>
+    <p class="sec-note">按"签到 3 + 中档 3 + 难题 2"的结构设计，参考 <a href="https://www.cnblogs.com/2K22/p/19324778" target="_blank" rel="noopener noreferrer">决赛选手经验</a>与<a href="https://www.luogu.com/article/1iwa0isx" target="_blank" rel="noopener noreferrer">2024游记</a>。</p>
+    <div class="table-scroll">
+      <table>
+        <caption>180 分钟时间分配</caption>
+        <thead>
+          <tr><th>时段</th><th class="num">耗时</th><th>动作</th><th>止损线</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>通读</td><td class="num">0–10min</td><td>通读全部 8 题，按"题面短 + 数据范围小 + 答案形式简单"预判难度排序</td><td>—</td></tr>
+          <tr><td>签到清空</td><td class="num">10–50min</td><td>清空 2–3 道签到题（模拟/贪心/找规律/简单公式）</td><td>每题 15min 硬止损</td></tr>
+          <tr><td>中档主攻</td><td class="num">50–110min</td><td>优先二分答案、DP、双指针等强项方向</td><td>每题 30min 止损</td></tr>
+          <tr><td>中档/部分分</td><td class="num">110–170min</td><td>第三道中档或难题部分分（结构化暴力保底）</td><td>一题 30min</td></tr>
+          <tr><td>收尾</td><td class="num">170–180min</td><td>只做已有代码的编译检查与重复提交规避，不开新题</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn"><b>罚时是隐形排名分。</b>2025 年 3084 人中，同样 4 题可以从第 152 名到第 328 名——差的往往就是几次 WA 的罚时。提交前多花 1 分钟过边界：<b>long long</b>（2024 数星星数据达 1e18）、<b>多测清空</b>、<b>n=1</b>。</div>
+
+    <div class="card">
+      <p style="margin:0 0 8px;"><b>对拍习惯：</b>中档题（贪心/构造/二分）提交前用"随机小数据 + 暴力对拍"验证；签到题可免。省下的 20 分钟罚时往往就是 100–200 名的差距。</p>
+      <p style="margin:0;"><b>评测异常留证：</b>若怀疑评测机故障，保留提交记录并截图（含时间），赛后按官方渠道申诉；比赛开始 10 分钟内若平台卡顿，截图留证并关注官方公告，不要反复无效提交制造罚时。</p>
+    </div>
+  </section>
+
+  <!-- 7. 练习渠道 -->
+  <section id="resources">
+    <h2><span class="idx">7</span>练习渠道</h2>
+    <p class="sec-note">唯一系统性题集在码蹄集官方，其余平台均为零散补充。</p>
+    <ul class="links">
+      <li><span class="lbl">主渠道 · 历年题集（2005–2023）</span><a href="https://matiji.net/baiduzhixing" target="_blank" rel="noopener noreferrer">matiji.net/baiduzhixing</a></li>
+      <li><span class="lbl">报名聚合页</span><a href="https://www.matiji.net/exam/contest/astar" target="_blank" rel="noopener noreferrer">matiji.net/exam/contest/astar</a></li>
+      <li><span class="lbl">2026 初赛第二场比赛页（9/19 14:00–17:00）</span><a href="https://www.matiji.net/exam/contest/contestdetail/548" target="_blank" rel="noopener noreferrer">contestdetail/548</a></li>
+      <li><span class="lbl">补充 · 洛谷零散选拔赛题</span><a href="https://www.luogu.com.cn/problem/T454241" target="_blank" rel="noopener noreferrer">T454241</a>、<a href="https://www.luogu.com.cn/problem/T454249" target="_blank" rel="noopener noreferrer">T454249</a></li>
+      <li><span class="lbl">纸质参考 ·《百度之星题集（2005–2021）》清华大学出版社 2022 版（448 页含逐题解析）</span>无需网络，可作模板与思路参考</li>
+    </ul>
+  </section>
+
+  <!-- 8. 赛前检查清单 -->
+  <section id="checklist">
+    <h2><span class="idx">8</span>赛前检查清单（9/18 完成）</h2>
+    <p class="sec-note">2023 年 8 月 6 日码蹄集曾遭攻击、开赛即瘫痪并换题——应急预案不是玄学。</p>
+    <ul class="checklist">
+      <li><input type="checkbox" data-key="bd-c1"><span>码蹄集客户端 + 浏览器双端登录完成</span></li>
+      <li><input type="checkbox" data-key="bd-c2"><span>试提交任意历史题一次，确认编译/评测链路通</span></li>
+      <li><input type="checkbox" data-key="bd-c3"><span>模板文件就位：线段树、逆元、快读、对拍脚本</span></li>
+      <li><input type="checkbox" data-key="bd-c4"><span>账号密码存档，避免临时找回</span></li>
+      <li><input type="checkbox" data-key="bd-c5"><span>9/19 中午前不安排重活</span></li>
+    </ul>
+  </section>
+
+</main>
+
+<footer>
+  百度之星初赛 · 11天备战日程 · 基于 2023–2026 四届真题调研 · 目标 9/19 稳定 AC 5 题 🌿
+</footer>
+
+<script>
+(function(){
+  var keys = ['bd-day1','bd-day2','bd-day3','bd-day4','bd-day5','bd-day6','bd-day7','bd-day8','bd-day9','bd-day10','bd-day11','bd-c1','bd-c2','bd-c3','bd-c4','bd-c5'];
+  function load(){
+    keys.forEach(function(k){
+      var el = document.querySelector('input[data-key="'+k+'"]');
+      if(!el) return;
+      if(localStorage.getItem(k)==='1'){ el.checked = true; }
+      apply(k, el);
+    });
+  }
+  function apply(k, el){
+    var card = el.closest('.day-card');
+    if(!card) return;
+    if(el.checked){ card.classList.add('done'); } else { card.classList.remove('done'); }
+  }
+  keys.forEach(function(k){
+    var el = document.querySelector('input[data-key="'+k+'"]');
+    if(!el) return;
+    el.addEventListener('change', function(){
+      localStorage.setItem(k, el.checked ? '1' : '0');
+      apply(k, el);
+    });
+  });
+  load();
+})();
+</script>
+</body>
+</html>

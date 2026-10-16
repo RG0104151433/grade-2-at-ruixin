@@ -1,0 +1,58 @@
+我会先检索 GitHub 上与 huashu-art-motion 定位相近的同类技能/动画项目并筛选候选，再逐个阅读其文档与核心源码、比对各自能力，最后整理成使用介绍。
+当前阶段先核对规划：本任务仍在"检索同类技能/项目——逐个精读源码文档——横向比对——输出使用介绍"的链路上，与初步规划一致。技能检索环节会用到技能发现能力，先加载它用于规划：
+规划核对：任务与初步规划一致，即"检索同类技能候选 → 逐个精读源码文档 → 横向比对 → 给出使用介绍"。已加载 `dumate-find-skill` 用于千帆广场与 skill hub 检索，GitHub 侧用搜索与网页获取。先建立 Todo：
+先多路检索与 huashu-art-motion 类似的技能/项目候选。
+已完成同类技能检索与精读：选定 huashu-design、GSAP Skills、Remotion Skills、HyperFrames 等核心可比项目。横向比对各技能与 huashu-art-motion 的异同并输出用途介绍。
+已完成对全部候选技能的阅读与能力理解。以下是横向比对结论。
+
+## 先给结论
+
+与 huashu-art-motion 同赛道（代码驱动动画/视觉产出）的公开技能，大致可以分成**四类**，每类选一个最有代表性的项目精读：**花叔姊妹技能 huashu-design**（HTML 做视觉产物的工作流套件）、**GSAP Skills**（教 AI 写动效代码的官方知识包）、**Remotion Skills**（React 代码渲染视频的官方技能包）、**HyperFrames**（"写 HTML 渲染视频"的开源框架）。它们和 art-motion 最本质的区别是：**art-motion 是"用 Canvas 2D 程序化绘制艺术动画"的单点引擎；其他四个是"面向交付完整产物"的工作流/框架/知识包**，动画只是其中一层。
+
+## 逐个介绍
+
+#### huashu-design（花叔的旗舰设计技能）——"AI 美工部"
+
+- **本质**：不是动画技能，而是一套以 **HTML 为唯一视觉载体**的设计师工作流套件，覆盖高保真原型、幻灯片/PPT、动画 Demo、信息图、设计风格探索五大类产出。仓库里约含几十个可交互技能（它自己即使用 huashu-art-motion 的机制做演示动画）。
+- **精读到的核心机制**：强制"新设计先出三个方向初稿给用户选"，团队角色分工（艺术总监/品牌研究员/视觉/动效/前端/文案），评审后迭代；明确声明**不用于**生产级 Web App、需要后端的系统。
+- **用处**：把"给我做一个 PPT/原型/风格图/动画演示"变成可复现的交付管线；适合做**教学课件、产品概念稿、设计评审素材**。它和 art-motion 是"包含"关系——art-motion 的确定性渲染引擎是它的动效底层之一，但 huashu-design 的目标是视觉产物本身而非动画引擎。
+
+#### GSAP Skills（GreenSock 官方 AI 技能包）——"动效库的正确用法说明书"
+
+- **本质**：8 个子技能（gsap-core / timeline / scrolltrigger / plugins / utils / react / performance / frameworks），教 AI 代理**正确地写 GSAP 动画代码**（`.to()/.fromTo()`、Timeline 编排、ScrollTrigger 滚动驱动、Flip、Draggable、SplitText 等），而不是自己生成一个引擎。
+- **精读到的关键点**：GSAP 被 **Webflow 收购后 100% 免费**（含全部原收费插件），技能内嵌"canonical pattern"给 AI 参考；覆盖 React/Vue/Svelte/vanilla，附性能规范。
+- **用处**：凡是"给网页/游戏 UI 加交互动效、滚动动画、入场退场"这类需求，装上它 AI 直接产出**符合官方最佳实践的可用代码**。与 art-motion 不同：art-motion 是"给定 t 渲染整帧画面的确定性引擎"（适合整段艺术场景），GSAP 是"操作 DOM/WebGL 元素的实时动效库"（适合交互、滚动、UI 反馈）。两者互补而非竞争。
+
+#### Remotion Skills（Remotion 官方技能包）——"用 React 写视频"
+
+- **本质**：11 个子技能（remotion-create / markup / studio / render / maps / captions / saas / interactivity / docs / upgrade / multimedia），核心思想是**用 React 组件声明每一帧，代码即视频**，渲染出真正的 MP4。
+- **精读到的关键点**：支持编程式地图动画（Mapbox/MapLibre/Cesium 3D 飞行）、字幕、甚至把视频能力封装成 SaaS 的架构指导；配套 Studio 实时预览、Lambda 云端渲染。
+- **用处**：**数据视频、产品宣传片、地图动效、动态图表**这类"需要真实视频文件、且内容由数据/逻辑生成"的场景。与 art-motion 的差别：art-motion 产出的是**浏览器内实时渲染的 Canvas**（还需浏览器渲染才能看），Remotion 产出的是**可直接分发/上传的 MP4 文件**，且可复用任意 React 生态（图表库、地图库）。
+
+#### HyperFrames（HeyGen 开源框架）——"写 HTML 渲染确定性视频"
+
+- **本质**：开源的 HTML→视频生产框架，核心主张 "Write HTML. Render video."——用 **HTML/CSS + 可 seek 的动画（GSAP/Anime.js/Three.js 等）** 编排时间轴，经 CLI 确定性渲染为 MP4。配套 21 个 agent 技能（router + 10 个创作工作流 + 原子域技能）。
+- **精读到的关键点**：按用途拆成工作流（产品发布视频/无脸解说/PR 转视频/动效图形/音乐驱动/幻灯演示等）；`frame.md` 把设计规范转译为视频排版语言；支持云渲染与 Lambda 渲染；生态里有第三方子技能（如简笔画动画、animejs seek 化适配）。**网页操作类任务**（如从网址抓取产品页做宣传片、GitHub PR 转动画讲解）是它的特色能力。
+- **用处**：**"把一段文案/一个网页/一个 PR 变成可分发的视频"的一站式管线**，尤其是营销视频、说明视频、动效图形。与 art-motion 最接近（都强调确定性渲染），但路线不同：art-motion 是 Canvas 程序化绘制 + 35 种艺术风格；HyperFrames 是 HTML/CSS 资产编排 + 成熟动效库 + 视频编码链路，**直接产出 MP4 是它最大的增益**。
+
+## 横向对比
+
+| 项目 | 产出形态 | 动画实现 | 确定性渲染 | 典型用处 |
+|---|---|---|---|---|
+| huashu-art-motion | 浏览器 Canvas 画面 | 自研 35 风格渲染器 | 是（种子随机） | 艺术风格叙事场景、风格切换演示 |
+| huashu-design | HTML 原型/PPT/图 | 复用 art-motion 等 | 部分 | 设计稿、课件、方案评审 |
+| GSAP Skills | 实时页面动效代码 | GSAP（DOM/WebGL） | 否（实时交互） | 网站/游戏 UI 动画、滚动动效 |
+| Remotion Skills | MP4 视频文件 | React 逐帧声明 | 是 | 数据视频、地图、产品片、视频 SaaS |
+| HyperFrames | MP4 视频文件 | HTML/CSS + 动效库 | 是 | 营销/解说/动效视频一键管线 |
+
+## 从前端小游戏开发角度怎么用它们
+
+- **huashu-design**：负责小游戏的**概念设计阶段**——玩法原型、关卡场景概念图、宣传稿，先给玩家/投资人看三个方向选型。
+- **GSAP Skills**：负责**游戏内的 UI/过场**——菜单入场、数值滚动、Boss 出场、抽卡动画这类需要即时反馈的动效，比手写 Canvas 骨骼快得多。
+- **Remotion Skills**：负责**游戏外宣**——把玩法录屏/数据图表做成更新公告视频、赛季盘点视频、排行榜动效视频，直接发 B 站/抖音。
+- **HyperFrames**：负责**预告片与说明视频**——把游戏官网、PR、攻略文案一键转成营销短片或玩法演示，配合 art-motion 输出艺术风格片段再混编。
+- **huashu-art-motion 本身**则可以作为**游戏内的场景/过场渲染器**：确定性渲染意味着同一 t 永远同一画面，天然适合回放、挑战排行榜缩略图这类需要"可复现画面"的需求。
+
+一句话总结：如果 art-motion 是"游戏的镜头"，那么 GSAP 是"动作执导"，Remotion/HyperFrames 是"后期剪辑室（直接出片）"，huashu-design 是"美术与策划的提案台"——它们不是替代关系，而是从玩法原型到宣发视频的完整链路各司其职。
+
+几点需要留意的边界：GSAP、Remotion、HyperFrames 均为官方开源且许可证宽松（MIT 系），但 **HyperFrames 的 /figma、云端渲染等部分能力依赖 HeyGen 托管服务**；huashu-design 自带角色形象仅限展示用途；千帆 hub 侧另有三款同类内部技能（fec-motion-interaction、gsap-animation-generate、dlazy-motion-graphics）因无公开源码无法做同样深度的精读，仅凭简介判断它们定位在上述分类之间，未纳入正式对比。

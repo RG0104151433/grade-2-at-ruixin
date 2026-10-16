@@ -1,0 +1,22 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "permission": {
+    "skill": {
+      "gsap-*": "allow",
+      "remotion-*": "allow",
+      "hyperframes*": "allow",
+      "embedded-captions": "allow",
+      "faceless-explainer": "allow",
+      "figma": "allow",
+      "general-video": "allow",
+      "media-use": "allow",
+      "motion-graphics": "allow",
+      "music-to-video": "allow",
+      "pr-to-video": "allow",
+      "product-launch-video": "allow",
+      "remotion-to-hyperframes": "allow",
+      "slideshow": "allow",
+      "talking-head-recut": "allow"
+    }
+  }
+}

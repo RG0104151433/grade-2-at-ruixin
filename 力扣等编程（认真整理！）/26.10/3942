@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int minOperations(vector<int>& nums) {
+        int len=nums.size();
+        int pos=0;
+        for (int i=0;i<len;i++) {
+            if (nums[i]==0) pos=i;
+        }
+        bool left=true,right=true;
+        // 看看左边绕一圈行不行
+        int cur=(pos+len-1)%len,prv=pos;
+        for (int i=0;i<len-1;i++) {
+            if (nums[cur]-nums[prv]!=1) { left=false; break; }
+            cur=(cur+len-1)%len;
+            prv=(prv+len-1)%len;
+        }
+        // 再看看右边行不行
+        cur=(pos+len+1)%len,prv=pos;
+        for (int i=0;i<len-1;i++) {
+            if (nums[cur]-nums[prv]!=1) { right=false; break; }
+            cur=(cur+len+1)%len;
+            prv=(prv+len+1)%len;
+        }
+        int ans=INT_MAX;
+        if (left)  ans=min(ans,min(pos+2,len-pos));
+        if (right) ans=min(ans,min(pos,len-pos+2));
+        return ans==INT_MAX ? -1 : ans;
+    }
+};

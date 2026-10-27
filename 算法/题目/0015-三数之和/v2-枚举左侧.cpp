@@ -14,7 +14,7 @@ public:
                     ans.push_back({nums[i],nums[l],nums[r]});
                     l++,r--;
                     while (l<r && nums[l]==nums[l-1]) l++;
-                    while (l<r && nums[r]==nums[r+1]) r--; // 将去重做在每一次操作中
+                    while (l<r && nums[r]==nums[r+1]) r--; // 灏嗗幓閲嶅仛鍦ㄦ瘡涓�娆℃搷浣滀腑
                 }
             }
         }

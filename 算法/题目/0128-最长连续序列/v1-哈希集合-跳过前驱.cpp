@@ -1,11 +1,11 @@
-// ÔÚÎ´ÅÅĞòÊı×éÖĞÕÒµ½Êı×ÖÁ¬ĞøµÄ×î³¤ĞòÁĞ£¬ÒªÇóO(n)Ê±¼ä¸´ÔÓ¶È¡ª¡ªÁéÉñÌâ½â
+// åœ¨æœªæ’åºæ•°ç»„ä¸­æ‰¾åˆ°æ•°å­—è¿ç»­çš„æœ€é•¿åºåˆ—ï¼Œè¦æ±‚O(n)æ—¶é—´å¤æ‚åº¦â€”â€”çµç¥é¢˜è§£
 class Solution {
 public:
     int longestConsecutive(vector<int>& nums) {
         unordered_set<int> record(nums.begin(),nums.end());
         int ans=0;
         for (int i:record) {
-            // °´ÕÕÁéÉñµÄË¼Â·£¬ÕâÀïµÄ¹Ø¼üÔÚÓÚÕÒµ½Ò»¸öÁ¬ĞøĞòÁĞµÄÆğµã
+            // æŒ‰ç…§çµç¥çš„æ€è·¯ï¼Œè¿™é‡Œçš„å…³é”®åœ¨äºæ‰¾åˆ°ä¸€ä¸ªè¿ç»­åºåˆ—çš„èµ·ç‚¹
             if (record.contains(i-1)) continue;
             int next=i+1;
             while (record.contains(next)) next++;

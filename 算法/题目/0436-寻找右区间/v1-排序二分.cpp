@@ -1,13 +1,13 @@
-// ÔÚÂÒĞòÇø¼ä¶ÎµÄÅÅÁĞÖĞÕÒµ½½ôÁÚµÄÏÂÒ»¸öÇø¼äµÄÏÂ±ê 
+// åœ¨ä¹±åºåŒºé—´æ®µçš„æ’åˆ—ä¸­æ‰¾åˆ°ç´§é‚»çš„ä¸‹ä¸€ä¸ªåŒºé—´çš„ä¸‹æ ‡ 
 class Solution {
 public:
     vector<int> findRightInterval(vector<vector<int>>& intervals) {
         int len=intervals.size();
         vector<int> ans(len,-1);
-        vector<pair<int,int>> record(len); // ¼ÇÂ¼ÏÂ±êºÍ×ó¶Ëµã 
+        vector<pair<int,int>> record(len); // è®°å½•ä¸‹æ ‡å’Œå·¦ç«¯ç‚¹ 
         for (int i=0;i<len;i++) record[i].first=i,record[i].second=intervals[i][0];
         sort(record.begin(),record.end(),[](const auto& a, const auto& b) {return a.second < b.second;});
-        for (int i=0;i<len;i++) { // ÓÃÓÒ¶ËµãÎªÄ¿±êÖµ½øĞĞ¶ş·Ö²éÕÒ 
+        for (int i=0;i<len;i++) { // ç”¨å³ç«¯ç‚¹ä¸ºç›®æ ‡å€¼è¿›è¡ŒäºŒåˆ†æŸ¥æ‰¾ 
             int aim=intervals[i][1];
             int left=0,right=len-1;
             while (left<right) {

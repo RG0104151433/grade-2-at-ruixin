@@ -1,4 +1,4 @@
-// ÕÒ³öÒ»¸öÊý×éÖÐËùÓÐ²»ÖØ¸´µÄºÎÎª0µÄÈýÔªÊý×é 
+// æ‰¾å‡ºä¸€ä¸ªæ•°ç»„ä¸­æ‰€æœ‰ä¸é‡å¤çš„ä½•ä¸º0çš„ä¸‰å…ƒæ•°ç»„ 
 
 class Solution {
 public:
@@ -24,7 +24,7 @@ public:
                     ++left;
                     --right;
 
-                    // Ìø¹ýÖØ¸´µÄ left ºÍ right£¬¼õÉÙÖØ¸´²åÈë
+                    // è·³è¿‡é‡å¤çš„ left å’Œ rightï¼Œå‡å°‘é‡å¤æ’å…¥
                     while (left < mid && nums[left] == nums[left - 1]) ++left;
                     while (mid < right && nums[right] == nums[right + 1]) --right;
                 }

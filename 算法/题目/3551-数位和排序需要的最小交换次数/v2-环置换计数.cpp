@@ -3,7 +3,7 @@ public:
     int minSwaps(vector<int>& nums) {
         int n = nums.size();
 
-        // {ÊıÎ»ºÍ, ÊıÖµ, Ô­ÏÂ±ê}
+        // {æ•°ä½å’Œ, æ•°å€¼, åŸä¸‹æ ‡}
         vector<array<int,3>> a(n);
         for (int i = 0; i < n; ++i) {
             int x = nums[i], s = 0;
@@ -16,13 +16,13 @@ public:
 
         sort(a.begin(), a.end());
 
-        // to[Ô­ÏÂ±ê] = Ä¿±êÎ»ÖÃ
+        // to[åŸä¸‹æ ‡] = ç›®æ ‡ä½ç½®
         vector<int> to(n);
         for (int i = 0; i < n; ++i) {
             to[a[i][2]] = i;
         }
 
-        vector<char> visited(n, 0); // ±È vector<bool> ·ÃÎÊ¸ü¿ì
+        vector<char> visited(n, 0); // æ¯” vector<bool> è®¿é—®æ›´å¿«
         int circle = 0;
 
         for (int i = 0; i < n; ++i) {

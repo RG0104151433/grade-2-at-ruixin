@@ -65,3 +65,6 @@ CMakeCache.txt
 *.tmp
 *.bak
 ~$*
+
+# ---------- 工具运行态 ----------
+.mimosa/

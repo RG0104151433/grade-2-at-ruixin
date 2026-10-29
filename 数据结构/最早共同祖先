@@ -1,0 +1,41 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main () {
+    int len;
+    cin>>len;
+    vector<int> bit(len+1,0);
+    for (int i=1;i<=len;i++) cin>>bit[i];
+    int a,b;
+    cin>>a>>b;
+    if (bit[a]==0) {
+        cout<<"ERROR: T["<<a<<"] is NULL"<<endl;
+        return 0;
+    }
+    if (bit[b]==0) {
+        cout<<"ERROR: T["<<b<<"] is NULL"<<endl;
+        return 0;
+    }
+    vector<int> prv_a,prv_b;
+    int m=a,n=b;
+    while (m>=1) {
+        prv_a.push_back(m);
+        m/=2;
+    }
+    while (n>=1) {
+        prv_b.push_back(n);
+        n/=2;
+    }
+    int len_a=prv_a.size(),len_b=prv_b.size();
+    int com=0;
+    for (int i=0;i<len_a;i++) {
+        for (int j=0;j<len_b;j++) {
+            if (prv_a[i]==prv_b[j]) {
+                com=prv_a[i];
+                break;
+            }
+        }
+        if (com) break;
+    }
+    cout<<com<<" "<<bit[com]<<endl;
+    return 0;
+}

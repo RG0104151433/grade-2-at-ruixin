@@ -1,0 +1,76 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct Node {
+    char data;
+    Node* left;
+    Node* right;
+    Node(char c):data(c),left(nullptr),right(nullptr) {} // 大肥鱼说这样才是好习惯
+}; // 别忘了分号
+Node* buildtree (const string& txt,int& idx) {
+    if (idx>=(int)txt.size()) return nullptr;
+    char c=txt[idx++];
+    if (c=='#') return nullptr;
+    Node* root=new Node(c);
+    root->left=buildtree(txt,idx);
+    root->right=buildtree(txt,idx); // 用不断迭代的方式
+    return root;
+}
+void printout(Node* root,int depth) {
+    // 注意，仔细理解题目中给出的结构，实则是左右字数的遍历，可以先左后右，且可以迭代仿佛调用
+    if (root==nullptr) return ;
+    cout<<string(depth*4,' ')<<root->data<<endl; // 注意这里写出string的结构
+    printout(root->left,depth+1);
+    printout(root->right,depth+1);
+}
+void preOrder(Node* root,string& ans) {
+    if (root==nullptr) return ;
+    ans.push_back(root->data);
+    preOrder(root->left,ans);
+    preOrder(root->right,ans);
+}
+void inOrder(Node* root,string& ans) {
+    if (root==nullptr) return ;
+    inOrder(root->left,ans);
+    ans.push_back(root->data);
+    inOrder(root->right,ans);
+}
+void postOrder(Node* root, string& ans) {
+    if (root==nullptr) return ;
+    postOrder(root->left,ans);
+    postOrder(root->right,ans);
+    ans.push_back(root->data);
+}
+int leafCount(Node* root) {
+    if (root==nullptr) return 0;
+    if (root->left==nullptr && root->right==nullptr) return 1;
+    return leafCount(root->left)+leafCount(root->right);
+}
+void swapTree(Node* root) {
+    if (root==nullptr) return ;
+    swap(root->left,root->right);
+    swapTree(root->left);
+    swapTree(root->right);
+}
+void act(Node* root) {
+    printout(root,0);
+    string pre,in,post;
+    preOrder(root,pre);
+    inOrder(root,in);
+    postOrder(root,post);
+    cout<<"pre_sequence  : "<<pre<<endl;
+    cout<<"in_sequence   : "<<in<<endl;
+    cout<<"post_sequence : "<<post<<endl;
+}
+int main () {
+    string txt;
+    cin>>txt; // 注意这是个前序遍历的结果
+    int idx=0;
+    Node* root=buildtree(txt,idx);
+    cout<<"BiTree"<<endl;
+    act(root);
+    int cnt=leafCount(root);
+    cout<<"Number of leaf: "<<cnt<<endl;
+    swapTree(root);
+    cout<<"BiTree swapped"<<endl;
+    act(root);
+}

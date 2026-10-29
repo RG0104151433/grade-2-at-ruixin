@@ -1,0 +1,24 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main () {
+    int len;
+    cin>>len;
+    vector<int> bit(len+1,0);
+    for (int i=1;i<=len;i++) cin>>bit[i];
+    int a,b;
+    cin>>a>>b;
+    if (bit[a]==0) {
+        cout<<"ERROR: T["<<a<<"] is NULL"<<endl;
+        return 0;
+    }
+    if (bit[b]==0) {
+        cout<<"ERROR: T["<<b<<"] is NULL"<<endl;
+        return 0;
+    }
+    int x=a,y=b;
+    while (x!=y) {
+        if (x>y) x/=2;
+        else y/=2;
+    }
+    cout<<x<<" "<<bit[x]<<endl;
+}

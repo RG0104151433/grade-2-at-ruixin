@@ -11,7 +11,7 @@
  */
 class Solution {
 public:
-    int getSum(TreeNode* root) { // ¼ÇÂ¼°üº¬¸Ã½ÚµãµÄ½ÚµãºÍ
+    int getSum(TreeNode* root) { // è®°å½•åŒ…å«è¯¥èŠ‚ç‚¹çš„èŠ‚ç‚¹å’Œ
         if (root==nullptr) return 0;
         int sum=root->val;
         if (root->left!=nullptr) sum+=getSum(root->left);

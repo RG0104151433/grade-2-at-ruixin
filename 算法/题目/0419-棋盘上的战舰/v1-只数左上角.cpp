@@ -1,7 +1,7 @@
 class Solution {
 public:
     int countBattleships(vector<vector<char>>& board) {
-        // ÕâÌâµÄ¹Ø¼üÔÚÓÚÆä²»¿ÉÄÜÊÇ¹ÕÍäµÄ£¬Ö»ÄÜÊÇÒ»ÌõÖ±Ïß
+        // è¿™é¢˜çš„å…³é”®åœ¨äºå…¶ä¸å¯èƒ½æ˜¯æ‹å¼¯çš„ï¼Œåªèƒ½æ˜¯ä¸€æ¡ç›´çº¿
         int ans=0;
         for (int i=0;i<board.size();i++) {
             for (int j=0;j<board[i].size();j++) {

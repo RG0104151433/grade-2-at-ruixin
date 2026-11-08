@@ -1,0 +1,1015 @@
+{
+  "format": "algorithm-selection-learning-report",
+  "version": 1,
+  "course": "算法选择与判断 · 第一课",
+  "exportedAt": "2026-11-08T08:29:13.381Z",
+  "score": 26,
+  "total": 30,
+  "accuracy": 0.8666666666666667,
+  "dimensions": {
+    "复杂度预算": {
+      "total": 3,
+      "correct": 3,
+      "anchor": "budget"
+    },
+    "数据与操作约束": {
+      "total": 4,
+      "correct": 4,
+      "anchor": "budget"
+    },
+    "窗口与前缀": {
+      "total": 5,
+      "correct": 5,
+      "anchor": "compare"
+    },
+    "二分与证明": {
+      "total": 5,
+      "correct": 4,
+      "anchor": "compare"
+    },
+    "数据结构选择": {
+      "total": 5,
+      "correct": 5,
+      "anchor": "compare"
+    },
+    "图与树判断": {
+      "total": 4,
+      "correct": 2,
+      "anchor": "compare"
+    },
+    "贪心与迁移": {
+      "total": 4,
+      "correct": 3,
+      "anchor": "proof"
+    }
+  },
+  "wrongQuestionIds": [
+    14,
+    21,
+    24,
+    27
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "dimension": "复杂度预算",
+      "prompt": "1. n=100,000，要处理全部元素。以下哪种量级最应优先排除？",
+      "options": [
+        {
+          "label": "A",
+          "text": "O(log n) 次查询，加 O(n) 读入",
+          "explanation": "读入后的整体仍为 O(n)，并非只花 O(log n)。"
+        },
+        {
+          "label": "B",
+          "text": "O(n)",
+          "explanation": "线性通常是合理候选，但仍要看常数。"
+        },
+        {
+          "label": "C",
+          "text": "O(n²)",
+          "explanation": "n²=100 亿量级，通常远超常规竞赛预算，应先寻找优化。"
+        },
+        {
+          "label": "D",
+          "text": "O(n log n)",
+          "explanation": "约 166 万量级，可评估。"
+        }
+      ],
+      "selected": "C",
+      "correctAnswer": "C",
+      "isCorrect": true,
+      "myReason": "n太大必然无法通过平方级的操作",
+      "reviewSection": "budget"
+    },
+    {
+      "id": 2,
+      "dimension": "复杂度预算",
+      "prompt": "2. n=20，每个子集只做 O(1) 工作，枚举所有子集约有多少种？",
+      "options": [
+        {
+          "label": "A",
+          "text": "2,000 万亿",
+          "explanation": "2²⁰ 仅约 105 万，指数底数和指数不能混淆。"
+        },
+        {
+          "label": "B",
+          "text": "20!",
+          "explanation": "20! 枚举的是排列，不是子集。"
+        },
+        {
+          "label": "C",
+          "text": "1,048,576",
+          "explanation": "每个元素选或不选，共 2²⁰=1,048,576 种。"
+        },
+        {
+          "label": "D",
+          "text": "400",
+          "explanation": "400 是 n²，不是子集数。"
+        }
+      ],
+      "selected": "C",
+      "correctAnswer": "C",
+      "isCorrect": true,
+      "myReason": "应该是2的20次方",
+      "reviewSection": "budget"
+    },
+    {
+      "id": 3,
+      "dimension": "复杂度预算",
+      "prompt": "3. 有 T=100 组数据，每组 n≤2,000，没有 Σn 限制。O(n²) 算法最坏总量约为多少？",
+      "options": [
+        {
+          "label": "A",
+          "text": "20 万",
+          "explanation": "这是 T×n，适用于线性算法。"
+        },
+        {
+          "label": "B",
+          "text": "400 万",
+          "explanation": "400 万只算一组。"
+        },
+        {
+          "label": "C",
+          "text": "200 万",
+          "explanation": "没有对应本题最坏总工作量。"
+        },
+        {
+          "label": "D",
+          "text": "4 亿",
+          "explanation": "Σnᵢ² 最大可到 100×2,000²=4 亿，必须考虑全部测试。"
+        }
+      ],
+      "selected": "D",
+      "correctAnswer": "D",
+      "isCorrect": true,
+      "myReason": "T*n^2=4,0000,0000",
+      "reviewSection": "budget"
+    },
+    {
+      "id": 4,
+      "dimension": "数据与操作约束",
+      "prompt": "4. n=100,000，值在 [0,10⁹]，只统计出现频次，内存 256 MB。最合理的候选是？",
+      "options": [
+        {
+          "label": "A",
+          "text": "只用长度 n 的数组，以数值直接下标访问",
+          "explanation": "数值可能远大于 n，直接下标会越界。"
+        },
+        {
+          "label": "B",
+          "text": "开 10⁹+1 个 int 的数组",
+          "explanation": "约需 4 GB，超出给定内存。"
+        },
+        {
+          "label": "C",
+          "text": "每读一个数就扫描之前所有数",
+          "explanation": "最坏 O(n²)，没有利用重复查询可被索引的结构。"
+        },
+        {
+          "label": "D",
+          "text": "用哈希表记录出现的值",
+          "explanation": "只记录出现的至多 n 个键，期望 O(n) 时间、O(n) 空间；也可评估排序计数。"
+        }
+      ],
+      "selected": "D",
+      "correctAnswer": "D",
+      "isCorrect": true,
+      "myReason": "",
+      "reviewSection": "budget"
+    },
+    {
+      "id": 5,
+      "dimension": "数据与操作约束",
+      "prompt": "5. n=100,000，求满足条件的子数组个数，答案最大可能是 n(n+1)/2。C++ 中哪项最可靠？",
+      "options": [
+        {
+          "label": "A",
+          "text": "只要数组元素是 int，答案就用 int",
+          "explanation": "输入类型不能决定统计答案的范围。"
+        },
+        {
+          "label": "B",
+          "text": "用 long long，并在乘法前提升类型，例如 1LL*n*(n+1)/2",
+          "explanation": "最大约 50 亿，且中间乘法更大，须在乘法前提升类型。"
+        },
+        {
+          "label": "C",
+          "text": "先用 int 算 n*(n+1)，最后赋给 long long",
+          "explanation": "中间的 int 乘法已经可能溢出，事后赋值不能补救。"
+        },
+        {
+          "label": "D",
+          "text": "答案一定不超过 n",
+          "explanation": "每一对合法左右边界都可能对应一个子数组。"
+        }
+      ],
+      "selected": "B",
+      "correctAnswer": "B",
+      "isCorrect": true,
+      "myReason": "",
+      "reviewSection": "budget"
+    },
+    {
+      "id": 6,
+      "dimension": "数据与操作约束",
+      "prompt": "6. 题目要求原数组的最长严格递增子序列。为什么不能先排序再求长度？",
+      "options": [
+        {
+          "label": "A",
+          "text": "只要数据很大，排序就会自动正确",
+          "explanation": "规模只约束效率，不能让错误算法变正确。"
+        },
+        {
+          "label": "B",
+          "text": "排序太慢，所以永远不能排序",
+          "explanation": "关键是语义被改变，不是排序速度。"
+        },
+        {
+          "label": "C",
+          "text": "排序可能改变相对顺序，从而改变题意",
+          "explanation": "[3,1,2] 的 LIS 是 2，排序后得到 3；不能破坏原相对顺序。"
+        },
+        {
+          "label": "D",
+          "text": "所有子序列都必须连续",
+          "explanation": "子序列可以不连续，子数组才必须连续。"
+        }
+      ],
+      "selected": "C",
+      "correctAnswer": "C",
+      "isCorrect": true,
+      "myReason": "",
+      "reviewSection": "route"
+    },
+    {
+      "id": 7,
+      "dimension": "窗口与前缀",
+      "prompt": "7. 正整数数组 n=100,000，求和至少为 S>0 的最短连续子数组。最自然的线性候选是？",
+      "options": [
+        {
+          "label": "A",
+          "text": "排序后贪心取最大的几个数",
+          "explanation": "排序破坏连续区间的原顺序。"
+        },
+        {
+          "label": "B",
+          "text": "普通 DFS 枚举每个元素选不选",
+          "explanation": "选不选会产生不连续子序列，还会指数增长。"
+        },
+        {
+          "label": "C",
+          "text": "正数条件下的变长滑动窗口",
+          "explanation": "正数保证扩张增和、收缩减和，两个指针各至多移动 n 次。"
+        },
+        {
+          "label": "D",
+          "text": "枚举所有子数组并逐一求和",
+          "explanation": "重复枚举、求和，成本过高。"
+        }
+      ],
+      "selected": "C",
+      "correctAnswer": "C",
+      "isCorrect": true,
+      "myReason": "",
+      "reviewSection": "compare"
+    },
+    {
+      "id": 8,
+      "dimension": "窗口与前缀",
+      "prompt": "8. 将上一题改成允许负数后，以下判断哪项正确？",
+      "options": [
+        {
+          "label": "A",
+          "text": "所有滑动窗口都不能处理负数",
+          "explanation": "定长求和窗口允许负数；不能一概而论。"
+        },
+        {
+          "label": "B",
+          "text": "仍可原样使用正数滑窗模板",
+          "explanation": "负数会破坏窗口和随边界移动的单调关系。"
+        },
+        {
+          "label": "C",
+          "text": "负数只会影响答案大小，不影响收缩规则",
+          "explanation": "删去负数反而可能增大和，会影响边界判断。"
+        },
+        {
+          "label": "D",
+          "text": "原收缩规则可能失效，需要重新分析算法",
+          "explanation": "[1,−1,5]、S=5 可让常见正数模板漏掉 [5]。含负数的最短和阈值题可进一步学习前缀和加单调队列。"
+        }
+      ],
+      "selected": "D",
+      "correctAnswer": "D",
+      "isCorrect": true,
+      "myReason": "",
+      "reviewSection": "compare"
+    },
+    {
+      "id": 9,
+      "dimension": "窗口与前缀",
+      "prompt": "9. 数组允许正负数，n=100,000，统计和恰好为 k 的连续子数组个数。首选哪项？",
+      "options": [
+        {
+          "label": "A",
+          "text": "原地排序 + 相向双指针",
+          "explanation": "排序改变原连续关系。"
+        },
+        {
+          "label": "B",
+          "text": "前缀和 + 历史前缀频次哈希表",
+          "explanation": "由 pre[r]−pre[l]=k，查询 pre[r]−k 出现的次数，期望 O(n)。"
+        },
+        {
+          "label": "C",
+          "text": "只保存当前前缀和，不保存历史",
+          "explanation": "没有历史频次就无法统计不同左端点。"
+        },
+        {
+          "label": "D",
+          "text": "只统计值等于 k 的单个元素",
+          "explanation": "多元素区间也可能和为 k。"
+        }
+      ],
+      "selected": "B",
+      "correctAnswer": "B",
+      "isCorrect": true,
+      "myReason": "",
+      "reviewSection": "signals"
+    },
+    {
+      "id": 10,
+      "dimension": "窗口与前缀",
+      "prompt": "10. 在“前缀和 + 哈希统计子数组和=k”中，为什么通常先查历史频次，再登记当前前缀？",
+      "options": [
+        {
+          "label": "A",
+          "text": "让数组变得有序",
+          "explanation": "哈希查询不负责排序。"
+        },
+        {
+          "label": "B",
+          "text": "减少哈希表的空间到 O(1)",
+          "explanation": "不同前缀仍可能有 O(n) 种。"
+        },
+        {
+          "label": "C",
+          "text": "防止 k=0 时把当前前缀与自己配成空区间",
+          "explanation": "先存会在 k=0 时把当前前缀计入历史，多算长度为 0 的区间；另需初始 cnt[0]=1。"
+        },
+        {
+          "label": "D",
+          "text": "让算法只适用于正数",
+          "explanation": "该算法允许负数。"
+        }
+      ],
+      "selected": "C",
+      "correctAnswer": "C",
+      "isCorrect": true,
+      "myReason": "",
+      "reviewSection": "proof"
+    },
+    {
+      "id": 11,
+      "dimension": "窗口与前缀",
+      "prompt": "11. 静态数组 n=100,000，有 q=100,000 次区间和查询，没有修改。合理方案是？",
+      "options": [
+        {
+          "label": "A",
+          "text": "每次重新排序",
+          "explanation": "排序不仅多余，还改变区间的原位置含义。"
+        },
+        {
+          "label": "B",
+          "text": "每个查询都进行一次 DFS",
+          "explanation": "没有图结构；遍历区间依旧重复工作。"
+        },
+        {
+          "label": "C",
+          "text": "O(n) 建前缀和，再每次 O(1) 做差",
+          "explanation": "pre[r+1]−pre[l] 可得闭区间和，总 O(n+q)。"
+        },
+        {
+          "label": "D",
+          "text": "每次从 l 扫到 r",
+          "explanation": "最坏总 O(nq)，即百亿级。"
+        }
+      ],
+      "selected": "C",
+      "correctAnswer": "C",
+      "isCorrect": true,
+      "myReason": "",
+      "reviewSection": "budget"
+    },
+    {
+      "id": 12,
+      "dimension": "二分与证明",
+      "prompt": "12. 有序数组中做 10,000 次“找第一个 ≥x 的位置”，每次 x 不同。哪项最直接？",
+      "options": [
+        {
+          "label": "A",
+          "text": "每次都从头线性扫描",
+          "explanation": "能正确但没有利用有序性，每次 O(n)。"
+        },
+        {
+          "label": "B",
+          "text": "每次先把数组打乱",
+          "explanation": "破坏了可用结构。"
+        },
+        {
+          "label": "C",
+          "text": "每次使用 lower_bound / 二分边界",
+          "explanation": "每次 O(log n)，并处理找不到时返回 n / end。"
+        },
+        {
+          "label": "D",
+          "text": "只看第一个与最后一个元素就返回位置",
+          "explanation": "端点不能决定所有内部边界。"
+        }
+      ],
+      "selected": "C",
+      "correctAnswer": "C",
+      "isCorrect": true,
+      "myReason": "",
+      "reviewSection": "compare"
+    },
+    {
+      "id": 13,
+      "dimension": "二分与证明",
+      "prompt": "13. 包裹必须保持原顺序，D 天内运完，求最小船容量。二分答案的核心依据是？",
+      "options": [
+        {
+          "label": "A",
+          "text": "容量增大不会让原本可行的装运变得不可行",
+          "explanation": "可行性由假到真，且可以线性模拟 check，形成二分边界。"
+        },
+        {
+          "label": "B",
+          "text": "题目中出现了“最小”二字",
+          "explanation": "最小只是目标，不能推出单调性。"
+        },
+        {
+          "label": "C",
+          "text": "包裹可以任意排序",
+          "explanation": "题目明确要求原顺序。"
+        },
+        {
+          "label": "D",
+          "text": "数组长度一定是 2 的幂",
+          "explanation": "二分无需长度为 2 的幂。"
+        }
+      ],
+      "selected": "A",
+      "correctAnswer": "A",
+      "isCorrect": true,
+      "myReason": "",
+      "reviewSection": "compare"
+    },
+    {
+      "id": 14,
+      "dimension": "二分与证明",
+      "prompt": "14. 答案范围大小为 U，每次 check 要遍历 n 个元素，二分答案总复杂度通常是？",
+      "options": [
+        {
+          "label": "A",
+          "text": "O(U)",
+          "explanation": "线性枚举答案范围才可能 O(U) 次判断。"
+        },
+        {
+          "label": "B",
+          "text": "O(log U)",
+          "explanation": "遗漏每次 check 的 O(n)。"
+        },
+        {
+          "label": "C",
+          "text": "O(n log U)",
+          "explanation": "约 log₂U 次判断，每次 O(n)，相乘得到 O(n log U)。"
+        },
+        {
+          "label": "D",
+          "text": "O(n+log U)",
+          "explanation": "check 不是只在最开始做一次。"
+        }
+      ],
+      "selected": "D",
+      "correctAnswer": "C",
+      "isCorrect": false,
+      "myReason": "",
+      "reviewSection": "budget"
+    },
+    {
+      "id": 15,
+      "dimension": "二分与证明",
+      "prompt": "15. 某整数可行性序列依次为“假、真、假、真”，没有额外结构。能直接套“找第一个真”的二分吗？",
+      "options": [
+        {
+          "label": "A",
+          "text": "能，只要数组很大",
+          "explanation": "大规模不构成正确性依据。"
+        },
+        {
+          "label": "B",
+          "text": "能，随便挑一个真即可",
+          "explanation": "任意可行值不等于第一个可行值。"
+        },
+        {
+          "label": "C",
+          "text": "不能，缺少二分所需的单调边界",
+          "explanation": "更新区间时不能安全排除一侧，可能漏掉最早的真。"
+        },
+        {
+          "label": "D",
+          "text": "能，只要要求最小值",
+          "explanation": "最小化目标无法修复不单调。"
+        }
+      ],
+      "selected": "C",
+      "correctAnswer": "C",
+      "isCorrect": true,
+      "myReason": "",
+      "reviewSection": "proof"
+    },
+    {
+      "id": 16,
+      "dimension": "数据结构选择",
+      "prompt": "16. n=100,000，重复 k=100,000 次取当前最大值，修改后放回。哪项通常最合理？",
+      "options": [
+        {
+          "label": "A",
+          "text": "每轮扫描整个数组",
+          "explanation": "总 O(nk) 太大。"
+        },
+        {
+          "label": "B",
+          "text": "大顶堆，每次取出并放回修改值",
+          "explanation": "动态维护全局最大值，每轮 O(log n)；批量堆化后总 O(n+k log n)。"
+        },
+        {
+          "label": "C",
+          "text": "每轮重新排序",
+          "explanation": "每轮 O(n log n)，重复排序昂贵。"
+        },
+        {
+          "label": "D",
+          "text": "只在开始排序一次，之后一直取原来的末尾",
+          "explanation": "修改会改变元素的大小关系。"
+        }
+      ],
+      "selected": "B",
+      "correctAnswer": "B",
+      "isCorrect": true,
+      "myReason": "",
+      "reviewSection": "compare"
+    },
+    {
+      "id": 17,
+      "dimension": "数据结构选择",
+      "prompt": "17. n=100,000，对每个位置求右边第一个严格更大元素的下标。最匹配哪项？",
+      "options": [
+        {
+          "label": "A",
+          "text": "并查集",
+          "explanation": "合并连通关系不处理这种邻近大小关系。"
+        },
+        {
+          "label": "B",
+          "text": "单调栈，存候选下标",
+          "explanation": "候选下标入栈出栈至多一次，找到的是最近的满足大小关系者。"
+        },
+        {
+          "label": "C",
+          "text": "大顶堆，只保存全局最大值",
+          "explanation": "全局最大值不能直接回答每个位置的最近更大者。"
+        },
+        {
+          "label": "D",
+          "text": "普通计数数组，不保留下标关系",
+          "explanation": "频次不足以表达右侧最近位置。"
+        }
+      ],
+      "selected": "B",
+      "correctAnswer": "B",
+      "isCorrect": true,
+      "myReason": "",
+      "reviewSection": "signals"
+    },
+    {
+      "id": 18,
+      "dimension": "数据结构选择",
+      "prompt": "18. 单调栈代码有一层 for，内部有 while 弹栈。为什么整体仍可能是 O(n)？",
+      "options": [
+        {
+          "label": "A",
+          "text": "每个下标最多入栈一次、出栈一次，总弹栈次数≤n",
+          "explanation": "摊还分析统计全部操作，而不是把每个 while 的最坏长度简单重复相乘。"
+        },
+        {
+          "label": "B",
+          "text": "所有双层循环都是线性的",
+          "explanation": "独立枚举的双层循环可能是 O(n²)。"
+        },
+        {
+          "label": "C",
+          "text": "while 每次必定只执行一次",
+          "explanation": "某一轮可能弹出多个元素，但总次数有限。"
+        },
+        {
+          "label": "D",
+          "text": "因为用了 STL 容器",
+          "explanation": "复杂度取决于操作总数，与是否 STL 无必然关系。"
+        }
+      ],
+      "selected": "A",
+      "correctAnswer": "A",
+      "isCorrect": true,
+      "myReason": "",
+      "reviewSection": "proof"
+    },
+    {
+      "id": 19,
+      "dimension": "数据结构选择",
+      "prompt": "19. n=100,000，求每个长度为 k 的连续窗口最大值，希望总 O(n)。最匹配哪项？",
+      "options": [
+        {
+          "label": "A",
+          "text": "存下标的单调队列，同时处理过期下标",
+          "explanation": "队头记录当前最大候选，队尾淘汰劣候选，每个下标进出有限次。"
+        },
+        {
+          "label": "B",
+          "text": "将整个数组排序后分组",
+          "explanation": "排序破坏窗口对应的原位置。"
+        },
+        {
+          "label": "C",
+          "text": "仅维护一个最大值，最大值离开窗口时不处理",
+          "explanation": "最大值过期后答案会错误。"
+        },
+        {
+          "label": "D",
+          "text": "每个窗口重新扫描 k 个元素",
+          "explanation": "总 O(nk)，没有达到要求。"
+        }
+      ],
+      "selected": "A",
+      "correctAnswer": "A",
+      "isCorrect": true,
+      "myReason": "",
+      "reviewSection": "compare"
+    },
+    {
+      "id": 20,
+      "dimension": "数据结构选择",
+      "prompt": "20. 字符串反复删除相邻相同字符，删除后会产生新的相邻关系。哪种结构最自然？",
+      "options": [
+        {
+          "label": "A",
+          "text": "仅比较原串每一对相邻字符一次",
+          "explanation": "消除后的新邻接关系也要处理。"
+        },
+        {
+          "label": "B",
+          "text": "并查集求最短路径",
+          "explanation": "问题没有最短路径结构，并查集也不求最短路。"
+        },
+        {
+          "label": "C",
+          "text": "一次排序后去重",
+          "explanation": "排序破坏相邻关系，也混淆了删除规则。"
+        },
+        {
+          "label": "D",
+          "text": "栈维护尚未消除的字符",
+          "explanation": "新字符只需与当前栈顶比较，维护已处理部分的消除结果。"
+        }
+      ],
+      "selected": "D",
+      "correctAnswer": "D",
+      "isCorrect": true,
+      "myReason": "",
+      "reviewSection": "signals"
+    },
+    {
+      "id": 21,
+      "dimension": "图与树判断",
+      "prompt": "21. 无权图 n 个点、m 条边，求起点到各点的最少边数。首选哪项？",
+      "options": [
+        {
+          "label": "A",
+          "text": "只按节点编号排序",
+          "explanation": "节点编号通常与路径长度无关。"
+        },
+        {
+          "label": "B",
+          "text": "并查集，集合编号就是距离",
+          "explanation": "集合表示连通性，不表示距离。"
+        },
+        {
+          "label": "C",
+          "text": "BFS，按层扩展",
+          "explanation": "等代价边按距离逐层扩展，邻接表时间 O(n+m)。"
+        },
+        {
+          "label": "D",
+          "text": "DFS，第一次到达就是最短",
+          "explanation": "普通 DFS 首次找到的路径可能绕远。"
+        }
+      ],
+      "selected": "D",
+      "correctAnswer": "C",
+      "isCorrect": false,
+      "myReason": "",
+      "reviewSection": "compare"
+    },
+    {
+      "id": 22,
+      "dimension": "图与树判断",
+      "prompt": "22. 图上边权非负但不全相等，要求单源最短距离。以下候选最匹配的是？",
+      "options": [
+        {
+          "label": "A",
+          "text": "并查集",
+          "explanation": "连通关系不包含最短距离。"
+        },
+        {
+          "label": "B",
+          "text": "仍用普通 BFS，第一次到达就定最短距离",
+          "explanation": "BFS 最少边数不一定对应最小权值和。"
+        },
+        {
+          "label": "C",
+          "text": "把所有边权改为 1 后做 DFS",
+          "explanation": "改变边权就改变了原问题。"
+        },
+        {
+          "label": "D",
+          "text": "Dijkstra（如邻接表配最小堆）",
+          "explanation": "非负权满足 Dijkstra 的定点依据；常见堆实现约 O((n+m) log n)，具体依实现。"
+        }
+      ],
+      "selected": "D",
+      "correctAnswer": "D",
+      "isCorrect": true,
+      "myReason": "图算法有点忘了，不确定",
+      "reviewSection": "signals"
+    },
+    {
+      "id": 23,
+      "dimension": "图与树判断",
+      "prompt": "23. 无向图持续加边，频繁问两点是否连通，不删边，不要求路径。哪项最合适？",
+      "options": [
+        {
+          "label": "A",
+          "text": "每次询问都重新 DFS 全图",
+          "explanation": "可以正确但重复遍历多，动态合并可更高效。"
+        },
+        {
+          "label": "B",
+          "text": "路径压缩与按大小/秩合并的并查集",
+          "explanation": "维护集合合并，单次操作均摊近常数 O(α(n))。"
+        },
+        {
+          "label": "C",
+          "text": "最短路 Dijkstra",
+          "explanation": "题目不需要距离，重复最短路成本高。"
+        },
+        {
+          "label": "D",
+          "text": "普通单调栈",
+          "explanation": "单调栈维护邻近大小关系，不维护动态连通性。"
+        }
+      ],
+      "selected": "B",
+      "correctAnswer": "B",
+      "isCorrect": true,
+      "myReason": "",
+      "reviewSection": "compare"
+    },
+    {
+      "id": 24,
+      "dimension": "图与树判断",
+      "prompt": "24. 对每个树节点，都重新遍历其左右子树求和，再算坡度。链状树最坏复杂度及优化是？",
+      "options": [
+        {
+          "label": "A",
+          "text": "O(n)；无需优化",
+          "explanation": "相同子树会被多个祖先重复访问。"
+        },
+        {
+          "label": "B",
+          "text": "O(n log n)；任何树都一样",
+          "explanation": "平衡树与链状树的累计子树规模不同。"
+        },
+        {
+          "label": "C",
+          "text": "O(log n)；改成 BFS",
+          "explanation": "仅遍历所有节点也需 O(n)，不可能自动 O(log n)。"
+        },
+        {
+          "label": "D",
+          "text": "O(n²)；后序遍历返回子树和，可降到 O(n)",
+          "explanation": "链上遍历规模相加约 n+(n−1)+…+1；一次后序复用子树和即可。"
+        }
+      ],
+      "selected": "C",
+      "correctAnswer": "D",
+      "isCorrect": false,
+      "myReason": "不确定，得研究研究",
+      "reviewSection": "cases"
+    },
+    {
+      "id": 25,
+      "dimension": "贪心与迁移",
+      "prompt": "25. 面额 [1,3,4] 可无限使用，凑 6 的最少硬币数。哪项正确？",
+      "options": [
+        {
+          "label": "A",
+          "text": "最大面额贪心一定只需 2 枚",
+          "explanation": "该策略先取 4，剩余 2 只能取 1+1。"
+        },
+        {
+          "label": "B",
+          "text": "所有面额集合都适用最大面额贪心",
+          "explanation": "贪心需要额外性质或正确性证明。"
+        },
+        {
+          "label": "C",
+          "text": "总取最大面额会得到 3 枚，但 3+3 只需 2 枚，贪心不保证最优",
+          "explanation": "这是一般面额贪心的反例；可用按金额的完全背包 DP。"
+        },
+        {
+          "label": "D",
+          "text": "只能枚举所有排列，不能 DP",
+          "explanation": "dp[s] 可表示凑 s 的最少枚数，状态能复用。"
+        }
+      ],
+      "selected": "C",
+      "correctAnswer": "C",
+      "isCorrect": true,
+      "myReason": "",
+      "reviewSection": "proof"
+    },
+    {
+      "id": 26,
+      "dimension": "贪心与迁移",
+      "prompt": "26. 01 背包 n=100、容量 W=10⁹。对标准 O(nW) DP 的判断哪项正确？",
+      "options": [
+        {
+          "label": "A",
+          "text": "n 只有 100，所以必定很快",
+          "explanation": "容量同样是状态维度。"
+        },
+        {
+          "label": "B",
+          "text": "时间 O(n+W)，因此无需担心",
+          "explanation": "标准转移是物品数与容量数相乘。"
+        },
+        {
+          "label": "C",
+          "text": "约 10¹¹ 次转移，不能仅凭“使用 DP”就认为能过",
+          "explanation": "必须重新查看价值总和、物品特征等约束，寻找其他状态设计或方法。"
+        },
+        {
+          "label": "D",
+          "text": "滚动数组能把时间也降到 O(n)",
+          "explanation": "滚动数组通常降低空间，不消除容量维度的转移时间。"
+        }
+      ],
+      "selected": "C",
+      "correctAnswer": "C",
+      "isCorrect": true,
+      "myReason": "",
+      "reviewSection": "budget"
+    },
+    {
+      "id": 27,
+      "dimension": "贪心与迁移",
+      "prompt": "27. H 指数中有 n 篇论文，为何能把大于 n 的引用数统一放进 n 桶？",
+      "options": [
+        {
+          "label": "A",
+          "text": "所有大数本来就没有意义",
+          "explanation": "等价性来自答案上界，不能泛化为忽略大数。"
+        },
+        {
+          "label": "B",
+          "text": "h≤n，对候选 h∈[0,n]，引用数大于 n 的论文作用相同",
+          "explanation": "这些论文对任何候选 h 都满足引用数≥h，合并不改变判断。"
+        },
+        {
+          "label": "C",
+          "text": "只有当所有引用次数互不相同时才成立",
+          "explanation": "重复引用数不影响截断依据。"
+        },
+        {
+          "label": "D",
+          "text": "计数数组可以随意截断任意题目的值域",
+          "explanation": "任意截断会丢失影响答案的信息。"
+        }
+      ],
+      "selected": "A",
+      "correctAnswer": "B",
+      "isCorrect": false,
+      "myReason": "",
+      "reviewSection": "cases"
+    },
+    {
+      "id": 28,
+      "dimension": "贪心与迁移",
+      "prompt": "28. 允许排序，n=2,000，输出所有不重复的和为 0 的值三元组。最合理的基本方案是？",
+      "options": [
+        {
+          "label": "A",
+          "text": "排序 + 固定一个值 + 双指针，过程中去重，O(n²)",
+          "explanation": "固定一个后变为两数配对；去重同时避免重复输出。输出空间需单独计入。"
+        },
+        {
+          "label": "B",
+          "text": "三重枚举，不去重",
+          "explanation": "不仅最坏约 n³，还有重复答案。"
+        },
+        {
+          "label": "C",
+          "text": "为每个三元组单独排序原数组",
+          "explanation": "重复排序没有减少候选规模。"
+        },
+        {
+          "label": "D",
+          "text": "排序后只跑一遍相向双指针，不固定任何数",
+          "explanation": "两个指针不能同时表达所有不同的第三个值。"
+        }
+      ],
+      "selected": "A",
+      "correctAnswer": "A",
+      "isCorrect": true,
+      "myReason": "",
+      "reviewSection": "cases"
+    },
+    {
+      "id": 29,
+      "dimension": "数据与操作约束",
+      "prompt": "29. 初始数组全 0，先做 q 次区间加，所有修改完成后只输出最终数组。最适合的方案是？",
+      "options": [
+        {
+          "label": "A",
+          "text": "差分数组：每次更新两个端点，最后前缀累加还原",
+          "explanation": "每次 O(1) 记录边界变化，最后 O(n) 还原，总 O(n+q)；在线交错查询则需另行分析。"
+        },
+        {
+          "label": "B",
+          "text": "每次更新都遍历整个区间",
+          "explanation": "最坏 O(nq)，重复写入大量位置。"
+        },
+        {
+          "label": "C",
+          "text": "每次修改后把数组重新排序",
+          "explanation": "排序破坏下标区间语义。"
+        },
+        {
+          "label": "D",
+          "text": "只建初始数组的前缀和，不记录修改",
+          "explanation": "没有记录修改，无法得到最终结果。"
+        }
+      ],
+      "selected": "A",
+      "correctAnswer": "A",
+      "isCorrect": true,
+      "myReason": "",
+      "reviewSection": "signals"
+    },
+    {
+      "id": 30,
+      "dimension": "二分与证明",
+      "prompt": "30. 看见“求最小值”，你暂时想到二分答案。下一步最应该做什么？",
+      "options": [
+        {
+          "label": "A",
+          "text": "定义 check(x)，证明单调性，确定覆盖答案的范围并估算总成本",
+          "explanation": "这四步共同决定答案二分是否适用、是否高效。"
+        },
+        {
+          "label": "B",
+          "text": "立即套二分模板，不需要定义 check",
+          "explanation": "没有 check 和边界依据，模板无法保证正确。"
+        },
+        {
+          "label": "C",
+          "text": "先假设所有最小值题都能二分",
+          "explanation": "目标词只是线索，不提供必要的单调边界。"
+        },
+        {
+          "label": "D",
+          "text": "只测一个样例，符合就说明正确",
+          "explanation": "有限样例不能取代正确性论证。"
+        }
+      ],
+      "selected": "A",
+      "correctAnswer": "A",
+      "isCorrect": true,
+      "myReason": "",
+      "reviewSection": "route"
+    }
+  ],
+  "nextStep": "请结合错题、错误选项与我的判断依据，分析我在复杂度、适用前提、题意或证明方面的薄弱点，再给出针对性讲解和新的迁移练习。"
+}

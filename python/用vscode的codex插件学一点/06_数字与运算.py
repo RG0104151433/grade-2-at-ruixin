@@ -38,3 +38,9 @@
 #
 # 请在下面写你的代码：
 
+price = 12
+quantity = 3
+delivery_fee = 5
+paid = 50
+total = price * quantity + delivery_fee
+print(f"Total: {total} yuan\nChange: {paid - total} yuan")

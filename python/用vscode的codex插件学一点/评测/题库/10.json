@@ -1,0 +1,48 @@
+{
+    "title":  "分组与剩余",
+    "solution":  "../../基础题/数字与运算/10_分组与剩余.py",
+    "comparison":  "tokens",
+    "timeout_seconds":  2,
+    "cases":  [
+                  {
+                      "name":  "01 样例",
+                      "input":  "23\n5\n",
+                      "expected":  "4\n3\n"
+                  },
+                  {
+                      "name":  "02 物品数为零",
+                      "input":  "0\n7\n",
+                      "expected":  "0\n0\n"
+                  },
+                  {
+                      "name":  "03 不足一组",
+                      "input":  "3\n8\n",
+                      "expected":  "0\n3\n"
+                  },
+                  {
+                      "name":  "04 恰好分完",
+                      "input":  "40\n8\n",
+                      "expected":  "5\n0\n"
+                  },
+                  {
+                      "name":  "05 每组一件",
+                      "input":  "17\n1\n",
+                      "expected":  "17\n0\n"
+                  },
+                  {
+                      "name":  "06 最大每组数量",
+                      "input":  "1\n1000000\n",
+                      "expected":  "0\n1\n"
+                  },
+                  {
+                      "name":  "07 差一件成组",
+                      "input":  "999999\n1000000\n",
+                      "expected":  "0\n999999\n"
+                  },
+                  {
+                      "name":  "08 大数与余件",
+                      "input":  "1000000000\n999983\n",
+                      "expected":  "1000\n17000\n"
+                  }
+              ]
+}

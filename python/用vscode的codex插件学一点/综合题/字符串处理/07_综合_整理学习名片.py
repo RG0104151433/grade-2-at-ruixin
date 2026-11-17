@@ -46,3 +46,11 @@
 #
 # 请在下面写你的代码：
 
+raw_name = "  eAsOn gAo  "
+raw_language = "  PyThOn  "
+op_name = raw_name.strip()
+op_language = raw_language.strip()
+display_name = op_name.title()
+display_language = op_language.lower()
+badge = display_name.upper() + " - " + display_language.upper()
+print(f"Name: {display_name}\nLanguage: {display_language.lower()}\nBadge: {badge}\nOriginal: [{raw_name}] [{raw_language}]")

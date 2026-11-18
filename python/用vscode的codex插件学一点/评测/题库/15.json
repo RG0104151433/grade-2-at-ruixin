@@ -1,0 +1,68 @@
+{
+  "title": "单行多格式流水线",
+  "solution": "../../挑战题/字符串处理/15_挑战_单行多格式流水线.py",
+  "comparison": "exact",
+  "timeout_seconds": 2,
+  "cases": [
+    {
+      "name": "01 样例",
+      "input": "  >>*build*  |  [src\\core]  |  a  \n",
+      "expected": "RAW:\"  >>*build*  |  [src\\core]  |  a  \"\n------------build*------------\nsrc\\core\tA:B(65)\n"
+    },
+    {
+      "name": "02 末尾多个合法星号",
+      "input": "***run** | [app\\v1] | z\n",
+      "expected": "RAW:\"***run** | [app\\v1] | z\"\n------------run**-------------\napp\\v1\tZ:[(90)\n"
+    },
+    {
+      "name": "03 仅右侧有空格",
+      "input": "deploy*   | [prod] | m\n",
+      "expected": "RAW:\"deploy*   | [prod] | m\"\n-----------deploy*------------\nprod\tM:N(77)\n"
+    },
+    {
+      "name": "04 仅左侧有修饰无右侧空格",
+      "input": ">>test| [unit] | B\n",
+      "expected": "RAW:\">>test| [unit] | B\"\n-------------test-------------\nunit\tB:C(66)\n"
+    },
+    {
+      "name": "05 路径中间含空格和反斜杠",
+      "input": " > check |  [my dir\\sub dir]  |  k  \n",
+      "expected": "RAW:\" > check |  [my dir\\sub dir]  |  k  \"\n------------check-------------\nmy dir\\sub dir\tK:L(75)\n"
+    },
+    {
+      "name": "06 路径不含方括号仅含空格",
+      "input": " *init* |   config/main   |  g \n",
+      "expected": "RAW:\" *init* |   config/main   |  g \"\n------------init*-------------\nconfig/main\tG:H(71)\n"
+    },
+    {
+      "name": "07 路径中间含方括号不误删",
+      "input": " > parse | [[a[0]/b]] | c \n",
+      "expected": "RAW:\" > parse | [[a[0]/b]] | c \"\n------------parse-------------\na[0]/b\tC:D(67)\n"
+    },
+    {
+      "name": "08 整行首尾带空格原样保留",
+      "input": "   > ping   |  [net]  |  p   \n",
+      "expected": "RAW:\"   > ping   |  [net]  |  p   \"\n-------------ping-------------\nnet\tP:Q(80)\n"
+    },
+    {
+      "name": "09 单字符命令与奇偶居中",
+      "input": "> A | [x] | d\n",
+      "expected": "RAW:\"> A | [x] | d\"\n--------------A---------------\nx\tD:E(68)\n"
+    },
+    {
+      "name": "10 超长命令不截断",
+      "input": "  >>*very_long_command_name_123456*  | [long] | e\n",
+      "expected": "RAW:\"  >>*very_long_command_name_123456*  | [long] | e\"\nvery_long_command_name_123456*\nlong\tE:F(69)\n"
+    },
+    {
+      "name": "11 大写与小写标记混测",
+      "input": " *sync | [db] | Q\n",
+      "expected": "RAW:\" *sync | [db] | Q\"\n-------------sync-------------\ndb\tQ:R(81)\n"
+    },
+    {
+      "name": "12 命令中间含大于号不剥离",
+      "input": " >>go>fast*  | [fast] | h\n",
+      "expected": "RAW:\" >>go>fast*  | [fast] | h\"\n-----------go>fast*-----------\nfast\tH:I(72)\n"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thinking with AI — Interactive Companion to Stanford CS193T</title>
+  <meta name="description" content="An unofficial, interactive study companion to Stanford's CS193T: Thinking with AI — 8 modules, 22 hands-on labs, self-checks, assignment missions and a final-project studio.">
+  <meta name="theme-color" content="#2f5bd3">
+  <meta property="og:title" content="Thinking with AI — Interactive Companion">
+  <meta property="og:description" content="Learn how AI works, prompt like a manager, wrangle context, direct agents, evaluate and count the cost — with interactive labs.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%232f5bd3'/%3E%3Cstop offset='1' stop-color='%236b4fc8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' text-anchor='middle' fill='white'%3ET%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>
+    // Apply saved/system theme before paint to avoid a flash.
+    (function () {
+      try {
+        var t = JSON.parse(localStorage.getItem('twai:app:theme'));
+        if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <a class="sr-only" href="#app">Skip to content</a>
+  <header class="topnav">
+    <div class="container">
+      <a class="brand" href="#/" aria-label="Thinking with AI — home">
+        <span class="brand-mark" aria-hidden="true">T</span>
+        <span>Thinking with AI<small>Interactive companion · CS193T</small></span>
+      </a>
+      <nav class="navlinks" id="navlinks" aria-label="Main">
+        <a href="#/" data-nav="home">Home</a>
+        <a href="#/modules" data-nav="modules">Modules</a>
+        <a href="#/labs" data-nav="labs">Labs</a>
+        <a href="#/assignments" data-nav="assignments">Missions</a>
+        <a href="#/project" data-nav="project">Project</a>
+        <a href="#/glossary" data-nav="glossary">Glossary</a>
+        <a href="#/resources" data-nav="resources">Resources</a>
+        <a href="#/journal" data-nav="journal">Journal</a>
+      </nav>
+      <button class="icon-btn" id="search-btn" type="button" aria-label="Search (press /)" title="Search (/)">⌕</button>
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Toggle dark mode" title="Toggle theme">◐</button>
+      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navlinks">☰</button>
+    </div>
+  </header>
+
+  <main id="app" tabindex="-1">
+    <noscript><div class="container section"><p>This interactive companion needs JavaScript enabled.</p></div></noscript>
+  </main>
+
+  <footer class="footer">
+    <div class="container stack">
+      <p><strong>Unofficial study companion.</strong> Not affiliated with or endorsed by Stanford University. CS193T: Thinking with AI is taught by Cynthia Bailey and the CS193T teaching team; course materials are © Stanford University and linked throughout — read the
+        <a href="https://cs193t.stanford.edu" target="_blank" rel="noopener">official course site</a> for the authoritative version. Summaries here are paraphrased for study; the interactive labs and quizzes are original.</p>
+      <p>Everything you type stays in your browser (localStorage). <a href="#/about">About this companion</a></p>
+    </div>
+  </footer>
+
+  <script type="module" src="assets/js/app.js"></script>
+</body>
+</html>

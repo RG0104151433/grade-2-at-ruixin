@@ -61,3 +61,8 @@
 #
 # 请在下面写你的代码：
 
+price, quantity, discount, shipping, paid = input().split()
+total = float(price) * int(quantity)
+actual = float(total) * (1 - int(discount) / 100) + float(shipping)
+change = float(paid) - float(actual)
+print(f"{total:.2f}\n{actual:.2f}\n{change:.2f}")

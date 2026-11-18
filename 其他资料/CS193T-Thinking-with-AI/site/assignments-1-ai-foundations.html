@@ -1,0 +1,877 @@
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+ 
+
+
+      <title>AI Foundations - </title>
+
+  <meta name="description" content="
+  Goal: get ready for the quarter!
+  
+    Forms — due Friday, September 25 at 11:59 pm Pacific.
+    Everything else — bring it to your tutorial in Week 2.
+  
+
+Hi everyone! And welcome to CS 193T. We are so excited to have you join us in this exploration of AI and the process of establishing your own personal boundaries around the roles you assign to AI in your work.
+Tutorial this week
+
+We won&rsquo;t have a formal tutorial this week. Instead, you&rsquo;re welcome to drop in either Thursday from 3:00–4:20 or Friday from 9:00–1:00 (both in CODA B80) for help setting up the AI software tools you&rsquo;ll need this quarter on your laptops. We&rsquo;ll have a bunch of TAs floating around and helping you, so please stop by if you&rsquo;d like help or are having any trouble!
+If you are not able to make it to the drop-in session, you will be fine using just the web-based Stanford AI Playground for the first two weeks. But for the sake of your future busy Week 3 self, we do highly recommend you get the tools installation taken care of this week.
+
+Assignment outline
+First, complete two forms: a welcome survey, and a survey of tutorial time preferences."><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "CS193T Thinking with AI",
+    
+    "url": "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/assignments\/1-ai-foundations\/",
+          "name": "Ai foundations"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : ""
+  },
+  "headline": "AI Foundations",
+  "description" : " Goal: get ready for the quarter!\nForms — due Friday, September 25 at 11:59 pm Pacific. Everything else — bring it to your tutorial in Week 2. Hi everyone! And welcome to CS 193T. We are so excited to have you join us in this exploration of AI and the process of establishing your own personal boundaries around the roles you assign to AI in your work.\nTutorial this week We won\u0026rsquo;t have a formal tutorial this week. Instead, you\u0026rsquo;re welcome to drop in either Thursday from 3:00–4:20 or Friday from 9:00–1:00 (both in CODA B80) for help setting up the AI software tools you\u0026rsquo;ll need this quarter on your laptops. We\u0026rsquo;ll have a bunch of TAs floating around and helping you, so please stop by if you\u0026rsquo;d like help or are having any trouble! If you are not able to make it to the drop-in session, you will be fine using just the web-based Stanford AI Playground for the first two weeks. But for the sake of your future busy Week 3 self, we do highly recommend you get the tools installation taken care of this week. Assignment outline First, complete two forms: a welcome survey, and a survey of tutorial time preferences.\n",
+  "inLanguage" : "en",
+  "wordCount":  1012 ,
+  "datePublished" : "2026-09-22T00:00:00-07:00",
+  "dateModified" : "2026-09-25T09:40:57-07:00",
+  "image" : "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/img\/SU_Seal_Red.png",
+  "keywords" : [ "" ],
+  "mainEntityOfPage" : "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/assignments\/1-ai-foundations\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/img\/SU_Seal_Red.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+
+<meta property="og:title" content="AI Foundations" />
+<meta property="og:description" content="
+  Goal: get ready for the quarter!
+  
+    Forms — due Friday, September 25 at 11:59 pm Pacific.
+    Everything else — bring it to your tutorial in Week 2.
+  
+
+Hi everyone! And welcome to CS 193T. We are so excited to have you join us in this exploration of AI and the process of establishing your own personal boundaries around the roles you assign to AI in your work.
+Tutorial this week
+
+We won&rsquo;t have a formal tutorial this week. Instead, you&rsquo;re welcome to drop in either Thursday from 3:00–4:20 or Friday from 9:00–1:00 (both in CODA B80) for help setting up the AI software tools you&rsquo;ll need this quarter on your laptops. We&rsquo;ll have a bunch of TAs floating around and helping you, so please stop by if you&rsquo;d like help or are having any trouble!
+If you are not able to make it to the drop-in session, you will be fine using just the web-based Stanford AI Playground for the first two weeks. But for the sake of your future busy Week 3 self, we do highly recommend you get the tools installation taken care of this week.
+
+Assignment outline
+First, complete two forms: a welcome survey, and a survey of tutorial time preferences.">
+<meta property="og:image" content="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/img/SU_Seal_Red.png" />
+<meta property="og:url" content="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/1-ai-foundations/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="CS193T Thinking with AI" />
+
+  <meta name="twitter:title" content="AI Foundations" />
+  <meta name="twitter:description" content="
+  Goal: get ready for the quarter!
+  
+    Forms — due Friday, September 25 at 11:59 pm Pacific.
+    Everything else — bring it to your tutorial in Week 2.
+  
+
+Hi everyone! And welcome to CS 193T. We …">
+  <meta name="twitter:image" content="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/img/SU_Seal_Red.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link href='https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/img/favicon_io/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.164.0">
+  <link rel="alternate" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/index.xml" type="application/rss+xml" title="CS193T Thinking with AI"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" integrity="sha384-h/hnnw1Bi4nbpD6kE7nYfCXzovi622sY5WBxww8ARKwpdLj5kUWjRuyiXaD1U2JT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/css/syntax.css" /><link rel="stylesheet" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/css/custom.css?v=18d110f4">
+
+
+
+
+
+<style>
+  div.solution { display: none; }
+  .solution pre { background-color: inherit; border: none; }
+  .solution .btn {
+    margin: 10px 0;
+  }
+  .solution .alert {
+    margin-top: 10px;
+  }
+</style>
+
+<style>
+ 
+:root { --bh-nav-height: 56px; }
+
+ 
+.navbar .navbar-collapse,
+.navbar .navbar-collapse.collapsing,
+.navbar .navbar-collapse.show {
+  max-height: calc(100vh - var(--bh-nav-height));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+ 
+@supports (height: 100svh) {
+  .navbar .navbar-collapse,
+  .navbar .navbar-collapse.collapsing,
+  .navbar .navbar-collapse.show {
+    max-height: calc(100svh - var(--bh-nav-height));
+  }
+}
+
+ 
+@media (max-width: 1199.98px) {
+  .navbar-nav .dropdown-menu {
+    position: static;
+    float: none;
+    max-height: 60vh;       
+    overflow-y: auto;
+  }
+}
+
+ 
+.dropdown-menu { z-index: 2000; }
+
+ 
+html, body { overflow-x: hidden; overflow-y: auto; }
+</style>
+
+
+    <link rel="stylesheet" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/katex/katex.min.css">
+    <script defer src="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/katex/katex.min.js"></script>
+    
+    <script defer src="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/katex/auto-render.min.js"
+        onload="renderMathInElement(document.body, {
+            delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '\\(', right: '\\)', display: false}
+            ]
+        });"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <a class="navbar-brand" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/">
+          
+            <img src="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/img/SU_Seal_Red.png"
+                 alt="CS193T Thinking with AI"
+                 style="display:inline-block; height:30px; margin-right:8px;" />
+          
+          CS193T Thinking with AI
+        </a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li class="navlinks-container" data-has-submenu="true">
+              <a
+                class="navlinks-parent"
+                role="button"
+                tabindex="0"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="submenu-course"
+              >Course<span class="sr-only"> (expand submenu)</span></a>
+
+              <div
+                class="navlinks-children"
+                role="menu"
+                aria-hidden="true"
+                id="submenu-course"
+              >
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/course/syllabus">Syllabus</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/course/faq">Common Questions</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/course/course_placement">Course Placement</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/course/getting_help">Getting Help</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/course/honor_code">Honor Code</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li class="navlinks-container" data-has-submenu="true">
+              <a
+                class="navlinks-parent"
+                role="button"
+                tabindex="0"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="submenu-resources"
+              >Resources<span class="sr-only"> (expand submenu)</span></a>
+
+              <div
+                class="navlinks-children"
+                role="menu"
+                aria-hidden="true"
+                id="submenu-resources"
+              >
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/resources/ethical_ai_tools">Ethical AI Tools</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/resources/optional_extra_readings">Optional Extra Readings</a>
+                
+                  <a role="menuitem" href="https://edstem.org/us/courses/100775/discussion">Ed Discussion Forum</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li class="navlinks-container" data-has-submenu="true">
+              <a
+                class="navlinks-parent"
+                role="button"
+                tabindex="0"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="submenu-lectures"
+              >Lectures<span class="sr-only"> (expand submenu)</span></a>
+
+              <div
+                class="navlinks-children"
+                role="menu"
+                aria-hidden="true"
+                id="submenu-lectures"
+              >
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/01-welcome/">Lecture 1: Introduction to AI</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/02-prompting/">Lecture 2: Core Prompting</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/03-context/">Lecture 3: Managing Sources</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/04-research-guests/">Lecture 4: Guest Panel Speakers</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/05-agents/">Lecture 5: AI Taking Action</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/06-control-ai/">Lecture 6: Control Your AI</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/07-budget/">Lecture 7: Count the Cost</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/08-learning/">Lecture 8: Staying Sharp</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li class="navlinks-container" data-has-submenu="true">
+              <a
+                class="navlinks-parent"
+                role="button"
+                tabindex="0"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="submenu-assignments"
+              >Assignments<span class="sr-only"> (expand submenu)</span></a>
+
+              <div
+                class="navlinks-children"
+                role="menu"
+                aria-hidden="true"
+                id="submenu-assignments"
+              >
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/course/about_assignments/">About Assignments</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/1-ai-foundations/">Assignment 1: AI Foundations</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/2-models-prompting/">Assignment 2: Models &#43; Prompting</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/3-managing-sources/">Assignment 3: Managing Sources &#43; Context</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/4a-deep-research/">Assignment 4A: Deep Research</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/4b-claude-science/">Assignment 4B: Claude Science</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/5a-cowork/">Assignment 5A: ChatGPT Work / Claude Cowork</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/5b-browser-agents/">Assignment 5B: ChatGPT in Chrome / Claude in Chrome</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/6-coding-agents/">Assignment 6: Claude Code and Codex</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/7-evals/">Assignment 7: Evals: Grading the Graders</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/8-apis/">Assignment 8: APIs and API Keys</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/9-voice-skills/">Assignment 9: Your Voice, Your Skills, and Your Project</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li class="navlinks-container" data-has-submenu="true">
+              <a
+                class="navlinks-parent"
+                role="button"
+                tabindex="0"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="submenu-final_project"
+              >Final Project<span class="sr-only"> (expand submenu)</span></a>
+
+              <div
+                class="navlinks-children"
+                role="menu"
+                aria-hidden="true"
+                id="submenu-final_project"
+              >
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/final_project/early_advice">Early Advice</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/final_project/rubric">Rubric</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/final_project/posters">Poster Resources</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li class="navlinks-container" data-has-submenu="true">
+              <a
+                class="navlinks-parent"
+                role="button"
+                tabindex="0"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="submenu-tutorials"
+              >Tutorials<span class="sr-only"> (expand submenu)</span></a>
+
+              <div
+                class="navlinks-children"
+                role="menu"
+                aria-hidden="true"
+                id="submenu-tutorials"
+              >
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/course/about_tutorial/">About Tutorial</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li>
+              <a title="🗓Schedule" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/schedule">🗓Schedule</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+  </div>
+
+  
+  <script defer src="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/js/nav-a11y.js"></script>
+</nav>
+
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+      <div class="intro-header no-img">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+              <div class="assignments-heading">
+                <div class="brand-line">
+                  
+                  <div class="brand-text">
+                    
+                      <h1 class="site-header-title">AI Foundations</h1>
+                    
+
+                    
+                  </div>
+                </div>
+
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  </header>
+
+
+<style>
+.brand-line{ display:flex; align-items:center; gap:12px; flex-wrap:nowrap; }
+.brand-seal{ width:150px; height:auto; flex:0 0 auto; }
+.brand-text{ display:flex; flex-direction:column; }
+@media (max-width:480px){ .brand-seal{ width:44px; } }
+</style>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <div class="assignment-meta">
+  <p><strong>Goal: get ready for the quarter!</strong></p>
+  <ul>
+    <li><strong>Forms</strong> — due Friday, September 25 at 11:59 pm Pacific.</li>
+    <li><strong>Everything else</strong> — bring it to your tutorial in Week 2.</li>
+  </ul>
+</div>
+<p>Hi everyone! And welcome to CS 193T. We are so excited to have you join us in this exploration of AI and the process of establishing your own personal boundaries around the roles you assign to AI in your work.</p>
+<h2 id="tutorial-this-week">Tutorial this week</h2>
+<ul>
+<li><strong>We won&rsquo;t have a formal tutorial this week.</strong> Instead, you&rsquo;re welcome to drop in either <strong>Thursday from 3:00–4:20</strong> or <strong>Friday from 9:00–1:00</strong> (both in CODA B80) for help setting up the AI software tools you&rsquo;ll need this quarter on your laptops. We&rsquo;ll have a bunch of TAs floating around and helping you, so please stop by if you&rsquo;d like help or are having any trouble!</li>
+<li>If you are not able to make it to the drop-in session, you will be fine using just the web-based <a href="https://aiplayground-prod2.stanford.edu/login">Stanford AI Playground</a> for the first two weeks. <em>But for the sake of your future busy Week 3 self, we do highly recommend you get the tools installation taken care of this week.</em></li>
+</ul>
+<h2 id="assignment-outline">Assignment outline</h2>
+<p>First, complete two forms: a <a href="https://forms.gle/TXmdJ4JfQXe2tXeG6">welcome survey</a>, and a <a href="https://forms.gle/pvWGiNhzQJ7LLdiD8">survey of tutorial time preferences</a>.</p>
+<p>Throughout the quarter, your homework for the week will be split into two parts:</p>
+<ul>
+<li><strong>AI tool work</strong>: a demonstration of your work with an AI tool.</li>
+<li><strong>Reflection</strong>: a reflection about your experience using AI tools that week, or issues around AI use.</li>
+</ul>
+<p>You&rsquo;ll use both of these deliverables as the starting point for the conversation you&rsquo;ll have with your TA next tutorial.</p>
+<h2 id="part-1-complete-required-forms">Part 1: Complete required forms</h2>
+<ul>
+<li>Tutorial preferences: <a href="https://forms.gle/pvWGiNhzQJ7LLdiD8">https://forms.gle/pvWGiNhzQJ7LLdiD8</a></li>
+<li>Welcome survey: <a href="https://forms.gle/TXmdJ4JfQXe2tXeG6">https://forms.gle/TXmdJ4JfQXe2tXeG6</a></li>
+</ul>
+<h2 id="part-2-ai-tool-work">Part 2: AI tool work</h2>
+<p>Go to the <a href="https://aiplayground-prod2.stanford.edu/login">Stanford AI Playground</a>, choose your favorite chatbot (ChatGPT, Claude, etc), and start a brand new chat. Write an opening prompt telling it to thread the needle of helping you with your homework—but not too much!—and also never hallucinating wrong information about the homework topic. Do your best to make it a prompt you think it will adhere to (i.e., make it emphatic, specific, authoritative, etc, as you see fit to achieve the goal of making it stick).</p>
+<p>After that opening prompt, continue the conversation and try to stress-test the system&rsquo;s adherence to your instructions. Ask yourself:</p>
+<ul>
+<li>How does it do?</li>
+<li>After asking it not to help too much, does it resist your pleas for excessive help or give in when you push?</li>
+<li>Is everything it says factual?</li>
+<li>What strategies did you use for both your original prompt and your attempts to push it to give in?</li>
+<li>As an extra exercise, re-run the experiment using different strength models from the same vendor (e.g., Haiku vs Sonnet vs Opus) and/or other vendors&rsquo; models. Compare how each performs relative to the others.</li>
+</ul>
+<p><strong>Turn-in procedure:</strong> Save your full chat transcript(s) to PDF (or screenshot) and upload to <a href="https://www.gradescope.com/courses/1398766">Gradescope</a>. Regardless of whether you&rsquo;re in the AI Playground or the ChatGPT/Claude/Gemini/etc UI, you can either copy and paste your responses or save it as a PDF (command + P on a Mac). You may also share especially interesting snippets with your classmates on <a href="https://edstem.org/us/courses/100775/discussion/8298447">Ed</a>, if you want!</p>
+<h2 id="part-3-reflection">Part 3: Reflection</h2>
+<p>Answer <strong>at least one</strong> of the questions below and get ready to talk about it in tutorial as an icebreaker!</p>
+<!-- Raw HTML: markdown has no lettered-list marker, so keep this as-is. -->
+<ol>
+  <li>Write down what you think the AI portion of the Honor Code policy for this course should be. A few situations to consider (no need to answer them all). You are welcome to share your syllabus policy concepts with your classmates in this <a href="https://edstem.org/us/courses/100775/discussion/8284519">Ed discussion board megathread</a>. 
+    <ol type="a">
+      <li>What if I ask you to journal your experiences using AI to study a topic, reflecting on whether that use impacted your learning positively or negatively, and turn in your journal entry?</li>
+      <li>AI scans your journal entry for typos?</li>
+      <li>AI writes the entry from an outline of your ideas?</li>
+      <li>AI writes it entirely?</li>
+      <li>Should the answers change for ESL students, or students with writing disabilities (e.g., dyslexia)?</li>
+      <li>What is a reasonable way to detect violations of the policy? What is a reasonable consequence? Should there be warning(s) before consequences?</li>
+    </ol>
+  </li>
+  <li>What is one skill you currently have, which you plan to use AI to increase productivity in, and that you want to keep sharp?
+    <ol type="a">
+      <li>What mechanisms could you put in place to monitor, like a smoke detector, when that skill may be slowly, subtly dulling?</li>
+    </ol>
+  </li>
+</ol>
+<p><strong>Be ready to discuss with your TA:</strong> N/A for this week.</p>
+<h2 id="technology-setup">Technology setup</h2>
+<p>This part of the assignment involves requesting access to premium Gemini/Claude/ChatGPT versions (free to Stanford students, staff, and faculty via Stanford enterprise subscriptions), as well as setting up your coding agent of choice.</p>
+<p>The step-by-step walkthrough is screenshot-heavy, so it lives in the PDF:</p>
+<p>📄 <strong><a href="assignment1-ai-foundations.pdf">Assignment 1 — full instructions with setup screenshots</a></strong></p>
+<p>The quick links, if you&rsquo;d rather skip straight to the request forms:</p>
+<table>
+	<thead>
+			<tr>
+					<th>Tool</th>
+					<th>Students</th>
+					<th>Visiting scholars, affiliates, fellows, other</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Claude for Education</td>
+					<td><a href="https://stanford.service-now.com/it_services/en/request-a-claude-for-education-standard-license?id=sc_cat_item&amp;sys_id=d0605d9c2b558b10ee36fd3fc891bfe2">Request a license</a></td>
+					<td><a href="https://stanford.service-now.com/it_services/en/add-claude-for-education-standard-monthly?id=sc_cat_item&amp;sys_id=e1d03e6787068310c5ea52073cbb35c5">Request access</a></td>
+			</tr>
+			<tr>
+					<td>Google Gemini</td>
+					<td>Go straight to <a href="https://aiworkspace.stanford.edu/">aiworkspace.stanford.edu</a></td>
+					<td><a href="https://stanford.service-now.com/it_services/en/add-gemini-standard-monthly?id=sc_cat_item&amp;sys_id=d6d3e7b487d64f10c5ea52073cbb35c9">Request access</a></td>
+			</tr>
+			<tr>
+					<td>OpenAI ChatGPT Edu</td>
+					<td><a href="https://stanford.service-now.com/it_services/en/request-a-chatgpt-edu-standard-license?id=sc_cat_item&amp;sys_id=0c3324ad2be5cf90ee36fd3fc891bf6f">Request a license</a></td>
+					<td><a href="https://stanford.service-now.com/it_services/en/add-chatgpt-edu-standard-monthly?id=sc_cat_item&amp;sys_id=d52e16ab87028310c5ea52073cbb35d4">Request access</a></td>
+			</tr>
+	</tbody>
+</table>
+<p>There is a higher paid tier available for each of these, but you will not need it in this class.</p>
+<h3 id="coding-agents">Coding agents</h3>
+<p>Later on in this class we&rsquo;ll be working with coding agents, and we will be supporting students doing agentic workflows. You won&rsquo;t need these tools for several weeks, but if you&rsquo;d like to get a head start, the installation instructions are in the PDF above.</p>
+<p>You&rsquo;re welcome to choose whichever one you want, or all three. For Claude Code and Codex you&rsquo;ll need your coding agent set up on your computer, <strong>within the terminal</strong>. If you are not familiar with working in the terminal, you may be more comfortable with Gemini workflows, which do not require terminal use. If you run into bugs, you&rsquo;re welcome to paste your errors into your favorite LLM and try getting help that way — or come to the drop-in help hours above.</p>
+<p><strong>Other resources</strong></p>
+<ul>
+<li>If you&rsquo;ve never used a terminal before: <a href="https://code.claude.com/docs/en/terminal-guide">Claude Code terminal guide</a></li>
+<li>Setup guides: <a href="https://code.claude.com/docs/en/quickstart">Claude Code quickstart</a> · <a href="https://learn.chatgpt.com/docs/codex/cli#getting-started">Codex CLI getting started</a></li>
+</ul>
+
+
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+          
+            <li class="next">
+              <a href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/2-models-prompting/" data-toggle="tooltip" data-placement="top" title="Models &#43; Prompting">Next Assignment &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+
+    </div>
+  </div>
+</div>
+
+      <footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+		
+		  <a href="mailto:cbl@stanford.edu" title="Email me">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2026
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/">CS193T Thinking with AI</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.164.0</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<script src="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/js/main.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+
+<script src="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/js/download-code.js"></script>
+
+
+<script>
+(function () {
+  var nav = document.querySelector('.navbar');
+  if (nav) {
+    var h = nav.getBoundingClientRect().height || 56;
+    document.documentElement.style.setProperty('--bh-nav-height', Math.round(h) + 'px');
+  }
+
+  var openState = { menu: null, toggle: null };
+
+  function onShow(e) {
+    var toggle = e.target.closest ? e.target.closest('.dropdown-toggle') : e.target;
+    if (!toggle) return;
+    var menu = toggle.nextElementSibling;
+    if (!menu || !menu.classList.contains('dropdown-menu')) return;
+
+    
+    var r = toggle.getBoundingClientRect();
+    menu.dataset._originalParent = menu.parentElement;
+    document.body.appendChild(menu);
+
+    var bottomPad = 8;
+    var maxH = Math.max(120, (window.innerHeight || document.documentElement.clientHeight) - r.bottom - bottomPad);
+    var minW = Math.max(r.width, 200);
+
+    Object.assign(menu.style, {
+      position: 'fixed',
+      left: r.left + 'px',
+      top: r.bottom + 'px',
+      minWidth: minW + 'px',
+      maxHeight: maxH + 'px',
+      overflowY: 'auto',
+      WebkitOverflowScrolling: 'touch',
+      display: 'block',
+      visibility: 'visible'
+    });
+
+    function onResize() {
+      var rr = toggle.getBoundingClientRect();
+      var maxH2 = Math.max(120, (window.innerHeight || document.documentElement.clientHeight) - rr.bottom - bottomPad);
+      menu.style.left = rr.left + 'px';
+      menu.style.top = rr.bottom + 'px';
+      menu.style.maxHeight = maxH2 + 'px';
+      menu.style.minWidth = Math.max(rr.width, 200) + 'px';
+    }
+    menu._resizeHandler = onResize;
+    window.addEventListener('resize', onResize);
+
+    openState.menu = menu;
+    openState.toggle = toggle;
+  }
+
+  function onHide() {
+    var menu = openState.menu;
+    if (!menu) return;
+
+    if (menu.dataset._originalParent) {
+      menu.dataset._originalParent.appendChild(menu);
+      delete menu.dataset._originalParent;
+    }
+    if (menu._resizeHandler) {
+      window.removeEventListener('resize', menu._resizeHandler);
+      delete menu._resizeHandler;
+    }
+    menu.removeAttribute('style');
+
+    openState.menu = null;
+    openState.toggle = null;
+  }
+
+  document.addEventListener('show.bs.dropdown', onShow, true);
+  document.addEventListener('hide.bs.dropdown', onHide, true);
+
+  
+  document.addEventListener('click', function (evt) {
+    var t = evt.target;
+    if (t.matches && (t.matches('.dropdown-toggle') || t.closest('.dropdown-toggle'))) {
+      if (!('bs' in window) && !('bootstrap' in window)) setTimeout(function(){ onShow({target: t}); }, 0);
+    }
+    
+    if (openState.menu && !openState.menu.contains(t) && !(openState.toggle && t.closest('.dropdown'))) {
+      onHide();
+    }
+  }, true);
+})();
+</script>
+
+
+<script>
+  $(document).ready(function() {
+    
+    var showtime = $("div.showtime").attr("when");
+    var anchor = $("div.showtime").attr("data-anchor");
+    
+    console.log("Solution debug - showtime:", showtime, "anchor:", anchor, "URL:", window.location.href);
+    
+    if (showtime) {
+      var now = new Date();
+      var gate;
+      
+      
+      try {
+        gate = new Date(showtime);
+        if (isNaN(gate.getTime())) {
+          console.log("Could not parse date:", showtime);
+          gate = new Date(0); 
+        }
+      } catch (e) {
+        console.log("Could not parse date:", showtime);
+        gate = new Date(0); 
+      }
+      
+      var shouldShow = now >= gate;
+      console.log("Time check - now:", now, "gate:", gate, "shouldShow from time:", shouldShow);
+      
+      if (anchor && anchor !== "#secret") {
+        var urlContainsAnchor = window.location.href.includes(anchor);
+        shouldShow = shouldShow || urlContainsAnchor;
+        console.log("URL check - anchor:", anchor, "URL contains anchor:", urlContainsAnchor, "final shouldShow:", shouldShow);
+      }
+      
+      if (shouldShow) {
+        console.log("Showing solutions");
+        $("div.solution").show();
+      } else {
+        console.log("Hiding solutions");
+      }
+    } else {
+      console.log("No showtime found, solutions will be hidden by default");
+    }
+  });
+</script>
+
+
+
+    
+  </body>
+</html>
+

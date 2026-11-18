@@ -1,0 +1,833 @@
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+ 
+
+
+      <title>Claude Code and Codex - </title>
+
+  <meta name="description" content="
+  Goals: use a coding agent to build something useful or explore an advanced feature!
+  
+    Gradescope — submit the indicated portions by Sunday, November 1 at 11:59 pm Pacific.
+    Tutorial — be ready to discuss your work with your TA during tutorial in Week 7.
+  
+
+Hi all! We will start by meeting classmates with related project interests, then give you time to build with Claude Code or Codex. If you already use these tools, choose an advanced feature you haven&rsquo;t tried before."><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "CS193T Thinking with AI",
+    
+    "url": "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/assignments\/6-coding-agents\/",
+          "name": "Claude code and codex"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : ""
+  },
+  "headline": "Claude Code and Codex",
+  "description" : " Goals: use a coding agent to build something useful or explore an advanced feature!\nGradescope — submit the indicated portions by Sunday, November 1 at 11:59 pm Pacific. Tutorial — be ready to discuss your work with your TA during tutorial in Week 7. Hi all! We will start by meeting classmates with related project interests, then give you time to build with Claude Code or Codex. If you already use these tools, choose an advanced feature you haven\u0026rsquo;t tried before.\n",
+  "inLanguage" : "en",
+  "wordCount":  1060 ,
+  "datePublished" : "2026-10-27T00:00:00-07:00",
+  "dateModified" : "2026-10-27T14:15:06-07:00",
+  "image" : "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/img\/SU_Seal_Red.png",
+  "keywords" : [ "" ],
+  "mainEntityOfPage" : "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/assignments\/6-coding-agents\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/img\/SU_Seal_Red.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+
+<meta property="og:title" content="Claude Code and Codex" />
+<meta property="og:description" content="
+  Goals: use a coding agent to build something useful or explore an advanced feature!
+  
+    Gradescope — submit the indicated portions by Sunday, November 1 at 11:59 pm Pacific.
+    Tutorial — be ready to discuss your work with your TA during tutorial in Week 7.
+  
+
+Hi all! We will start by meeting classmates with related project interests, then give you time to build with Claude Code or Codex. If you already use these tools, choose an advanced feature you haven&rsquo;t tried before.">
+<meta property="og:image" content="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/img/SU_Seal_Red.png" />
+<meta property="og:url" content="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/6-coding-agents/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="CS193T Thinking with AI" />
+
+  <meta name="twitter:title" content="Claude Code and Codex" />
+  <meta name="twitter:description" content="
+  Goals: use a coding agent to build something useful or explore an advanced feature!
+  
+    Gradescope — submit the indicated portions by Sunday, November 1 at 11:59 pm Pacific.
+    Tutorial — be …">
+  <meta name="twitter:image" content="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/img/SU_Seal_Red.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link href='https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/img/favicon_io/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.164.0">
+  <link rel="alternate" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/index.xml" type="application/rss+xml" title="CS193T Thinking with AI"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" integrity="sha384-h/hnnw1Bi4nbpD6kE7nYfCXzovi622sY5WBxww8ARKwpdLj5kUWjRuyiXaD1U2JT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/css/syntax.css" /><link rel="stylesheet" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/css/custom.css?v=18d110f4">
+
+
+
+
+
+<style>
+  div.solution { display: none; }
+  .solution pre { background-color: inherit; border: none; }
+  .solution .btn {
+    margin: 10px 0;
+  }
+  .solution .alert {
+    margin-top: 10px;
+  }
+</style>
+
+<style>
+ 
+:root { --bh-nav-height: 56px; }
+
+ 
+.navbar .navbar-collapse,
+.navbar .navbar-collapse.collapsing,
+.navbar .navbar-collapse.show {
+  max-height: calc(100vh - var(--bh-nav-height));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+ 
+@supports (height: 100svh) {
+  .navbar .navbar-collapse,
+  .navbar .navbar-collapse.collapsing,
+  .navbar .navbar-collapse.show {
+    max-height: calc(100svh - var(--bh-nav-height));
+  }
+}
+
+ 
+@media (max-width: 1199.98px) {
+  .navbar-nav .dropdown-menu {
+    position: static;
+    float: none;
+    max-height: 60vh;       
+    overflow-y: auto;
+  }
+}
+
+ 
+.dropdown-menu { z-index: 2000; }
+
+ 
+html, body { overflow-x: hidden; overflow-y: auto; }
+</style>
+
+
+    <link rel="stylesheet" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/katex/katex.min.css">
+    <script defer src="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/katex/katex.min.js"></script>
+    
+    <script defer src="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/katex/auto-render.min.js"
+        onload="renderMathInElement(document.body, {
+            delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '\\(', right: '\\)', display: false}
+            ]
+        });"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <a class="navbar-brand" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/">
+          
+            <img src="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/img/SU_Seal_Red.png"
+                 alt="CS193T Thinking with AI"
+                 style="display:inline-block; height:30px; margin-right:8px;" />
+          
+          CS193T Thinking with AI
+        </a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li class="navlinks-container" data-has-submenu="true">
+              <a
+                class="navlinks-parent"
+                role="button"
+                tabindex="0"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="submenu-course"
+              >Course<span class="sr-only"> (expand submenu)</span></a>
+
+              <div
+                class="navlinks-children"
+                role="menu"
+                aria-hidden="true"
+                id="submenu-course"
+              >
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/course/syllabus">Syllabus</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/course/faq">Common Questions</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/course/course_placement">Course Placement</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/course/getting_help">Getting Help</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/course/honor_code">Honor Code</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li class="navlinks-container" data-has-submenu="true">
+              <a
+                class="navlinks-parent"
+                role="button"
+                tabindex="0"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="submenu-resources"
+              >Resources<span class="sr-only"> (expand submenu)</span></a>
+
+              <div
+                class="navlinks-children"
+                role="menu"
+                aria-hidden="true"
+                id="submenu-resources"
+              >
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/resources/ethical_ai_tools">Ethical AI Tools</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/resources/optional_extra_readings">Optional Extra Readings</a>
+                
+                  <a role="menuitem" href="https://edstem.org/us/courses/100775/discussion">Ed Discussion Forum</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li class="navlinks-container" data-has-submenu="true">
+              <a
+                class="navlinks-parent"
+                role="button"
+                tabindex="0"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="submenu-lectures"
+              >Lectures<span class="sr-only"> (expand submenu)</span></a>
+
+              <div
+                class="navlinks-children"
+                role="menu"
+                aria-hidden="true"
+                id="submenu-lectures"
+              >
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/01-welcome/">Lecture 1: Introduction to AI</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/02-prompting/">Lecture 2: Core Prompting</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/03-context/">Lecture 3: Managing Sources</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/04-research-guests/">Lecture 4: Guest Panel Speakers</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/05-agents/">Lecture 5: AI Taking Action</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/06-control-ai/">Lecture 6: Control Your AI</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/07-budget/">Lecture 7: Count the Cost</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/08-learning/">Lecture 8: Staying Sharp</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li class="navlinks-container" data-has-submenu="true">
+              <a
+                class="navlinks-parent"
+                role="button"
+                tabindex="0"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="submenu-assignments"
+              >Assignments<span class="sr-only"> (expand submenu)</span></a>
+
+              <div
+                class="navlinks-children"
+                role="menu"
+                aria-hidden="true"
+                id="submenu-assignments"
+              >
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/course/about_assignments/">About Assignments</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/1-ai-foundations/">Assignment 1: AI Foundations</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/2-models-prompting/">Assignment 2: Models &#43; Prompting</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/3-managing-sources/">Assignment 3: Managing Sources &#43; Context</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/4a-deep-research/">Assignment 4A: Deep Research</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/4b-claude-science/">Assignment 4B: Claude Science</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/5a-cowork/">Assignment 5A: ChatGPT Work / Claude Cowork</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/5b-browser-agents/">Assignment 5B: ChatGPT in Chrome / Claude in Chrome</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/6-coding-agents/">Assignment 6: Claude Code and Codex</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/7-evals/">Assignment 7: Evals: Grading the Graders</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/8-apis/">Assignment 8: APIs and API Keys</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/9-voice-skills/">Assignment 9: Your Voice, Your Skills, and Your Project</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li class="navlinks-container" data-has-submenu="true">
+              <a
+                class="navlinks-parent"
+                role="button"
+                tabindex="0"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="submenu-final_project"
+              >Final Project<span class="sr-only"> (expand submenu)</span></a>
+
+              <div
+                class="navlinks-children"
+                role="menu"
+                aria-hidden="true"
+                id="submenu-final_project"
+              >
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/final_project/early_advice">Early Advice</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/final_project/rubric">Rubric</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/final_project/posters">Poster Resources</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li class="navlinks-container" data-has-submenu="true">
+              <a
+                class="navlinks-parent"
+                role="button"
+                tabindex="0"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="submenu-tutorials"
+              >Tutorials<span class="sr-only"> (expand submenu)</span></a>
+
+              <div
+                class="navlinks-children"
+                role="menu"
+                aria-hidden="true"
+                id="submenu-tutorials"
+              >
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/course/about_tutorial/">About Tutorial</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li>
+              <a title="🗓Schedule" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/schedule">🗓Schedule</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+  </div>
+
+  
+  <script defer src="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/js/nav-a11y.js"></script>
+</nav>
+
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+      <div class="intro-header no-img">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+              <div class="assignments-heading">
+                <div class="brand-line">
+                  
+                  <div class="brand-text">
+                    
+                      <h1 class="site-header-title">Claude Code and Codex</h1>
+                    
+
+                    
+                  </div>
+                </div>
+
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  </header>
+
+
+<style>
+.brand-line{ display:flex; align-items:center; gap:12px; flex-wrap:nowrap; }
+.brand-seal{ width:150px; height:auto; flex:0 0 auto; }
+.brand-text{ display:flex; flex-direction:column; }
+@media (max-width:480px){ .brand-seal{ width:44px; } }
+</style>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <div class="assignment-meta">
+  <p><strong>Goals: use a coding agent to build something useful or explore an advanced feature!</strong></p>
+  <ul>
+    <li><strong>Gradescope</strong> — submit the indicated portions by Sunday, November 1 at 11:59 pm Pacific.</li>
+    <li><strong>Tutorial</strong> — be ready to discuss your work with your TA during tutorial in Week 7.</li>
+  </ul>
+</div>
+<p>Hi all! We will start by meeting classmates with related project interests, then give you time to build with Claude Code or Codex. If you already use these tools, choose an advanced feature you haven&rsquo;t tried before.</p>
+<p>Our tech talk will use Piper&rsquo;s running app to show how a coding agent moves from a request to changes in files and a working result. This week, you will try that process yourself and check one part of what you made.</p>
+<p>📄 <strong><a href="assignment6-coding-agents.pdf">Assignment 6 — full instructions (PDF)</a></strong></p>
+<h2 id="assignment-outline">Assignment outline</h2>
+<p>This document is intended to be started in tutorial and completed for homework if necessary. Work through it in the order given.</p>
+<ul>
+<li>Meet classmates with related project interests</li>
+<li>Build a website or apply an advanced feature to a concrete task</li>
+<li>Determine what went wrong</li>
+<li>Submit a short account of your exploration and a reflection</li>
+</ul>
+<h2 id="part-1-tutorial-group-work">Part 1: Tutorial group work</h2>
+<h3 id="group-activity-1--find-your-mini-squad">Group Activity 1 — Find your mini squad</h3>
+<p>Choose your favorite idea (or two!) and spend about 10 minutes adding yourself to our shared project-interest slide deck and meeting people with related interests. The deck is organized by broad realms, with an &ldquo;Other / still exploring&rdquo; slide if you aren&rsquo;t sure where to start.</p>
+<p>For example: <em>Piper — running and fitness — interested in making Garmin/Strava data more useful — open to chatting!</em></p>
+<p><strong>Deck:</strong> <a href="https://docs.google.com/presentation/d/1qhMrOvR8dKPRU73t5BQkeXUL3d6rmLAgxjYdrVkQb78/edit?usp=sharing">CS193 Project Squad Finding</a></p>
+<p>Add your name, tutorial and something you&rsquo;re interested in. You may also add a possible project idea and your email or preferred contact information. If you see someone in your tutorial adding to the same idea, you&rsquo;re welcome to go talk to them!</p>
+<p>Keep using the deck after tutorial! You can update your idea or reach out to classmates throughout the project. Adding your name expresses interest; it does not commit you to an idea or a group.</p>
+<p><strong>Deliverable:</strong> You don&rsquo;t need to submit anything for this portion of the assignment.</p>
+<h2 id="part-2-individual-ai-tool-work">Part 2: Individual AI tool work</h2>
+<p>Use Claude Code or Codex to try one of the options below. If you&rsquo;re new to coding agents, start with the website option. If you already use them comfortably, choose an advanced feature that is new to you. Apply it to something concrete that you would actually find useful; it can relate to your final project, but it doesn&rsquo;t have to.</p>
+<p>Before starting, decide: What do you want to make or do, and what would a working result look like? Use the tool to work with project files and run what you make. A regular chat that only gives you suggested code is not the same experience.</p>
+<h3 id="option-1--build-a-website">Option 1 — Build a website</h3>
+<p><em>Beginner; Claude Code or Codex.</em> Choose something you&rsquo;d like to have: a personal homepage, a project site, or a page for a club or event. Use the tool to build it, try running it locally, and make changes through conversation.</p>
+<h3 id="option-2--build-a-custom-skill">Option 2 — Build a custom skill</h3>
+<p><em>Claude Code or Codex.</em> Create a reusable procedure for a task related to your interests. Include instructions and supporting materials, such as a template, reference document, or script, then apply it to a real task. For example, make a skill for processing activity exports or preparing files in a format your project needs.</p>
+<h3 id="option-3--create-specialist-subagents">Option 3 — Create specialist subagents</h3>
+<p><em>Claude Code or Codex.</em> Design agents with different responsibilities, such as exploring a codebase, implementing a feature, and reviewing changes. Give them a concrete task and figure out how to divide the work and pass information between them. Pay attention to your role as the conductor of their work.</p>
+<h3 id="option-4--make-a-rule-executable-with-hooks">Option 4 — Make a rule executable with hooks</h3>
+<p><em>Claude Code.</em> Configure an action that runs automatically at a particular point in the agent&rsquo;s work. For example, validate generated data after an edit or run a required check when Claude tries to finish. Choose a rule that matters for your task and demonstrate the hook running.</p>
+<h3 id="option-5--give-your-agent-a-new-tool-through-mcp">Option 5 — Give your agent a new tool through MCP</h3>
+<p><em>Claude Code or Codex.</em> Build a small Model Context Protocol (MCP) server that connects the agent to information or actions relevant to your project, such as querying a database or searching a local collection. Use the new tool to accomplish something concrete.</p>
+<h3 id="option-6--explore-parallel-approaches-with-worktrees">Option 6 — Explore parallel approaches with worktrees</h3>
+<p><em>Codex; requires a Git project.</em> Give separate agent conversations their own copies of a project, then have them pursue different approaches to the same feature. Act as the conductor: inspect the results and decide which approach you want to continue.</p>
+<p><strong>Deliverable,</strong> all copy and pasted into Gradescope:</p>
+<ol>
+<li>Name the tool and concrete task you chose.</li>
+<li>Copy and paste your opening prompt.</li>
+<li>Write a short paragraph explaining what you tried, what you made or changed, and one thing you noticed about how the agent worked.</li>
+</ol>
+<h2 id="part-3-non-ai-tool-work">Part 3: Non-AI tool work</h2>
+<h3 id="what-went-wrong">What went wrong?</h3>
+<p>As you work, keep track of something that went wrong or surprised you. What did you expect, and what actually happened? We&rsquo;ll use these examples next week to guide our work on evaluating AI tools.</p>
+<p><strong>Deliverable,</strong> in a 4–6 sentence paragraph copied and pasted into Gradescope:</p>
+<ol>
+<li>Include a failure, unexpected result, or surprise you found while working with your coding agent. If everything seemed to work, identify something you have not yet checked.</li>
+</ol>
+<h2 id="part-4-reflection--building-and-directing">Part 4: Reflection — Building and directing</h2>
+<p>Write one short paragraph, approximately 4–6 sentences, responding to at least one of the mini questions below about what happened when you began using an agent:</p>
+<blockquote>
+<p>What did you need to understand or decide yourself while the agent worked? When did you feel like the builder, and when did you feel like a conductor directing the work? If someone else began relying on what you made, what would you want to understand, check, or maintain before feeling comfortable sharing it?</p>
+</blockquote>
+<p><strong>Deliverable:</strong> Copy and paste your reflection into Gradescope.</p>
+<h2 id="submission">Submission</h2>
+<p>You should have three items to submit to <a href="https://www.gradescope.com/courses/1398766">Gradescope</a>. Be ready to discuss these with your TA next week:</p>
+<ol>
+<li>Your exploration account, including your tool, task, and opening prompt. Also include what you tried/changed.</li>
+<li>A failure or unexpected result you saw when working with your agent.</li>
+<li>Your reflection!</li>
+</ol>
+
+
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/5b-browser-agents/" data-toggle="tooltip" data-placement="top" title="ChatGPT in Chrome / Claude in Chrome">&larr; Previous Assignment</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/7-evals/" data-toggle="tooltip" data-placement="top" title="Evals: Grading the Graders">Next Assignment &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+
+    </div>
+  </div>
+</div>
+
+      <footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+		
+		  <a href="mailto:cbl@stanford.edu" title="Email me">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2026
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/">CS193T Thinking with AI</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.164.0</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<script src="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/js/main.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+
+<script src="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/js/download-code.js"></script>
+
+
+<script>
+(function () {
+  var nav = document.querySelector('.navbar');
+  if (nav) {
+    var h = nav.getBoundingClientRect().height || 56;
+    document.documentElement.style.setProperty('--bh-nav-height', Math.round(h) + 'px');
+  }
+
+  var openState = { menu: null, toggle: null };
+
+  function onShow(e) {
+    var toggle = e.target.closest ? e.target.closest('.dropdown-toggle') : e.target;
+    if (!toggle) return;
+    var menu = toggle.nextElementSibling;
+    if (!menu || !menu.classList.contains('dropdown-menu')) return;
+
+    
+    var r = toggle.getBoundingClientRect();
+    menu.dataset._originalParent = menu.parentElement;
+    document.body.appendChild(menu);
+
+    var bottomPad = 8;
+    var maxH = Math.max(120, (window.innerHeight || document.documentElement.clientHeight) - r.bottom - bottomPad);
+    var minW = Math.max(r.width, 200);
+
+    Object.assign(menu.style, {
+      position: 'fixed',
+      left: r.left + 'px',
+      top: r.bottom + 'px',
+      minWidth: minW + 'px',
+      maxHeight: maxH + 'px',
+      overflowY: 'auto',
+      WebkitOverflowScrolling: 'touch',
+      display: 'block',
+      visibility: 'visible'
+    });
+
+    function onResize() {
+      var rr = toggle.getBoundingClientRect();
+      var maxH2 = Math.max(120, (window.innerHeight || document.documentElement.clientHeight) - rr.bottom - bottomPad);
+      menu.style.left = rr.left + 'px';
+      menu.style.top = rr.bottom + 'px';
+      menu.style.maxHeight = maxH2 + 'px';
+      menu.style.minWidth = Math.max(rr.width, 200) + 'px';
+    }
+    menu._resizeHandler = onResize;
+    window.addEventListener('resize', onResize);
+
+    openState.menu = menu;
+    openState.toggle = toggle;
+  }
+
+  function onHide() {
+    var menu = openState.menu;
+    if (!menu) return;
+
+    if (menu.dataset._originalParent) {
+      menu.dataset._originalParent.appendChild(menu);
+      delete menu.dataset._originalParent;
+    }
+    if (menu._resizeHandler) {
+      window.removeEventListener('resize', menu._resizeHandler);
+      delete menu._resizeHandler;
+    }
+    menu.removeAttribute('style');
+
+    openState.menu = null;
+    openState.toggle = null;
+  }
+
+  document.addEventListener('show.bs.dropdown', onShow, true);
+  document.addEventListener('hide.bs.dropdown', onHide, true);
+
+  
+  document.addEventListener('click', function (evt) {
+    var t = evt.target;
+    if (t.matches && (t.matches('.dropdown-toggle') || t.closest('.dropdown-toggle'))) {
+      if (!('bs' in window) && !('bootstrap' in window)) setTimeout(function(){ onShow({target: t}); }, 0);
+    }
+    
+    if (openState.menu && !openState.menu.contains(t) && !(openState.toggle && t.closest('.dropdown'))) {
+      onHide();
+    }
+  }, true);
+})();
+</script>
+
+
+<script>
+  $(document).ready(function() {
+    
+    var showtime = $("div.showtime").attr("when");
+    var anchor = $("div.showtime").attr("data-anchor");
+    
+    console.log("Solution debug - showtime:", showtime, "anchor:", anchor, "URL:", window.location.href);
+    
+    if (showtime) {
+      var now = new Date();
+      var gate;
+      
+      
+      try {
+        gate = new Date(showtime);
+        if (isNaN(gate.getTime())) {
+          console.log("Could not parse date:", showtime);
+          gate = new Date(0); 
+        }
+      } catch (e) {
+        console.log("Could not parse date:", showtime);
+        gate = new Date(0); 
+      }
+      
+      var shouldShow = now >= gate;
+      console.log("Time check - now:", now, "gate:", gate, "shouldShow from time:", shouldShow);
+      
+      if (anchor && anchor !== "#secret") {
+        var urlContainsAnchor = window.location.href.includes(anchor);
+        shouldShow = shouldShow || urlContainsAnchor;
+        console.log("URL check - anchor:", anchor, "URL contains anchor:", urlContainsAnchor, "final shouldShow:", shouldShow);
+      }
+      
+      if (shouldShow) {
+        console.log("Showing solutions");
+        $("div.solution").show();
+      } else {
+        console.log("Hiding solutions");
+      }
+    } else {
+      console.log("No showtime found, solutions will be hidden by default");
+    }
+  });
+</script>
+
+
+
+    
+  </body>
+</html>
+

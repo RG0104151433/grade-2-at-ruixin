@@ -1,0 +1,58 @@
+{
+  "title": "字符清洗与居中格式",
+  "solution": "../../基础题/字符串处理/13_字符清洗与居中格式.py",
+  "comparison": "exact",
+  "timeout_seconds": 2,
+  "cases": [
+    {
+      "name": "01 样例",
+      "input": "  ==python basics**  \n20\n*\n",
+      "expected": "13\n***PYTHON BASICS****\n  ==python basics**   -> PYTHON BASICS\n"
+    },
+    {
+      "name": "02 混杂符号清理",
+      "input": "#* =hello world= *#\n15\n-\n",
+      "expected": "11\n--HELLO WORLD--\n#* =hello world= *# -> HELLO WORLD\n"
+    },
+    {
+      "name": "03 中间符号不剥离",
+      "input": "*=a=b*c=#\n11\n+\n",
+      "expected": "5\n+++A=B*C+++\n*=a=b*c=# -> A=B*C\n"
+    },
+    {
+      "name": "04 宽度小于文本不截断",
+      "input": "  ##longtitle##  \n4\n*\n",
+      "expected": "9\nLONGTITLE\n  ##longtitle##   -> LONGTITLE\n"
+    },
+    {
+      "name": "05 宽度恰好等于长度",
+      "input": "  abc  \n3\n=\n",
+      "expected": "3\nABC\n  abc   -> ABC\n"
+    },
+    {
+      "name": "06 无多余首尾符号",
+      "input": "DataScience\n15\n.\n",
+      "expected": "11\n..DATASCIENCE..\nDataScience -> DATASCIENCE\n"
+    },
+    {
+      "name": "07 单字符与奇偶填充",
+      "input": "***x===\n6\n-\n",
+      "expected": "1\n--X---\n***x=== -> X\n"
+    },
+    {
+      "name": "08 偶数长度奇数宽度",
+      "input": "  ab  \n5\n-\n",
+      "expected": "2\n--AB-\n  ab   -> AB\n"
+    },
+    {
+      "name": "09 保留内部连续空格",
+      "input": "  #hi   py#  \n12\n_\n",
+      "expected": "7\n__HI   PY___\n  #hi   py#   -> HI   PY\n"
+    },
+    {
+      "name": "10 较宽居中横幅",
+      "input": "  bit  \n40\n=\n",
+      "expected": "3\n==================BIT===================\n  bit   -> BIT\n"
+    }
+  ]
+}

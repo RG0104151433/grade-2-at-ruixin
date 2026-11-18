@@ -1,0 +1,904 @@
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+ 
+
+
+      <title>Managing Sources &#43; Context - </title>
+
+  <meta name="description" content="
+  Goals: practice intentionally curating the information AI has access to, explore how source selection changes AI outputs, experiment with persistent instructions and memory, and think about what context is useful to give an AI versus what is better left out.
+  
+    Gradescope — submit the indicated portions by Sunday, October 11 at 11:59 pm Pacific.
+    Tutorial — discuss with your TA during tutorial in Week 4.
+  
+
+Hello everyone! This week we&rsquo;re moving beyond the prompt itself and looking at everything else that can shape an AI response: your chat history, saved preferences and instructions, memories, uploaded files, retrieved sources, and purpose-built collections of documents."><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "CS193T Thinking with AI",
+    
+    "url": "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/assignments\/3-managing-sources\/",
+          "name": "Managing sources context"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : ""
+  },
+  "headline": "Managing Sources \u002b Context",
+  "description" : " Goals: practice intentionally curating the information AI has access to, explore how source selection changes AI outputs, experiment with persistent instructions and memory, and think about what context is useful to give an AI versus what is better left out.\nGradescope — submit the indicated portions by Sunday, October 11 at 11:59 pm Pacific. Tutorial — discuss with your TA during tutorial in Week 4. Hello everyone! This week we\u0026rsquo;re moving beyond the prompt itself and looking at everything else that can shape an AI response: your chat history, saved preferences and instructions, memories, uploaded files, retrieved sources, and purpose-built collections of documents.\n",
+  "inLanguage" : "en",
+  "wordCount":  1588 ,
+  "datePublished" : "2026-10-06T00:00:00-07:00",
+  "dateModified" : "2026-10-06T16:09:36-07:00",
+  "image" : "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/img\/SU_Seal_Red.png",
+  "keywords" : [ "" ],
+  "mainEntityOfPage" : "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/assignments\/3-managing-sources\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/img\/SU_Seal_Red.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+
+<meta property="og:title" content="Managing Sources &#43; Context" />
+<meta property="og:description" content="
+  Goals: practice intentionally curating the information AI has access to, explore how source selection changes AI outputs, experiment with persistent instructions and memory, and think about what context is useful to give an AI versus what is better left out.
+  
+    Gradescope — submit the indicated portions by Sunday, October 11 at 11:59 pm Pacific.
+    Tutorial — discuss with your TA during tutorial in Week 4.
+  
+
+Hello everyone! This week we&rsquo;re moving beyond the prompt itself and looking at everything else that can shape an AI response: your chat history, saved preferences and instructions, memories, uploaded files, retrieved sources, and purpose-built collections of documents.">
+<meta property="og:image" content="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/img/SU_Seal_Red.png" />
+<meta property="og:url" content="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/3-managing-sources/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="CS193T Thinking with AI" />
+
+  <meta name="twitter:title" content="Managing Sources &#43; Context" />
+  <meta name="twitter:description" content="
+  Goals: practice intentionally curating the information AI has access to, explore how source selection changes AI outputs, experiment with persistent instructions and memory, and think about what …">
+  <meta name="twitter:image" content="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/img/SU_Seal_Red.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link href='https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/img/favicon_io/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.164.0">
+  <link rel="alternate" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/index.xml" type="application/rss+xml" title="CS193T Thinking with AI"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" integrity="sha384-h/hnnw1Bi4nbpD6kE7nYfCXzovi622sY5WBxww8ARKwpdLj5kUWjRuyiXaD1U2JT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/css/syntax.css" /><link rel="stylesheet" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/css/custom.css?v=18d110f4">
+
+
+
+
+
+<style>
+  div.solution { display: none; }
+  .solution pre { background-color: inherit; border: none; }
+  .solution .btn {
+    margin: 10px 0;
+  }
+  .solution .alert {
+    margin-top: 10px;
+  }
+</style>
+
+<style>
+ 
+:root { --bh-nav-height: 56px; }
+
+ 
+.navbar .navbar-collapse,
+.navbar .navbar-collapse.collapsing,
+.navbar .navbar-collapse.show {
+  max-height: calc(100vh - var(--bh-nav-height));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+ 
+@supports (height: 100svh) {
+  .navbar .navbar-collapse,
+  .navbar .navbar-collapse.collapsing,
+  .navbar .navbar-collapse.show {
+    max-height: calc(100svh - var(--bh-nav-height));
+  }
+}
+
+ 
+@media (max-width: 1199.98px) {
+  .navbar-nav .dropdown-menu {
+    position: static;
+    float: none;
+    max-height: 60vh;       
+    overflow-y: auto;
+  }
+}
+
+ 
+.dropdown-menu { z-index: 2000; }
+
+ 
+html, body { overflow-x: hidden; overflow-y: auto; }
+</style>
+
+
+    <link rel="stylesheet" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/katex/katex.min.css">
+    <script defer src="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/katex/katex.min.js"></script>
+    
+    <script defer src="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/katex/auto-render.min.js"
+        onload="renderMathInElement(document.body, {
+            delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '\\(', right: '\\)', display: false}
+            ]
+        });"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <a class="navbar-brand" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/">
+          
+            <img src="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/img/SU_Seal_Red.png"
+                 alt="CS193T Thinking with AI"
+                 style="display:inline-block; height:30px; margin-right:8px;" />
+          
+          CS193T Thinking with AI
+        </a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li class="navlinks-container" data-has-submenu="true">
+              <a
+                class="navlinks-parent"
+                role="button"
+                tabindex="0"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="submenu-course"
+              >Course<span class="sr-only"> (expand submenu)</span></a>
+
+              <div
+                class="navlinks-children"
+                role="menu"
+                aria-hidden="true"
+                id="submenu-course"
+              >
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/course/syllabus">Syllabus</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/course/faq">Common Questions</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/course/course_placement">Course Placement</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/course/getting_help">Getting Help</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/course/honor_code">Honor Code</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li class="navlinks-container" data-has-submenu="true">
+              <a
+                class="navlinks-parent"
+                role="button"
+                tabindex="0"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="submenu-resources"
+              >Resources<span class="sr-only"> (expand submenu)</span></a>
+
+              <div
+                class="navlinks-children"
+                role="menu"
+                aria-hidden="true"
+                id="submenu-resources"
+              >
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/resources/ethical_ai_tools">Ethical AI Tools</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/resources/optional_extra_readings">Optional Extra Readings</a>
+                
+                  <a role="menuitem" href="https://edstem.org/us/courses/100775/discussion">Ed Discussion Forum</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li class="navlinks-container" data-has-submenu="true">
+              <a
+                class="navlinks-parent"
+                role="button"
+                tabindex="0"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="submenu-lectures"
+              >Lectures<span class="sr-only"> (expand submenu)</span></a>
+
+              <div
+                class="navlinks-children"
+                role="menu"
+                aria-hidden="true"
+                id="submenu-lectures"
+              >
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/01-welcome/">Lecture 1: Introduction to AI</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/02-prompting/">Lecture 2: Core Prompting</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/03-context/">Lecture 3: Managing Sources</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/04-research-guests/">Lecture 4: Guest Panel Speakers</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/05-agents/">Lecture 5: AI Taking Action</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/06-control-ai/">Lecture 6: Control Your AI</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/07-budget/">Lecture 7: Count the Cost</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/08-learning/">Lecture 8: Staying Sharp</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li class="navlinks-container" data-has-submenu="true">
+              <a
+                class="navlinks-parent"
+                role="button"
+                tabindex="0"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="submenu-assignments"
+              >Assignments<span class="sr-only"> (expand submenu)</span></a>
+
+              <div
+                class="navlinks-children"
+                role="menu"
+                aria-hidden="true"
+                id="submenu-assignments"
+              >
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/course/about_assignments/">About Assignments</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/1-ai-foundations/">Assignment 1: AI Foundations</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/2-models-prompting/">Assignment 2: Models &#43; Prompting</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/3-managing-sources/">Assignment 3: Managing Sources &#43; Context</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/4a-deep-research/">Assignment 4A: Deep Research</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/4b-claude-science/">Assignment 4B: Claude Science</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/5a-cowork/">Assignment 5A: ChatGPT Work / Claude Cowork</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/5b-browser-agents/">Assignment 5B: ChatGPT in Chrome / Claude in Chrome</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/6-coding-agents/">Assignment 6: Claude Code and Codex</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/7-evals/">Assignment 7: Evals: Grading the Graders</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/8-apis/">Assignment 8: APIs and API Keys</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/9-voice-skills/">Assignment 9: Your Voice, Your Skills, and Your Project</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li class="navlinks-container" data-has-submenu="true">
+              <a
+                class="navlinks-parent"
+                role="button"
+                tabindex="0"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="submenu-final_project"
+              >Final Project<span class="sr-only"> (expand submenu)</span></a>
+
+              <div
+                class="navlinks-children"
+                role="menu"
+                aria-hidden="true"
+                id="submenu-final_project"
+              >
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/final_project/early_advice">Early Advice</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/final_project/rubric">Rubric</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/final_project/posters">Poster Resources</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li class="navlinks-container" data-has-submenu="true">
+              <a
+                class="navlinks-parent"
+                role="button"
+                tabindex="0"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="submenu-tutorials"
+              >Tutorials<span class="sr-only"> (expand submenu)</span></a>
+
+              <div
+                class="navlinks-children"
+                role="menu"
+                aria-hidden="true"
+                id="submenu-tutorials"
+              >
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/course/about_tutorial/">About Tutorial</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li>
+              <a title="🗓Schedule" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/schedule">🗓Schedule</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+  </div>
+
+  
+  <script defer src="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/js/nav-a11y.js"></script>
+</nav>
+
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+      <div class="intro-header no-img">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+              <div class="assignments-heading">
+                <div class="brand-line">
+                  
+                  <div class="brand-text">
+                    
+                      <h1 class="site-header-title">Managing Sources + Context</h1>
+                    
+
+                    
+                  </div>
+                </div>
+
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  </header>
+
+
+<style>
+.brand-line{ display:flex; align-items:center; gap:12px; flex-wrap:nowrap; }
+.brand-seal{ width:150px; height:auto; flex:0 0 auto; }
+.brand-text{ display:flex; flex-direction:column; }
+@media (max-width:480px){ .brand-seal{ width:44px; } }
+</style>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <div class="assignment-meta">
+  <p><strong>Goals: practice intentionally curating the information AI has access to, explore how source selection changes AI outputs, experiment with persistent instructions and memory, and think about what context is useful to give an AI versus what is better left out.</strong></p>
+  <ul>
+    <li><strong>Gradescope</strong> — submit the indicated portions by Sunday, October 11 at 11:59 pm Pacific.</li>
+    <li><strong>Tutorial</strong> — discuss with your TA during tutorial in Week 4.</li>
+  </ul>
+</div>
+<p>Hello everyone! This week we&rsquo;re moving beyond the prompt itself and looking at everything else that can shape an AI response: your chat history, saved preferences and instructions, memories, uploaded files, retrieved sources, and purpose-built collections of documents.</p>
+<p>As we discussed in lecture, all of these can affect what the model generates. More context is not automatically better context. Part of using AI well is learning to decide what belongs in the system&rsquo;s working context, what does not, and how to tell when your source collection is helping rather than hurting.</p>
+<p>This week we&rsquo;ll primarily use <a href="https://notebook.google.com/">Gemini Notebook</a> (previously NotebookLM), plus the AI chat tool of your choice. Gemini Notebook is included in the lecture&rsquo;s tool lineup alongside ChatGPT, Claude, and Gemini.</p>
+<p>📄 <strong><a href="assignment3-managing-sources.pdf">Assignment 3 — full instructions (PDF)</a></strong></p>
+<h2 id="assignment-outline">Assignment outline</h2>
+<p>This document is intended to be started in tutorial and completed for homework if necessary. Work through it in the order given:</p>
+<ul>
+<li>First, we&rsquo;ll do a short tutorial exercise about context and source selection.</li>
+<li>Then, you&rsquo;ll build and stress-test a small source-grounded AI system.</li>
+<li>Then, you&rsquo;ll experiment with persistent instructions.</li>
+<li>Finally, you&rsquo;ll complete a short reflection.</li>
+</ul>
+<p>Some parts involve submitting material to <a href="https://www.gradescope.com/courses/1398766">Gradescope</a>. Others are primarily intended for discussion or &ldquo;show and tell&rdquo; with your TA in next week&rsquo;s tutorial.</p>
+<h2 id="part-1-tutorial-group-work">Part 1: Tutorial group work</h2>
+<h3 id="activity-1--what-does-the-model-know">Activity 1 — What does the model know?</h3>
+<p>In lecture, we expanded our picture of the context window. In addition to your current prompt and the AI&rsquo;s response, a chat may also include the system prompt, earlier messages in the conversation, settings, memories about you, uploaded documents, and material retrieved from the web.</p>
+<p>With your tutorial group, take a few minutes to make a list of the different kinds of information that might influence an AI response.</p>
+<p>For each one, discuss:</p>
+<ul>
+<li>Who chose for that information to be there: you, the AI company, or the AI itself?</li>
+<li>Could you inspect or change it?</li>
+<li>When would including it improve an answer?</li>
+<li>When might it make an answer worse?</li>
+<li>Is there anything you would intentionally withhold?</li>
+</ul>
+<p>Then discuss as a group: Is &ldquo;give the AI as much context as possible&rdquo; actually good advice? Why or why not?</p>
+<h3 id="activity-2--build-a-glossary-with-notebooklm">Activity 2 — Build a glossary with NotebookLM</h3>
+<p>We have now accumulated several lectures&rsquo; worth of AI vocabulary. Instead of giving you another glossary, we&rsquo;re going to have you make one.</p>
+<p>Take the slides from Lectures 1–3 and give them to an AI system that can work across multiple files, such as Gemini Notebook (previously called NotebookLM; if you log in with your Stanford email, you should get the Stanford license version that includes things like some extra privacy protections). Ask Notebook to identify the major course terms and concepts and create a glossary for you. You may want to tell it to pay particular attention to vocabulary that is visually emphasized in the slides.</p>
+<p>As a group, predict where this could go wrong.</p>
+<p>Afterward, inspect the glossary.</p>
+<p>Discuss:</p>
+<ul>
+<li>Did it identify the concepts you expected?</li>
+<li>What did it miss?</li>
+<li>Did it include things that do not really deserve to be glossary entries?</li>
+<li>Can you trace each definition back to something actually present in the slides?</li>
+<li>How much do you trust this glossary as a study tool?</li>
+</ul>
+<p>You do not need to submit the glossary. We&rsquo;ll use this exercise to set up the main assignment.</p>
+<h2 id="part-2-ai-tool-work">Part 2: AI tool work</h2>
+<p>This week, you&rsquo;re going to create a small source-grounded AI system. Choose a topic you genuinely care about or want to understand better. It can be academic, professional, practical, or personal. Ideally, choose something where you can find several sources that contribute different kinds of useful information.</p>
+<p>Examples might include:</p>
+<ul>
+<li>creating a knowledge base for one of your classes;</li>
+<li>understanding a research topic;</li>
+<li>planning a trip;</li>
+<li>comparing approaches to a hobby or project;</li>
+<li>learning the rules and strategy of a game;</li>
+<li>understanding an organization or industry;</li>
+<li>preparing for an interview;</li>
+<li>collecting material for something you are writing or building.</li>
+</ul>
+<p>Avoid choosing a corpus consisting entirely of near-duplicate sources saying the same thing.</p>
+<h3 id="build-your-corpus">Build your corpus</h3>
+<p>Create a new Gemini Notebook and add a small set of sources about your topic.</p>
+<p>There is deliberately no magic required number of sources here. Part of the exercise is deciding how much context your system actually needs.</p>
+<p>Think about:</p>
+<ul>
+<li>What does each source contribute?</li>
+<li>Are you including multiple perspectives or types of evidence?</li>
+<li>Are some sources redundant?</li>
+<li>Is anything important missing?</li>
+<li>Are you adding something simply because it is available, rather than because it is useful?</li>
+</ul>
+<p>Then ask your Notebook several questions that you think a good corpus on this topic should be able to answer.</p>
+<p>The point here is not merely to make a big pile of documents. The lecture distinguishes grounding a model from simply filling its context window, and introduces retrieval-augmented generation as another way of supplying relevant information.</p>
+<p><strong>Deliverable:</strong> Ask your Notebook to write a short description of itself, answering the following questions:</p>
+<ul>
+<li>What is this collection of sources designed to help someone understand or accomplish?</li>
+<li>What kinds of questions is it well equipped to answer, and what are its main limitations?</li>
+</ul>
+<p>Submit the summary of your notebook to this week&rsquo;s Gradescope assignment.</p>
+<h3 id="poison-the-well">Poison the well</h3>
+<p>Now deliberately add one bad source. &ldquo;Bad&rdquo; can mean several things here. For example, the source could be:</p>
+<ul>
+<li>factually unreliable;</li>
+<li>irrelevant to your topic;</li>
+<li>very low quality;</li>
+<li>outdated;</li>
+<li>confidently misleading;</li>
+<li>strongly contradictory to the rest of your corpus.</li>
+</ul>
+<p>If you cannot think of one, you are also welcome to use <a href="https://stanfordmag.org/contents/have-you-heard-the-one-about-the-squirrels">this wonderful source</a> I dredged up from the depths of the internet that is as old as I am.</p>
+<p>Before you add it, ask your Notebook 2–3 questions and save its answers. Then add the bad source and ask the same questions again, and compare the results.</p>
+<p>The purpose is not to &ldquo;break&rdquo; the system. We want you to see whether one source that does not belong changes the behavior of the whole collection.</p>
+<p><strong>Deliverable:</strong> Submit a short response (3–4 sentences) to Gradescope answering at least one of the following questions:</p>
+<ul>
+<li>What bad source did you add, and why did it count as &ldquo;bad&rdquo; for this corpus?</li>
+<li>What changed, if anything, when you asked the same questions again?</li>
+<li>Did the Notebook ignore the source, appropriately qualify it, accidentally incorporate it, or do something else? Give one concrete example.</li>
+<li>After this experiment, what would you change about the way you curate sources for an AI system in the future?</li>
+</ul>
+<h3 id="persistent-instructions">Persistent instructions</h3>
+<p>So far, we have mostly changed an AI&rsquo;s behavior by changing what we put into the current conversation. But major AI tools can also preserve instructions or preferences across conversations.</p>
+<p>The lecture uses examples such as ChatGPT personalization settings and custom instructions, and Gemini&rsquo;s Gems, which allow a set of instructions to function essentially like a standing system prompt for a new chat.</p>
+<p>We&rsquo;re going to experiment with what happens when one of those instructions becomes persistent.</p>
+<p>Choose one of the following instructions, and add it to your favorite model&rsquo;s permanent memory (you can always delete it when done with this exercise):</p>
+<ul>
+<li>Never validate my question before answering. No &ldquo;great point,&rdquo; &ldquo;absolutely,&rdquo; or &ldquo;that&rsquo;s a really interesting question.&rdquo; Start with the answer or with a correction.</li>
+<li>If my assumption is wrong, say so before answering.</li>
+<li>If you are uncertain, tell me how confident you are and explain the source of the uncertainty. Never present a guess as a fact.</li>
+<li>If I push back on your answer, do not change it merely because I seem unhappy. Change it when I provide new evidence or reasoning.</li>
+<li>After an important answer, add one sentence identifying a useful question I did not ask.</li>
+<li>If I ask you to agree with something that is wrong, disagree.</li>
+<li>Create your own instruction inspired by these.</li>
+</ul>
+<p><em>Questions adapted from @artefactohq on X and @whighsmith on X.</em></p>
+<p>Now take a prompt from an earlier week that produced an answer you cared about. Run it again.</p>
+<p><strong>Deliverable:</strong> Upload the following to Gradescope:</p>
+<ul>
+<li>The instruction you chose</li>
+<li>The prompt you retested</li>
+<li>What changed in the output, and whether or not you would keep this instruction long term (3–4 sentences)</li>
+</ul>
+<p>Now, remove the instruction if you don&rsquo;t want it influencing future chats.</p>
+<h2 id="part-3-reflection--what-should-stay-yours">Part 3: Reflection — What should stay yours?</h2>
+<p>One theme from lecture is that AI can help you do more without actually changing the underlying model: changing the context changes the model&rsquo;s next-token predictions, not its learned weights.</p>
+<p>But there is another side to managing context: what do you choose not to outsource?</p>
+<p>Write one short paragraph, approximately 4–6 sentences, responding to:</p>
+<blockquote>
+<p>After this week&rsquo;s exercises, what is one kind of context you think you should actively curate rather than simply hand over to AI?</p>
+</blockquote>
+<p>You can interpret &ldquo;context&rdquo; broadly: documents, personal memories, preferences, instructions, prior work, sources, examples, or even your own judgment.</p>
+<p>Then explain one concrete habit you could adopt to maintain control over that context.</p>
+<p><strong>Deliverable:</strong> copy and paste your reflection into Gradescope.</p>
+<h2 id="submission">Submission</h2>
+<p>You should have four items to submit to <a href="https://www.gradescope.com/courses/1398766">Gradescope</a>, and be ready to discuss these with your TA next week:</p>
+<ol>
+<li>Notebook summary + link</li>
+<li>Bad-source experiment</li>
+<li>Persistent-instruction experiment</li>
+<li>Reflection</li>
+</ol>
+
+
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/2-models-prompting/" data-toggle="tooltip" data-placement="top" title="Models &#43; Prompting">&larr; Previous Assignment</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/4a-deep-research/" data-toggle="tooltip" data-placement="top" title="Deep Research">Next Assignment &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+
+    </div>
+  </div>
+</div>
+
+      <footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+		
+		  <a href="mailto:cbl@stanford.edu" title="Email me">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2026
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/">CS193T Thinking with AI</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.164.0</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<script src="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/js/main.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+
+<script src="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/js/download-code.js"></script>
+
+
+<script>
+(function () {
+  var nav = document.querySelector('.navbar');
+  if (nav) {
+    var h = nav.getBoundingClientRect().height || 56;
+    document.documentElement.style.setProperty('--bh-nav-height', Math.round(h) + 'px');
+  }
+
+  var openState = { menu: null, toggle: null };
+
+  function onShow(e) {
+    var toggle = e.target.closest ? e.target.closest('.dropdown-toggle') : e.target;
+    if (!toggle) return;
+    var menu = toggle.nextElementSibling;
+    if (!menu || !menu.classList.contains('dropdown-menu')) return;
+
+    
+    var r = toggle.getBoundingClientRect();
+    menu.dataset._originalParent = menu.parentElement;
+    document.body.appendChild(menu);
+
+    var bottomPad = 8;
+    var maxH = Math.max(120, (window.innerHeight || document.documentElement.clientHeight) - r.bottom - bottomPad);
+    var minW = Math.max(r.width, 200);
+
+    Object.assign(menu.style, {
+      position: 'fixed',
+      left: r.left + 'px',
+      top: r.bottom + 'px',
+      minWidth: minW + 'px',
+      maxHeight: maxH + 'px',
+      overflowY: 'auto',
+      WebkitOverflowScrolling: 'touch',
+      display: 'block',
+      visibility: 'visible'
+    });
+
+    function onResize() {
+      var rr = toggle.getBoundingClientRect();
+      var maxH2 = Math.max(120, (window.innerHeight || document.documentElement.clientHeight) - rr.bottom - bottomPad);
+      menu.style.left = rr.left + 'px';
+      menu.style.top = rr.bottom + 'px';
+      menu.style.maxHeight = maxH2 + 'px';
+      menu.style.minWidth = Math.max(rr.width, 200) + 'px';
+    }
+    menu._resizeHandler = onResize;
+    window.addEventListener('resize', onResize);
+
+    openState.menu = menu;
+    openState.toggle = toggle;
+  }
+
+  function onHide() {
+    var menu = openState.menu;
+    if (!menu) return;
+
+    if (menu.dataset._originalParent) {
+      menu.dataset._originalParent.appendChild(menu);
+      delete menu.dataset._originalParent;
+    }
+    if (menu._resizeHandler) {
+      window.removeEventListener('resize', menu._resizeHandler);
+      delete menu._resizeHandler;
+    }
+    menu.removeAttribute('style');
+
+    openState.menu = null;
+    openState.toggle = null;
+  }
+
+  document.addEventListener('show.bs.dropdown', onShow, true);
+  document.addEventListener('hide.bs.dropdown', onHide, true);
+
+  
+  document.addEventListener('click', function (evt) {
+    var t = evt.target;
+    if (t.matches && (t.matches('.dropdown-toggle') || t.closest('.dropdown-toggle'))) {
+      if (!('bs' in window) && !('bootstrap' in window)) setTimeout(function(){ onShow({target: t}); }, 0);
+    }
+    
+    if (openState.menu && !openState.menu.contains(t) && !(openState.toggle && t.closest('.dropdown'))) {
+      onHide();
+    }
+  }, true);
+})();
+</script>
+
+
+<script>
+  $(document).ready(function() {
+    
+    var showtime = $("div.showtime").attr("when");
+    var anchor = $("div.showtime").attr("data-anchor");
+    
+    console.log("Solution debug - showtime:", showtime, "anchor:", anchor, "URL:", window.location.href);
+    
+    if (showtime) {
+      var now = new Date();
+      var gate;
+      
+      
+      try {
+        gate = new Date(showtime);
+        if (isNaN(gate.getTime())) {
+          console.log("Could not parse date:", showtime);
+          gate = new Date(0); 
+        }
+      } catch (e) {
+        console.log("Could not parse date:", showtime);
+        gate = new Date(0); 
+      }
+      
+      var shouldShow = now >= gate;
+      console.log("Time check - now:", now, "gate:", gate, "shouldShow from time:", shouldShow);
+      
+      if (anchor && anchor !== "#secret") {
+        var urlContainsAnchor = window.location.href.includes(anchor);
+        shouldShow = shouldShow || urlContainsAnchor;
+        console.log("URL check - anchor:", anchor, "URL contains anchor:", urlContainsAnchor, "final shouldShow:", shouldShow);
+      }
+      
+      if (shouldShow) {
+        console.log("Showing solutions");
+        $("div.solution").show();
+      } else {
+        console.log("Hiding solutions");
+      }
+    } else {
+      console.log("No showtime found, solutions will be hidden by default");
+    }
+  });
+</script>
+
+
+
+    
+  </body>
+</html>
+

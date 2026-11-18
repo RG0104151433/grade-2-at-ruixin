@@ -1,0 +1,921 @@
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+ 
+
+
+      <title>Models &#43; Prompting - </title>
+
+  <meta name="description" content="
+  Goals: explore models and modes, practice the &#34;scope of work&#34; and &#34;interview me&#34; patterns, and reflect on finding and retaining your own voice and skills while using AI.
+  
+    Gradescope — submit the indicated portions by Sunday, October 4 at 11:59 pm Pacific.
+    Tutorial — discuss with your TA during tutorial in Week 3.
+  
+
+Hello everyone! If you haven&rsquo;t completed the AI software tools registration and installation process recommended in Assignment 1, you might consider working on that this week. We will begin using features of these models that are not available in the AI Playground next week."><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "CS193T Thinking with AI",
+    
+    "url": "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/assignments\/2-models-prompting\/",
+          "name": "Models prompting"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : ""
+  },
+  "headline": "Models \u002b Prompting",
+  "description" : " Goals: explore models and modes, practice the \u0022scope of work\u0022 and \u0022interview me\u0022 patterns, and reflect on finding and retaining your own voice and skills while using AI.\nGradescope — submit the indicated portions by Sunday, October 4 at 11:59 pm Pacific. Tutorial — discuss with your TA during tutorial in Week 3. Hello everyone! If you haven\u0026rsquo;t completed the AI software tools registration and installation process recommended in Assignment 1, you might consider working on that this week. We will begin using features of these models that are not available in the AI Playground next week.\n",
+  "inLanguage" : "en",
+  "wordCount":  1993 ,
+  "datePublished" : "2026-09-29T00:00:00-07:00",
+  "dateModified" : "2026-09-29T13:53:08-07:00",
+  "image" : "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/img\/SU_Seal_Red.png",
+  "keywords" : [ "" ],
+  "mainEntityOfPage" : "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/assignments\/2-models-prompting\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/web.stanford.edu\/class\/archive\/cs\/cs193t\/cs193t.1272\/img\/SU_Seal_Red.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+
+<meta property="og:title" content="Models &#43; Prompting" />
+<meta property="og:description" content="
+  Goals: explore models and modes, practice the &#34;scope of work&#34; and &#34;interview me&#34; patterns, and reflect on finding and retaining your own voice and skills while using AI.
+  
+    Gradescope — submit the indicated portions by Sunday, October 4 at 11:59 pm Pacific.
+    Tutorial — discuss with your TA during tutorial in Week 3.
+  
+
+Hello everyone! If you haven&rsquo;t completed the AI software tools registration and installation process recommended in Assignment 1, you might consider working on that this week. We will begin using features of these models that are not available in the AI Playground next week.">
+<meta property="og:image" content="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/img/SU_Seal_Red.png" />
+<meta property="og:url" content="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/2-models-prompting/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="CS193T Thinking with AI" />
+
+  <meta name="twitter:title" content="Models &#43; Prompting" />
+  <meta name="twitter:description" content="
+  Goals: explore models and modes, practice the &#34;scope of work&#34; and &#34;interview me&#34; patterns, and reflect on finding and retaining your own voice and skills while using AI.
+  
+    Gradescope — submit …">
+  <meta name="twitter:image" content="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/img/SU_Seal_Red.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link href='https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/img/favicon_io/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.164.0">
+  <link rel="alternate" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/index.xml" type="application/rss+xml" title="CS193T Thinking with AI"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" integrity="sha384-h/hnnw1Bi4nbpD6kE7nYfCXzovi622sY5WBxww8ARKwpdLj5kUWjRuyiXaD1U2JT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/css/syntax.css" /><link rel="stylesheet" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/css/custom.css?v=18d110f4">
+
+
+
+
+
+<style>
+  div.solution { display: none; }
+  .solution pre { background-color: inherit; border: none; }
+  .solution .btn {
+    margin: 10px 0;
+  }
+  .solution .alert {
+    margin-top: 10px;
+  }
+</style>
+
+<style>
+ 
+:root { --bh-nav-height: 56px; }
+
+ 
+.navbar .navbar-collapse,
+.navbar .navbar-collapse.collapsing,
+.navbar .navbar-collapse.show {
+  max-height: calc(100vh - var(--bh-nav-height));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+ 
+@supports (height: 100svh) {
+  .navbar .navbar-collapse,
+  .navbar .navbar-collapse.collapsing,
+  .navbar .navbar-collapse.show {
+    max-height: calc(100svh - var(--bh-nav-height));
+  }
+}
+
+ 
+@media (max-width: 1199.98px) {
+  .navbar-nav .dropdown-menu {
+    position: static;
+    float: none;
+    max-height: 60vh;       
+    overflow-y: auto;
+  }
+}
+
+ 
+.dropdown-menu { z-index: 2000; }
+
+ 
+html, body { overflow-x: hidden; overflow-y: auto; }
+</style>
+
+
+    <link rel="stylesheet" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/katex/katex.min.css">
+    <script defer src="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/katex/katex.min.js"></script>
+    
+    <script defer src="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/katex/auto-render.min.js"
+        onload="renderMathInElement(document.body, {
+            delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '\\(', right: '\\)', display: false}
+            ]
+        });"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <a class="navbar-brand" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/">
+          
+            <img src="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/img/SU_Seal_Red.png"
+                 alt="CS193T Thinking with AI"
+                 style="display:inline-block; height:30px; margin-right:8px;" />
+          
+          CS193T Thinking with AI
+        </a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li class="navlinks-container" data-has-submenu="true">
+              <a
+                class="navlinks-parent"
+                role="button"
+                tabindex="0"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="submenu-course"
+              >Course<span class="sr-only"> (expand submenu)</span></a>
+
+              <div
+                class="navlinks-children"
+                role="menu"
+                aria-hidden="true"
+                id="submenu-course"
+              >
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/course/syllabus">Syllabus</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/course/faq">Common Questions</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/course/course_placement">Course Placement</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/course/getting_help">Getting Help</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/course/honor_code">Honor Code</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li class="navlinks-container" data-has-submenu="true">
+              <a
+                class="navlinks-parent"
+                role="button"
+                tabindex="0"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="submenu-resources"
+              >Resources<span class="sr-only"> (expand submenu)</span></a>
+
+              <div
+                class="navlinks-children"
+                role="menu"
+                aria-hidden="true"
+                id="submenu-resources"
+              >
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/resources/ethical_ai_tools">Ethical AI Tools</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/resources/optional_extra_readings">Optional Extra Readings</a>
+                
+                  <a role="menuitem" href="https://edstem.org/us/courses/100775/discussion">Ed Discussion Forum</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li class="navlinks-container" data-has-submenu="true">
+              <a
+                class="navlinks-parent"
+                role="button"
+                tabindex="0"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="submenu-lectures"
+              >Lectures<span class="sr-only"> (expand submenu)</span></a>
+
+              <div
+                class="navlinks-children"
+                role="menu"
+                aria-hidden="true"
+                id="submenu-lectures"
+              >
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/01-welcome/">Lecture 1: Introduction to AI</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/02-prompting/">Lecture 2: Core Prompting</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/03-context/">Lecture 3: Managing Sources</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/04-research-guests/">Lecture 4: Guest Panel Speakers</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/05-agents/">Lecture 5: AI Taking Action</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/06-control-ai/">Lecture 6: Control Your AI</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/07-budget/">Lecture 7: Count the Cost</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/lectures/08-learning/">Lecture 8: Staying Sharp</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li class="navlinks-container" data-has-submenu="true">
+              <a
+                class="navlinks-parent"
+                role="button"
+                tabindex="0"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="submenu-assignments"
+              >Assignments<span class="sr-only"> (expand submenu)</span></a>
+
+              <div
+                class="navlinks-children"
+                role="menu"
+                aria-hidden="true"
+                id="submenu-assignments"
+              >
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/course/about_assignments/">About Assignments</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/1-ai-foundations/">Assignment 1: AI Foundations</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/2-models-prompting/">Assignment 2: Models &#43; Prompting</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/3-managing-sources/">Assignment 3: Managing Sources &#43; Context</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/4a-deep-research/">Assignment 4A: Deep Research</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/4b-claude-science/">Assignment 4B: Claude Science</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/5a-cowork/">Assignment 5A: ChatGPT Work / Claude Cowork</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/5b-browser-agents/">Assignment 5B: ChatGPT in Chrome / Claude in Chrome</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/6-coding-agents/">Assignment 6: Claude Code and Codex</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/7-evals/">Assignment 7: Evals: Grading the Graders</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/8-apis/">Assignment 8: APIs and API Keys</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/9-voice-skills/">Assignment 9: Your Voice, Your Skills, and Your Project</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li class="navlinks-container" data-has-submenu="true">
+              <a
+                class="navlinks-parent"
+                role="button"
+                tabindex="0"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="submenu-final_project"
+              >Final Project<span class="sr-only"> (expand submenu)</span></a>
+
+              <div
+                class="navlinks-children"
+                role="menu"
+                aria-hidden="true"
+                id="submenu-final_project"
+              >
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/final_project/early_advice">Early Advice</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/final_project/rubric">Rubric</a>
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/final_project/posters">Poster Resources</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li class="navlinks-container" data-has-submenu="true">
+              <a
+                class="navlinks-parent"
+                role="button"
+                tabindex="0"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="submenu-tutorials"
+              >Tutorials<span class="sr-only"> (expand submenu)</span></a>
+
+              <div
+                class="navlinks-children"
+                role="menu"
+                aria-hidden="true"
+                id="submenu-tutorials"
+              >
+                
+                  <a role="menuitem" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/course/about_tutorial/">About Tutorial</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li>
+              <a title="🗓Schedule" href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/schedule">🗓Schedule</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+  </div>
+
+  
+  <script defer src="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/js/nav-a11y.js"></script>
+</nav>
+
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+      <div class="intro-header no-img">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+              <div class="assignments-heading">
+                <div class="brand-line">
+                  
+                  <div class="brand-text">
+                    
+                      <h1 class="site-header-title">Models + Prompting</h1>
+                    
+
+                    
+                  </div>
+                </div>
+
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  </header>
+
+
+<style>
+.brand-line{ display:flex; align-items:center; gap:12px; flex-wrap:nowrap; }
+.brand-seal{ width:150px; height:auto; flex:0 0 auto; }
+.brand-text{ display:flex; flex-direction:column; }
+@media (max-width:480px){ .brand-seal{ width:44px; } }
+</style>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <div class="assignment-meta">
+  <p><strong>Goals: explore models and modes, practice the "scope of work" and "interview me" patterns, and reflect on finding and retaining your own voice and skills while using AI.</strong></p>
+  <ul>
+    <li><strong>Gradescope</strong> — submit the indicated portions by Sunday, October 4 at 11:59 pm Pacific.</li>
+    <li><strong>Tutorial</strong> — discuss with your TA during tutorial in Week 3.</li>
+  </ul>
+</div>
+<p>Hello everyone! If you haven&rsquo;t completed the AI software tools registration and installation process recommended in <a href="../1-ai-foundations/">Assignment 1</a>, you might consider working on that this week. We will begin using features of these models that are not available in the AI Playground next week.</p>
+<p>📄 <strong><a href="assignment2-models-prompting.pdf">Assignment 2 — full instructions (PDF)</a></strong></p>
+<h2 id="assignment-outline">Assignment outline</h2>
+<p>This document is to be started in your tutorial, and completed for homework if necessary. Work through it in the order given:</p>
+<ul>
+<li>First, we&rsquo;ll lead you through some tutorial exercises.</li>
+<li>Then, you&rsquo;ll complete two AI tool work questions.</li>
+<li>Then, complete your reflection.</li>
+</ul>
+<p>Some parts may involve submitting materials to <a href="https://www.gradescope.com/courses/1398766">Gradescope</a>. This will allow your TA to preview the work you&rsquo;ve done ahead of your conversations in the tutorial. Other parts you will only &ldquo;show and tell&rdquo; or discuss during next week&rsquo;s tutorial.</p>
+<h2 id="part-1-tutorial-group-work">Part 1: Tutorial group work</h2>
+<p>Discuss the Week 1 reflection questions as a type of icebreaker with your new groupmates. As a reminder, those were:</p>
+<ul>
+<li>What should the course AI Honor Code look like?</li>
+<li>What did you notice when you stress-tested your &ldquo;help me, but not too much&rdquo; prompt?</li>
+</ul>
+<p>Now we&rsquo;ll talk about this as a full group:</p>
+<ul>
+<li>&ldquo;What did we learn last week about how much models actually follow our instructions?&rdquo;</li>
+<li>&ldquo;How do you tell whether a better result came from a better model or from better instructions?&rdquo;</li>
+</ul>
+<h3 id="activity-1--same-task-different-models">Activity 1 — Same task, different models</h3>
+<p>Here&rsquo;s the same prompt given to different models. Before you read the responses closely, decide the criteria that define success.</p>
+<p><strong>Prompt:</strong></p>
+<blockquote>
+<p>Piper&rsquo;s roommate Anna is planning a way to make Stanford more sustainable. Unfortunately, a squirrel has eaten the Stanford sustainability committee&rsquo;s first draft. Fortunately, it left the budget spreadsheet.</p>
+<p>The committee can fund exactly two projects for a one-month pilot. It has $10,000 and at most 8 volunteer hours per week across both projects.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Project</th>
+					<th>Cost</th>
+					<th>Hours/week</th>
+					<th>Estimated waste diverted/week</th>
+					<th>Estimated participants</th>
+					<th>Expected audience</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>A. Dining hall food recovery</td>
+					<td>$6,000</td>
+					<td>4</td>
+					<td>160 kg</td>
+					<td>80</td>
+					<td>Mostly undergraduates</td>
+			</tr>
+			<tr>
+					<td>B. Graduate housing food recovery</td>
+					<td>$5,000</td>
+					<td>6</td>
+					<td>120 kg</td>
+					<td>140</td>
+					<td>Mostly graduate students</td>
+			</tr>
+			<tr>
+					<td>C. Multilingual reuse pop-up</td>
+					<td>$4,000</td>
+					<td>3</td>
+					<td>50 kg</td>
+					<td>260</td>
+					<td>Many graduate students</td>
+			</tr>
+			<tr>
+					<td>D. Repair café</td>
+					<td>$3,000</td>
+					<td>2</td>
+					<td>70 kg</td>
+					<td>100</td>
+					<td>Mostly undergraduates</td>
+			</tr>
+	</tbody>
+</table>
+<p>The committee wants to divert waste, involve graduate students, and spend responsibly. These are estimates, and participant counts may overlap.</p>
+<p>Write a 50–100 word recommendation. Choose two projects; give their combined cost, hours, and estimated weekly waste diversion; explain a tradeoff against another feasible pair; and name one thing to measure after the pilot. Use only the information above.</p>
+</blockquote>
+<p><strong>Response 1</strong></p>
+<blockquote>
+<p>Fund A (dining hall food recovery) and C (multilingual reuse pop-up). Together they cost $10,000, need 7 volunteer hours per week, and are estimated to divert 210 kg of waste per week. A and D would divert 230 kg for $9,000, but both expect mostly undergraduate audiences; C gives the pilot a way to reach many graduate students. After the month, measure the number of unique graduate student participants, since the estimated participant counts may overlap.</p>
+</blockquote>
+<p><strong>Response 2</strong></p>
+<blockquote>
+<p>Recommend Projects A (Dining hall food recovery) and C (Multilingual reuse pop-up). Together, they cost $10,000, require 7 volunteer hours per week, and divert an estimated 210 kg of waste weekly.</p>
+<p>Compared to the feasible pair of Projects A and D ($9,000, 6 hours/week, 230 kg/week waste), Projects A and C cost $1,000 more and divert 20 kg less waste. However, Project C involves many graduate students, satisfying a key committee goal that A and D (which serve mostly undergraduates) miss.</p>
+<p>After the pilot, measure actual weekly waste diverted.</p>
+</blockquote>
+<p><strong>Response 3</strong></p>
+<blockquote>
+<p>Recommendation: Projects A and C</p>
+<p>Fund dining hall food recovery and the multilingual reuse pop-up for a combined cost of $10,000, requiring 7 hours weekly and diverting an estimated 210 kg of waste. This maximizes graduate participation (260 participants in the pop-up) while remaining on budget. The trade-off: projects A and D divert slightly more waste (230 kg) but skew toward undergraduates, misaligning with your goal of involving graduate students. Post-pilot, measure repeat participation rates among graduate students to assess engagement sustainability.</p>
+</blockquote>
+<p>Now, evaluate all three models, with these in mind:</p>
+<ul>
+<li>Can you guess which model created each of these? Thinking/effort level?</li>
+<li>What specific evidence supports your evaluation?</li>
+</ul>
+<p>Now we&rsquo;ll reveal the models. A few things to think about:</p>
+<ul>
+<li>Were you surprised?</li>
+<li>Were any differences content-related, or mostly stylistic?</li>
+<li>Would your answer change if one model took 5× longer?</li>
+</ul>
+<h2 id="part-2-ai-tool-work">Part 2: AI tool work</h2>
+<h3 id="how-am-i-perceived">How am I perceived?</h3>
+<p>Take a piece of your own writing. Ideally, it should be at least a few paragraphs in length and contain some interesting prose. For example, an especially consequential email (e.g., asking someone for something and having to make the case), an application essay, or a personal essay. Put that writing sample into an LLM (choose a strong model and enable &ldquo;thinking&rdquo; and/or use higher levels of effort), using the following prompt:</p>
+<blockquote>
+<p>Read this writing sample. Understanding this is just one sample so this will necessarily be speculative, what do you think we might be able to infer about the author? Please write in as much detail as possible, addressing dimensions such as: What is their role or seniority relative to the audience they&rsquo;re addressing? How confident are they? What mood or motives might be behind what they wrote?</p>
+</blockquote>
+<p><em>Feel free to edit this prompt as you see fit! Other prompt question ideas: What do they value? What seem to be their personal strengths and weaknesses?</em></p>
+<p>Does the way you want to come across align with AI&rsquo;s observations about how you come across? Did anything in the AI analysis surprise you?</p>
+<p>Now that you&rsquo;ve used AI to do some introspection about your writing voice, try exploring what your writing voice might sound like with slight adjustments in different directions. Below are some sample prompts for doing this. Feel free to explore other directions that interest you!</p>
+<ul>
+<li>Rewrite the passage to be 10% more senior-level-sounding.</li>
+<li>Rewrite the passage to be 10% more cheerful or bubbly.</li>
+<li>Rewrite the passage to be 10% more stern.</li>
+<li>Rewrite the passage to be 10% more enthusiastic!</li>
+<li><em>[your choice of other adjectives!]</em></li>
+</ul>
+<p><strong>Deliverable:</strong> for one of the ways you asked the LLM to change your work, copy and paste the LLM&rsquo;s analysis of your original writing sample in Gradescope.</p>
+<h3 id="scope-of-work-pattern-recap">&ldquo;Scope of Work&rdquo; pattern recap</h3>
+<p>As we discussed in lecture, being able to write a detailed &ldquo;scope of work&rdquo; (the who/what/when/where of a task) can help you get more value out of AI by treating it like a subcontractor for your business. Consider these two prompts:</p>
+<ol>
+<li>Write me a paragraph about Abraham Lincoln.</li>
+<li>I am the CEO of a small-to-medium-sized company. I send out a weekly newsletter to employees with a &ldquo;CEO&rsquo;s factoid of the week.&rdquo; Sometimes I put something random, but other times I use this opportunity to share a relevant message to the workforce (keeping it subtle though). This particular week, I&rsquo;d like the factoid to be a paragraph about Abraham Lincoln, focusing on times when he persisted despite major setbacks. Our company is going through a rough patch right now, and I hope this could provide an uplifting message to your employees. Write this paragraph in my voice. I&rsquo;ve included 20 past sample newsletters to use as examples of my writing style.</li>
+</ol>
+<p>The second one is a good example of a detailed scope of work. Although not structured as explicit who/what/when/where bullet points, each of those is addressed in the prompt. Regardless of the model or effort level chosen, the second one will create a &ldquo;better&rdquo; response. Why does this work? Consider the thin and thick lines shared in lecture. The more detailed and relevant context you provide, the better the AI-generated response will be, since your detail will push the model off the thickest lines and onto something more unique and custom-fit to your purpose.</p>
+<h3 id="interview-me-pattern-activity">&ldquo;Interview Me&rdquo; pattern activity</h3>
+<p>Of course it&rsquo;s not always easy to sit down and write a detailed scope of work—that can be a challenging task in itself! Perhaps you haven&rsquo;t yet put enough thought into what needs to be done to feel confident that you&rsquo;ve already thought of every nuance of what should be done for the task. To overcome this challenge, you can use the &ldquo;interview me&rdquo; pattern, in which you ask the model to interview you for an extended period of time to elicit from you all the information needed to create a detailed scope of work.</p>
+<p><em>Example:</em> for the Abraham Lincoln example, if you didn&rsquo;t already have such a clear vision of what you were trying to achieve, you could prompt this instead:</p>
+<blockquote>
+<p>I am the CEO of a small-to-medium-sized company. I send out a weekly newsletter to employees with a &ldquo;CEO&rsquo;s factoid of the week.&rdquo; Sometimes I put something random, but this week I would like to use this opportunity to subtly share a relevant message to the workforce. The problem is, I don&rsquo;t know yet what I want to say or how to say it. Interview me with at least 15 questions to elicit requirements for the task of writing this week&rsquo;s factoid. It&rsquo;s your job in this interview to probe me to discover what it makes sense to say to my employees at this moment.</p>
+</blockquote>
+<p>Your task is to implement the &ldquo;interview me&rdquo; pattern for some task you need to accomplish in your life/work. The &ldquo;interview me&rdquo; pattern is most useful when the task is fairly complex and there are aspects to it that it hasn&rsquo;t yet even occurred to you to think about. Take a moment to think of a task of that nature (a complex task, a big career decision, etc). Now choose your favorite AI chat tool, and try the interview me pattern on that task.</p>
+<p>A few examples could be:</p>
+<ul>
+<li>&ldquo;I&rsquo;m starting a new course and want to know the best way to study for it. Interview me with at least 15 questions to elicit my personal circumstances and the nature of this class. It&rsquo;s your job in this interview to probe me to discover what I really need.&rdquo;</li>
+<li>&ldquo;I&rsquo;m working on a new tool for my job and my manager told me to have it do x. Interview me with at least 15 questions to elicit more detailed goals and requirements for this tool, since my manager&rsquo;s mandate was very vague. It&rsquo;s your job in this interview to probe me to discover issues I didn&rsquo;t yet even think to consider—the unknown unknowns—so that by the end of the interview we can write a thorough plan.&rdquo;</li>
+<li>&ldquo;I&rsquo;m just starting my frosh year of college, and trying to decide how best to spend the upcoming first summer of my college life. I&rsquo;m not yet sure I even know all the factors I should consider, let alone have clarity about what I should do. Interview me with at least 15 questions to elicit my personal circumstances and goals. It&rsquo;s your job in this interview to probe me to discover what I really need.&rdquo;</li>
+</ul>
+<p><strong>Deliverable:</strong> copy and paste your opening prompt into Gradescope. Then, copy and paste a few of the interview questions + answers below it.</p>
+<h2 id="part-3-reflection">Part 3: Reflection</h2>
+<p>Write a short paragraph (4–5 sentences) about the two questions we saw at the end of lecture:</p>
+<ol>
+<li>What is one skill you currently have that you want to keep sharp (while using AI assistance)?</li>
+<li>What mechanisms could you put in place to give you an early warning when that skill may be slowly, subtly dulling?</li>
+</ol>
+<p><strong>Deliverable:</strong> copy and paste your response into Gradescope.</p>
+<h2 id="submission">Submission</h2>
+<p>You should have three items to upload to <a href="https://www.gradescope.com/courses/1398766">Gradescope</a>, and be ready to discuss with your TA in the tutorial: <strong>&ldquo;How am I perceived?&rdquo;</strong>, <strong>&ldquo;Interview Me,&rdquo;</strong> and <strong>&ldquo;Reflection.&rdquo;</strong></p>
+
+
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/1-ai-foundations/" data-toggle="tooltip" data-placement="top" title="AI Foundations">&larr; Previous Assignment</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/assignments/3-managing-sources/" data-toggle="tooltip" data-placement="top" title="Managing Sources &#43; Context">Next Assignment &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+
+    </div>
+  </div>
+</div>
+
+      <footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+		
+		  <a href="mailto:cbl@stanford.edu" title="Email me">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2026
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/">CS193T Thinking with AI</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.164.0</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<script src="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/js/main.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+
+<script src="https://web.stanford.edu/class/archive/cs/cs193t/cs193t.1272/js/download-code.js"></script>
+
+
+<script>
+(function () {
+  var nav = document.querySelector('.navbar');
+  if (nav) {
+    var h = nav.getBoundingClientRect().height || 56;
+    document.documentElement.style.setProperty('--bh-nav-height', Math.round(h) + 'px');
+  }
+
+  var openState = { menu: null, toggle: null };
+
+  function onShow(e) {
+    var toggle = e.target.closest ? e.target.closest('.dropdown-toggle') : e.target;
+    if (!toggle) return;
+    var menu = toggle.nextElementSibling;
+    if (!menu || !menu.classList.contains('dropdown-menu')) return;
+
+    
+    var r = toggle.getBoundingClientRect();
+    menu.dataset._originalParent = menu.parentElement;
+    document.body.appendChild(menu);
+
+    var bottomPad = 8;
+    var maxH = Math.max(120, (window.innerHeight || document.documentElement.clientHeight) - r.bottom - bottomPad);
+    var minW = Math.max(r.width, 200);
+
+    Object.assign(menu.style, {
+      position: 'fixed',
+      left: r.left + 'px',
+      top: r.bottom + 'px',
+      minWidth: minW + 'px',
+      maxHeight: maxH + 'px',
+      overflowY: 'auto',
+      WebkitOverflowScrolling: 'touch',
+      display: 'block',
+      visibility: 'visible'
+    });
+
+    function onResize() {
+      var rr = toggle.getBoundingClientRect();
+      var maxH2 = Math.max(120, (window.innerHeight || document.documentElement.clientHeight) - rr.bottom - bottomPad);
+      menu.style.left = rr.left + 'px';
+      menu.style.top = rr.bottom + 'px';
+      menu.style.maxHeight = maxH2 + 'px';
+      menu.style.minWidth = Math.max(rr.width, 200) + 'px';
+    }
+    menu._resizeHandler = onResize;
+    window.addEventListener('resize', onResize);
+
+    openState.menu = menu;
+    openState.toggle = toggle;
+  }
+
+  function onHide() {
+    var menu = openState.menu;
+    if (!menu) return;
+
+    if (menu.dataset._originalParent) {
+      menu.dataset._originalParent.appendChild(menu);
+      delete menu.dataset._originalParent;
+    }
+    if (menu._resizeHandler) {
+      window.removeEventListener('resize', menu._resizeHandler);
+      delete menu._resizeHandler;
+    }
+    menu.removeAttribute('style');
+
+    openState.menu = null;
+    openState.toggle = null;
+  }
+
+  document.addEventListener('show.bs.dropdown', onShow, true);
+  document.addEventListener('hide.bs.dropdown', onHide, true);
+
+  
+  document.addEventListener('click', function (evt) {
+    var t = evt.target;
+    if (t.matches && (t.matches('.dropdown-toggle') || t.closest('.dropdown-toggle'))) {
+      if (!('bs' in window) && !('bootstrap' in window)) setTimeout(function(){ onShow({target: t}); }, 0);
+    }
+    
+    if (openState.menu && !openState.menu.contains(t) && !(openState.toggle && t.closest('.dropdown'))) {
+      onHide();
+    }
+  }, true);
+})();
+</script>
+
+
+<script>
+  $(document).ready(function() {
+    
+    var showtime = $("div.showtime").attr("when");
+    var anchor = $("div.showtime").attr("data-anchor");
+    
+    console.log("Solution debug - showtime:", showtime, "anchor:", anchor, "URL:", window.location.href);
+    
+    if (showtime) {
+      var now = new Date();
+      var gate;
+      
+      
+      try {
+        gate = new Date(showtime);
+        if (isNaN(gate.getTime())) {
+          console.log("Could not parse date:", showtime);
+          gate = new Date(0); 
+        }
+      } catch (e) {
+        console.log("Could not parse date:", showtime);
+        gate = new Date(0); 
+      }
+      
+      var shouldShow = now >= gate;
+      console.log("Time check - now:", now, "gate:", gate, "shouldShow from time:", shouldShow);
+      
+      if (anchor && anchor !== "#secret") {
+        var urlContainsAnchor = window.location.href.includes(anchor);
+        shouldShow = shouldShow || urlContainsAnchor;
+        console.log("URL check - anchor:", anchor, "URL contains anchor:", urlContainsAnchor, "final shouldShow:", shouldShow);
+      }
+      
+      if (shouldShow) {
+        console.log("Showing solutions");
+        $("div.solution").show();
+      } else {
+        console.log("Hiding solutions");
+      }
+    } else {
+      console.log("No showtime found, solutions will be hidden by default");
+    }
+  });
+</script>
+
+
+
+    
+  </body>
+</html>
+

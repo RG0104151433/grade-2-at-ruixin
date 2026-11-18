@@ -1,0 +1,58 @@
+{
+  "title": "字符编码与格式化卡片",
+  "solution": "../../综合题/字符串处理/14_综合_字符编码与格式化卡片.py",
+  "comparison": "exact",
+  "timeout_seconds": 2,
+  "cases": [
+    {
+      "name": "01 样例大写字母",
+      "input": "A\n3\n",
+      "expected": "Char: \"A\"\tCode: 65\nNext: \"D\"\tCode: 68\n[A     |    65]\n"
+    },
+    {
+      "name": "02 小写字母",
+      "input": "x\n2\n",
+      "expected": "Char: \"x\"\tCode: 120\nNext: \"z\"\tCode: 122\n[x     |   120]\n"
+    },
+    {
+      "name": "03 数字字符",
+      "input": "0\n5\n",
+      "expected": "Char: \"0\"\tCode: 48\nNext: \"5\"\tCode: 53\n[0     |    48]\n"
+    },
+    {
+      "name": "04 数字跨到冒号",
+      "input": "9\n1\n",
+      "expected": "Char: \"9\"\tCode: 57\nNext: \":\"\tCode: 58\n[9     |    57]\n"
+    },
+    {
+      "name": "05 字母跨到左花括号",
+      "input": "z\n1\n",
+      "expected": "Char: \"z\"\tCode: 122\nNext: \"{\"\tCode: 123\n[z     |   122]\n"
+    },
+    {
+      "name": "06 英文符号",
+      "input": "#\n4\n",
+      "expected": "Char: \"#\"\tCode: 35\nNext: \"'\"\tCode: 39\n[#     |    35]\n"
+    },
+    {
+      "name": "07 最小偏移中文",
+      "input": "数\n1\n",
+      "expected": "Char: \"数\"\tCode: 25968\nNext: \"敱\"\tCode: 25969\n[数     | 25968]\n"
+    },
+    {
+      "name": "08 最大偏移中文",
+      "input": "北\n5\n",
+      "expected": "Char: \"北\"\tCode: 21271\nNext: \"匜\"\tCode: 21276\n[北     | 21271]\n"
+    },
+    {
+      "name": "09 最小可打印符号",
+      "input": "!\n2\n",
+      "expected": "Char: \"!\"\tCode: 33\nNext: \"#\"\tCode: 35\n[!     |    33]\n"
+    },
+    {
+      "name": "10 大写末端边界",
+      "input": "U\n5\n",
+      "expected": "Char: \"U\"\tCode: 85\nNext: \"Z\"\tCode: 90\n[U     |    85]\n"
+    }
+  ]
+}

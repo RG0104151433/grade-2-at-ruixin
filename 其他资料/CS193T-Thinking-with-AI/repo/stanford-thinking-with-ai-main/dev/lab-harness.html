@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab harness</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<main class="container section">
+  <p class="muted small">Dev harness — load a lab with <code>?lab=&lt;id&gt;</code>. Add <code>&theme=dark</code> to test dark mode.</p>
+  <div class="lab"><div class="lab-head"><div><h3 id="t"></h3></div></div><div id="mount" class="lab-body"></div></div>
+</main>
+<script type="module">
+  import { makeStore, toast } from '../assets/js/labs/_kit.js';
+  const p = new URLSearchParams(location.search);
+  const id = p.get('lab');
+  if (p.get('theme') === 'dark') document.documentElement.dataset.theme = 'dark';
+  document.getElementById('t').textContent = id || '(no lab given)';
+  const el = document.getElementById('mount');
+  el.classList.add('lab-' + id);
+  try {
+    const mod = await import(`../assets/js/labs/${id}.js`);
+    mod.mount(el, { id, store: makeStore('lab:' + id), toast });
+  } catch (e) {
+    el.innerHTML = '<pre class="lab-error"></pre>';
+    el.firstChild.textContent = e.stack || String(e);
+    console.error(e);
+  }
+</script>
+</body>
+</html>

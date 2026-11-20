@@ -1,0 +1,68 @@
+{
+  "title": "多分支区间与逻辑组合",
+  "solution": "../../基础题/条件判断/20_多分支区间与逻辑组合.py",
+  "comparison": "exact",
+  "timeout_seconds": 2,
+  "cases": [
+    {
+      "name": "01 样例35与2000世纪闰年",
+      "input": "35 2000\n",
+      "expected": "OK\nLEAP\n"
+    },
+    {
+      "name": "02 负值非法与1900世纪平年",
+      "input": "-1 1900\n",
+      "expected": "INVALID\nCOMMON\n"
+    },
+    {
+      "name": "03 零边界与普通闰年",
+      "input": "0 2024\n",
+      "expected": "GREAT\nLEAP\n"
+    },
+    {
+      "name": "04 34上边界与普通平年",
+      "input": "34 2023\n",
+      "expected": "GREAT\nCOMMON\n"
+    },
+    {
+      "name": "05 74上边界与1600世纪闰年",
+      "input": "74 1600\n",
+      "expected": "OK\nLEAP\n"
+    },
+    {
+      "name": "06 75临界点与2100世纪平年",
+      "input": "75 2100\n",
+      "expected": "BAD\nCOMMON\n"
+    },
+    {
+      "name": "07 极大污染与普通闰年",
+      "input": "500 2020\n",
+      "expected": "BAD\nLEAP\n"
+    },
+    {
+      "name": "08 最小负值与元年平年",
+      "input": "-10 1\n",
+      "expected": "INVALID\nCOMMON\n"
+    },
+    {
+      "name": "09 4年闰年最小值",
+      "input": "20 4\n",
+      "expected": "GREAT\nLEAP\n"
+    },
+    {
+      "name": "10 100年平年",
+      "input": "50 100\n",
+      "expected": "OK\nCOMMON\n"
+    },
+    {
+      "name": "11 最大年份9999平年",
+      "input": "100 9999\n",
+      "expected": "BAD\nCOMMON\n"
+    },
+    {
+      "name": "12 制表符与多余空格",
+      "input": "  34\t2400  \n",
+      "expected": "GREAT\nLEAP\n"
+    }
+  ]
+}

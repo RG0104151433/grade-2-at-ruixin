@@ -55,3 +55,10 @@
 # 保存后按 Ctrl+Shift+B 评测，或告诉我“检查第16题”。
 #
 # 请在下面写你的代码：
+
+from decimal import Decimal
+import math
+n, r, x = input().split()
+print(f"{bin(int(n))} {oct(int(n))} {hex(int(n))}\n{(1+float(r))**365:.2f} {math.pow(1-float(r),365):.2f}\n{Decimal("0.1")+Decimal(x)}")
+# False
+# 因为x在input处理时就是个字符串

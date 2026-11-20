@@ -1,0 +1,58 @@
+{
+  "title": "单双分支与布尔比较",
+  "solution": "../../基础题/条件判断/19_单双分支与布尔比较.py",
+  "comparison": "exact",
+  "timeout_seconds": 2,
+  "cases": [
+    {
+      "name": "01 样例临界相等",
+      "input": "60 60\n  hello@py  \n",
+      "expected": "PASS\nEVEN\nHAS_AT\n"
+    },
+    {
+      "name": "02 差1分未及格与无@",
+      "input": "59 60\npython\n",
+      "expected": "FAIL\nODD\nNO_AT\n"
+    },
+    {
+      "name": "03 零分边界",
+      "input": "0 1\n@\n",
+      "expected": "FAIL\nEVEN\nHAS_AT\n"
+    },
+    {
+      "name": "04 满分边界与制表符清理",
+      "input": "100 90\n\tuser_name\t\n",
+      "expected": "PASS\nEVEN\nNO_AT\n"
+    },
+    {
+      "name": "05 奇数及格与仅含@加空白",
+      "input": "85 85\n   @   \n",
+      "expected": "PASS\nODD\nHAS_AT\n"
+    },
+    {
+      "name": "06 最低及格线",
+      "input": "1 1\nno_symbol\n",
+      "expected": "PASS\nODD\nNO_AT\n"
+    },
+    {
+      "name": "07 中间带@的字符串",
+      "input": "72 80\na@b.com\n",
+      "expected": "FAIL\nEVEN\nHAS_AT\n"
+    },
+    {
+      "name": "08 零分及格边界与空格",
+      "input": "0 60\n  test user  \n",
+      "expected": "FAIL\nEVEN\nNO_AT\n"
+    },
+    {
+      "name": "09 奇数未及格但含@",
+      "input": "33 50\n@admin\n",
+      "expected": "FAIL\nODD\nHAS_AT\n"
+    },
+    {
+      "name": "10 多余空格首行参数",
+      "input": "  91   90  \n  end@\n",
+      "expected": "PASS\nODD\nHAS_AT\n"
+    }
+  ]
+}

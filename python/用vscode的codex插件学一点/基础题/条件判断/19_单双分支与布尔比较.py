@@ -44,3 +44,18 @@
 # 保存后按 Ctrl+Shift+B 评测，或告诉我“检查第19题”。
 #
 # 请在下面写你的代码：
+
+Score, Pass_line = input().split()
+word = input().strip()
+score = int(Score)
+pass_line = int(Pass_line)
+if score >= pass_line :
+    print("PASS")
+else :
+    print("FAIL")
+if score % 2 == 0 :
+    print("EVEN")
+else :
+    print("ODD")
+contain = "HAS_AT" if '@' in word else "NO_AT"
+print(f"{contain}")

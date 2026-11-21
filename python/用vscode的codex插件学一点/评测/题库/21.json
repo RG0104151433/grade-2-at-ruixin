@@ -1,0 +1,58 @@
+{
+  "title": "类型检查与异常容错",
+  "solution": "../../基础题/条件判断/21_类型检查与异常容错.py",
+  "comparison": "exact",
+  "timeout_seconds": 2,
+  "cases": [
+    {
+      "name": "01 样例正负相加",
+      "input": "  -42  \n  3.5\n",
+      "expected": "INT:-42\nFLOAT:3.50\n-38.50\n"
+    },
+    {
+      "name": "02 整数字符串与小数点字符串",
+      "input": "3.14\n10\n",
+      "expected": "NOT_INT\nFLOAT:10.00\nCANNOT_ADD\n"
+    },
+    {
+      "name": "03 第一项成功第二项失败",
+      "input": "25\nabc\n",
+      "expected": "INT:25\nNOT_NUM\nCANNOT_ADD\n"
+    },
+    {
+      "name": "04 两项都失败",
+      "input": "hello\n12x\n",
+      "expected": "NOT_INT\nNOT_NUM\nCANNOT_ADD\n"
+    },
+    {
+      "name": "05 零边界",
+      "input": "0\n0\n",
+      "expected": "INT:0\nFLOAT:0.00\n0.00\n"
+    },
+    {
+      "name": "06 带加号与科学计数浮点",
+      "input": "+15\n2.5e1\n",
+      "expected": "INT:15\nFLOAT:25.00\n40.00\n"
+    },
+    {
+      "name": "07 制表符首尾空白",
+      "input": "\t100\t\n\t-0.25\t\n",
+      "expected": "INT:100\nFLOAT:-0.25\n99.75\n"
+    },
+    {
+      "name": "08 看似数字的中文或标点",
+      "input": "一二三\n3.1.4\n",
+      "expected": "NOT_INT\nNOT_NUM\nCANNOT_ADD\n"
+    },
+    {
+      "name": "09 仅有空格的无效整数",
+      "input": "   \n8.888\n",
+      "expected": "NOT_INT\nFLOAT:8.89\nCANNOT_ADD\n"
+    },
+    {
+      "name": "10 大整数与负数相加",
+      "input": "1000000\n-999999.5\n",
+      "expected": "INT:1000000\nFLOAT:-999999.50\n0.50\n"
+    }
+  ]
+}

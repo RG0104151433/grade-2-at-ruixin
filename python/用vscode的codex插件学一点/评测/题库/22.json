@@ -1,0 +1,68 @@
+{
+  "title": "嵌套分支与独立判定",
+  "solution": "../../基础题/条件判断/22_嵌套分支与独立判定.py",
+  "comparison": "exact",
+  "timeout_seconds": 2,
+  "cases": [
+    {
+      "name": "01 样例会员加急用券",
+      "input": "3.0 YES yes SAVE5\n",
+      "expected": "18.00\n13.40\nVIP_EXPRESS\n"
+    },
+    {
+      "name": "02 1kg边界普通件无券",
+      "input": "1.0 no no NONE\n",
+      "expected": "10.00\n10.00\nNORMAL\n"
+    },
+    {
+      "name": "03 1kg会员不加急折后不足10不用券",
+      "input": "1.0 yes No SAVE5\n",
+      "expected": "10.00\n8.00\nVIP_STANDARD\n"
+    },
+    {
+      "name": "04 5kg边界非会员加急用券",
+      "input": "5.0 No YES SAVE5\n",
+      "expected": "26.00\n33.00\nNORMAL\n"
+    },
+    {
+      "name": "05 大于5kg会员加急不用券",
+      "input": "10.0 yes yes OTHER\n",
+      "expected": "41.00\n36.80\nVIP_EXPRESS\n"
+    },
+    {
+      "name": "06 折后恰好10元可用券",
+      "input": "1.625 yes no SAVE5\n",
+      "expected": "12.50\n5.00\nVIP_STANDARD\n"
+    },
+    {
+      "name": "07 折后9.99不足10不可用券",
+      "input": "1.5 yes no SAVE5\n",
+      "expected": "12.00\n9.60\nVIP_STANDARD\n"
+    },
+    {
+      "name": "08 极轻非会员加急",
+      "input": "0.5 NO yes NONE\n",
+      "expected": "10.00\n22.00\nNORMAL\n"
+    },
+    {
+      "name": "09 极轻非会员用券刚好10元",
+      "input": "0.2 no no SAVE5\n",
+      "expected": "10.00\n5.00\nNORMAL\n"
+    },
+    {
+      "name": "10 最大重量100kg会员标准用券",
+      "input": "100 Yes No SAVE5\n",
+      "expected": "311.00\n243.80\nVIP_STANDARD\n"
+    },
+    {
+      "name": "11 略超1kg边界",
+      "input": "1.25 no no NONE\n",
+      "expected": "11.00\n11.00\nNORMAL\n"
+    },
+    {
+      "name": "12 多余空格与制表符",
+      "input": "  6.0\tYES   no   SAVE5  \n",
+      "expected": "29.00\n18.20\nVIP_STANDARD\n"
+    }
+  ]
+}

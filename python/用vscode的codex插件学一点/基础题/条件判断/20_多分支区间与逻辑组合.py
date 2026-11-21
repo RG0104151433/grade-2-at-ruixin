@@ -38,3 +38,21 @@
 # 保存后按 Ctrl+Shift+B 评测，或告诉我“检查第20题”。
 #
 # 请在下面写你的代码：
+
+Pm, Year = input().split()
+pm = int(Pm)
+year = int(Year)
+if pm < 0 :
+    print(f"INVALID")
+elif pm < 35 :
+    print(f"GREAT")
+elif pm < 75 :
+    print(f"OK")
+else :
+    print(f"BAD")
+if year % 4 == 0 and year % 100 != 0 or year % 400 == 0 :
+    print(f"LEAP")
+else :
+    print(f"COMMON")
+# 如果移到前面会使得区间逻辑之间无法借用前一个的结果，如果全部独立会浪费时间
+# 不会，一真即真

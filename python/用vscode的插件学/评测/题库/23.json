@@ -1,0 +1,78 @@
+{
+  "title": "体检指标与温标评估",
+  "solution": "../../综合题/条件判断/23_综合_体检指标与温标评估.py",
+  "comparison": "exact",
+  "timeout_seconds": 2,
+  "cases": [
+    {
+      "name": "01 样例华氏正常与BMI分歧",
+      "input": "1.60 62.5\n98.6 f\n",
+      "expected": "TEMP:37.0C/98.6F|NORMAL\nBMI:24.41|INT:Healthy|DOM:Overweight\nBORDERLINE_FOLLOWUP\n"
+    },
+    {
+      "name": "02 全正常通过ALL_PASS",
+      "input": "1.75 68.0\n36.6 C\n",
+      "expected": "TEMP:36.6C/97.9F|NORMAL\nBMI:22.20|INT:Healthy|DOM:Healthy\nALL_PASS\n"
+    },
+    {
+      "name": "03 体温恰好36.0端点与BMI18.5端点",
+      "input": "2.00 74.0\n36.0 c\n",
+      "expected": "TEMP:36.0C/96.8F|NORMAL\nBMI:18.50|INT:Healthy|DOM:Healthy\nALL_PASS\n"
+    },
+    {
+      "name": "04 体温恰好37.3端点与BMI24.0端点",
+      "input": "2.00 96.0\n37.3 C\n",
+      "expected": "TEMP:37.3C/99.1F|NORMAL\nBMI:24.00|INT:Healthy|DOM:Overweight\nBORDERLINE_FOLLOWUP\n"
+    },
+    {
+      "name": "05 低体温LOW触发就医",
+      "input": "1.80 72.0\n95.0 F\n",
+      "expected": "TEMP:35.0C/95.0F|LOW\nBMI:22.22|INT:Healthy|DOM:Healthy\nMEDICAL_CARE\n"
+    },
+    {
+      "name": "06 发热FEVER优先于BMI超重",
+      "input": "1.70 85.0\n38.2 c\n",
+      "expected": "TEMP:38.2C/100.8F|FEVER\nBMI:29.41|INT:Overweight|DOM:Obese\nMEDICAL_CARE\n"
+    },
+    {
+      "name": "07 BMI双标准28.0分歧与发热优先级",
+      "input": "2.00 112.0\n37.4 C\n",
+      "expected": "TEMP:37.4C/99.3F|FEVER\nBMI:28.00|INT:Overweight|DOM:Obese\nMEDICAL_CARE\n"
+    },
+    {
+      "name": "08 BMI双标准28.0正常体温分歧复查",
+      "input": "2.00 112.0\n36.8 c\n",
+      "expected": "TEMP:36.8C/98.2F|NORMAL\nBMI:28.00|INT:Overweight|DOM:Obese\nBORDERLINE_FOLLOWUP\n"
+    },
+    {
+      "name": "09 双方均为Obese且正常体温",
+      "input": "2.00 120.0\n36.5 c\n",
+      "expected": "TEMP:36.5C/97.7F|NORMAL\nBMI:30.00|INT:Obese|DOM:Obese\nDIET_ADVICE\n"
+    },
+    {
+      "name": "10 偏瘦Thin且正常体温需饮食建议",
+      "input": "2.00 70.0\n96.8 F\n",
+      "expected": "TEMP:36.0C/96.8F|NORMAL\nBMI:17.50|INT:Thin|DOM:Thin\nDIET_ADVICE\n"
+    },
+    {
+      "name": "11 体温非数字但BMI有效仍重试",
+      "input": "1.75 65.0\nabc c\n",
+      "expected": "TEMP_INVALID\nBMI:21.22|INT:Healthy|DOM:Healthy\nCHECK_RETRY\n"
+    },
+    {
+      "name": "12 体温有效发热但BMI越界",
+      "input": "0.40 65.0\n107.6 f\n",
+      "expected": "TEMP:42.0C/107.6F|FEVER\nBMI_INVALID\nCHECK_RETRY\n"
+    },
+    {
+      "name": "13 双标准25.0端点同为Overweight建议饮食",
+      "input": "2.00 100.0\n36.5 c\n",
+      "expected": "TEMP:36.5C/97.7F|NORMAL\nBMI:25.00|INT:Overweight|DOM:Overweight\nDIET_ADVICE\n"
+    },
+    {
+      "name": "14 非法温标K与体温超生理上限",
+      "input": "1.75 70.0\n45.1 k\n",
+      "expected": "TEMP_INVALID\nBMI:22.86|INT:Healthy|DOM:Healthy\nCHECK_RETRY\n"
+    }
+  ]
+}

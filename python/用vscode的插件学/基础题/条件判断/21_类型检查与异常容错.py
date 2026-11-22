@@ -44,3 +44,28 @@
 # 保存后按 Ctrl+Shift+B 评测，或告诉我“检查第21题”。
 #
 # 请在下面写你的代码：
+
+Int_text = input().strip()
+Num_text = input().strip()
+int_convert = False
+num_convert = False
+try :
+    int_text = int(Int_text)
+    int_convert = True
+    print(f"INT:{int_text}")
+except ValueError :
+    print("NOT_INT")
+try :
+    num_text = float(Num_text)
+    if isinstance(num_text, float) :
+        num_convert = True
+        print(f"FLOAT:{num_text:.2f}")
+except ValueError :
+    print("NOT_NUM")
+if int_convert and num_convert :
+    if int_text is not None and num_text is not None :
+        print(f"{int_text + num_text:.2f}")
+else :
+    print("CANNOT_ADD")
+# 裸except会吞掉其他报错（但是我不清楚吞掉其他报错又意味着什么）
+# 直接用eval过于空泛，无法精细处理变量的具体情况

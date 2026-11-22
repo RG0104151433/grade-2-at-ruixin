@@ -1,0 +1,88 @@
+{
+  "title": "跨零点停车与优惠仲裁",
+  "solution": "../../挑战题/条件判断/24_挑战_跨零点停车与优惠仲裁.py",
+  "comparison": "exact",
+  "timeout_seconds": 2,
+  "cases": [
+    {
+      "name": "01 样例NIGHT早入场失败回退用券",
+      "input": "1959 2230 no NIGHT 10\n",
+      "expected": "151 6\n20.00 10.00\nCOUPON\n"
+    },
+    {
+      "name": "02 恰好15分钟免费无视VIP与券",
+      "input": "2350 0005 yes VIP 20\n",
+      "expected": "15 0\n0.00 0.00\nFREE\n"
+    },
+    {
+      "name": "03 16分钟起步计1单位且NIGHT未达封顶",
+      "input": "2100 2116 no NIGHT 0\n",
+      "expected": "16 1\n4.00 4.00\nNIGHT_PASS\n"
+    },
+    {
+      "name": "04 恰好30与31分钟边界",
+      "input": "0900 0931 no NONE 0\n",
+      "expected": "31 2\n8.00 8.00\nSTANDARD\n"
+    },
+    {
+      "name": "05 标准三档与20元门槛未达不用券",
+      "input": "1000 1200 no NONE 30\n",
+      "expected": "120 4\n14.00 14.00\nSTANDARD\n"
+    },
+    {
+      "name": "06 标准用券刚好20元门槛",
+      "input": "1000 1300 no NONE 12\n",
+      "expected": "180 6\n20.00 8.00\nCOUPON\n"
+    },
+    {
+      "name": "07 大额现金券抵扣归零不负",
+      "input": "0900 1230 no NONE 50\n",
+      "expected": "210 7\n22.00 0.00\nCOUPON\n"
+    },
+    {
+      "name": "08 NIGHT精准夜间端点2000到0800",
+      "input": "2000 0800 yes night 5\n",
+      "expected": "720 24\n56.00 10.00\nNIGHT_PASS\n"
+    },
+    {
+      "name": "09 NIGHT次日0801超时失败受50封顶再用券",
+      "input": "2000 0801 yes night 5\n",
+      "expected": "721 25\n58.00 45.00\nCOUPON\n"
+    },
+    {
+      "name": "10 VIP八折且未触发36封顶屏蔽券",
+      "input": "0800 1200 no vip 10\n",
+      "expected": "240 8\n24.00 19.20\nVIP_PASS\n"
+    },
+    {
+      "name": "11 VIP八折触发36元封顶保护",
+      "input": "0800 2200 no VIP 15\n",
+      "expected": "840 28\n64.00 36.00\nVIP_PASS\n"
+    },
+    {
+      "name": "12 同刻跨夜计24小时普通50封顶",
+      "input": "1000 1000 yes NONE 0\n",
+      "expected": "1440 48\n104.00 50.00\nSTANDARD\n"
+    },
+    {
+      "name": "13 同刻不跨夜计0分钟FREE",
+      "input": "1000 1000 no NONE 0\n",
+      "expected": "0 0\n0.00 0.00\nFREE\n"
+    },
+    {
+      "name": "14 非法分钟数60拦截",
+      "input": "1260 1300 no NONE 0\n",
+      "expected": "INVALID_RECORD\n"
+    },
+    {
+      "name": "15 非跨夜出场早于入场拦截",
+      "input": "1400 1300 no NONE 0\n",
+      "expected": "INVALID_RECORD\n"
+    },
+    {
+      "name": "16 非数字时间与越界券值拦截",
+      "input": "abc 1300 no NONE 55\n",
+      "expected": "INVALID_RECORD\n"
+    }
+  ]
+}

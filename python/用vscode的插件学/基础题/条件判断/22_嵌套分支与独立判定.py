@@ -45,3 +45,38 @@
 # 保存后按 Ctrl+Shift+B 评测，或告诉我“检查第22题”。
 #
 # 请在下面写你的代码：
+
+Weight, Is_member, Is_express, Coupon_code = input().split()
+weight = float(Weight.strip())
+is_member = Is_member.strip().lower()
+is_express = Is_express.strip().lower()
+coupon_code = Coupon_code.strip()
+if weight <= 1 :
+    base_fee = 10.0
+elif 1 < weight <= 5 :
+    base_fee = 10.0 + (weight - 1) * 4.0
+else :
+    base_fee = 26.0 + (weight - 5) * 3.0
+print(f"{base_fee:.2f}")
+if is_express == "yes" :
+    if is_member == "yes" :
+        urgent_fee = (base_fee + 5.0) * 0.8
+    else :
+        urgent_fee = base_fee + 12.0
+else :
+    if is_member == "yes" :
+        urgent_fee = base_fee * 0.8
+    else :
+        urgent_fee = base_fee
+if coupon_code == "SAVE5" and urgent_fee >= 10 :
+    urgent_fee -= 5.0
+print(f"{urgent_fee:.2f}")
+if is_member == "yes" :
+    if is_express == "yes" :
+        print("VIP_EXPRESS")
+    else :
+        print("VIP_STANDARD")
+else :
+    print("NORMAL")
+# 从逻辑上二者就不是排斥的
+# 肯定不一样，差一块

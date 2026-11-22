@@ -1,0 +1,58 @@
+{
+  "title": "模板填空与序列索引初探",
+  "solution": "../../基础题/条件判断/27_补充_模板填空与序列索引初探.py",
+  "comparison": "exact",
+  "timeout_seconds": 2,
+  "cases": [
+    {
+      "name": "01 样例模板拆位与表达式拦截",
+      "input": "932\nhello,2\nENWSENWS\n10**2\n",
+      "expected": "14\nFalse\nYES\n输入有误\n"
+    },
+    {
+      "name": "02 零值拆位与首尾相等",
+      "input": "0\nabca,1\nEW\n5\n",
+      "expected": "0\nTrue\nYES\n25\n"
+    },
+    {
+      "name": "03 单字符k=1相等与浮点平方",
+      "input": "7\na,1\nNNSS\n2.5\n",
+      "expected": "7\nTrue\nYES\n6.25\n"
+    },
+    {
+      "name": "04 末尾k=len必然True与复数平方",
+      "input": "505\npython,6\nEWNS\n1+2j\n",
+      "expected": "10\nTrue\nYES\n(-3+4j)\n"
+    },
+    {
+      "name": "05 k超长度越界ERROR与大整数",
+      "input": "999\nabc,4\nEEW\n123456789\n",
+      "expected": "27\nERROR\nNO\n15241578750190521\n"
+    },
+    {
+      "name": "06 k<=0非法位置ERROR与负整数",
+      "input": "100\nabc,0\nNS\n-8\n",
+      "expected": "1\nERROR\nYES\n64\n"
+    },
+    {
+      "name": "07 空串边界ERROR与非数字文本",
+      "input": "42\n,1\nE\nabc\n",
+      "expected": "6\nERROR\nNO\n输入有误\n"
+    },
+    {
+      "name": "08 东西抵消但南北不抵消NO",
+      "input": "80\nlevel,2\nEWN\n-1.5\n",
+      "expected": "8\nFalse\nNO\n2.25\n"
+    },
+    {
+      "name": "09 二进制字面量非十进制拒收",
+      "input": "19\n12341,1\nSSNNWWEE\n0b10\n",
+      "expected": "10\nTrue\nYES\n输入有误\n"
+    },
+    {
+      "name": "10 带首尾空白纯数字与带空格空串",
+      "input": "300\nabb,3\nN\n  -3+4j  \n",
+      "expected": "3\nTrue\nNO\n(-7-24j)\n"
+    }
+  ]
+}

@@ -51,3 +51,80 @@
 # 保存后按 Ctrl+Shift+B 评测，或告诉我“检查第23题”。
 #
 # 请在下面写你的代码：
+
+H_text, W_text = input().split()
+h_text = H_text.strip()
+w_text = W_text.strip()
+T_text, Unit_text = input().split()
+t_text = T_text.strip()
+unit_text = Unit_text.lower()
+
+temp_validity = True
+try :
+    t = float(t_text)
+    if isinstance(t, float) :
+        if unit_text == 'f' :
+            t_c = (t - 32) / 1.8
+            t_f = t
+        elif unit_text == 'c' :
+            t_c = t
+            t_f = t * 1.8 +32
+        else :
+            print("TEMP_INVALID") # 这个是unit_text不合规的报错
+            temp_validity = False
+        if temp_validity and (t_c < 30 or t_c > 45) :
+            print("TEMP_INVALID") # 这个是数值范围错误的报错
+            temp_validity = False
+except ValueError :
+    print("TEMP_INVALID") # 这个是温度非float的报错 至此，三种TEMP_INVALID处理完毕
+    temp_validity = False
+if temp_validity :
+    if t_c < 36.0 :
+        condition = "LOW"
+    elif t_c <= 37.3 :
+        condition = "NORMAL"
+    else :
+        condition = "FEVER"
+    print(f"TEMP:{t_c:.1f}C/{t_f:.1f}F|{condition}")
+
+bmi_validity = True
+try :
+    h = float(h_text)
+    w = float(w_text)
+    if isinstance(h, float) and isinstance(w, float) :
+        if h < 0.5 or h > 2.5 or w < 10.0 or w > 300.0 :
+            print("BMI_INVALID")
+            bmi_validity = False
+        else :
+            bmi = w / (h ** 2)
+    else :
+        print("BMI_INVALID")
+        bmi_validity = False
+except ValueError :
+    print("BMI_INVALID")
+    bmi_validity = False
+if bmi_validity :
+    if bmi < 18.5 :
+        itn, dom = "Thin", "Thin"
+    elif bmi < 24 :
+        itn, dom = "Healthy", "Healthy"
+    elif bmi < 25 :
+        itn, dom = "Healthy", "Overweight"
+    elif bmi < 28 :
+        itn, dom = "Overweight", "Overweight"
+    elif bmi < 30 :
+        itn, dom = "Overweight", "Obese"
+    else :
+        itn, dom = "Obese", "Obese"
+    print(f"BMI:{bmi:.2f}|INT:{itn}|DOM:{dom}")
+
+if not temp_validity or not bmi_validity :
+    print("CHECK_RETRY")
+elif condition != "NORMAL" :
+    print("MEDICAL_CARE")
+elif itn != dom :
+    print("BORDERLINE_FOLLOWUP")
+elif dom != "Healthy" :
+    print("DIET_ADVICE")
+else :
+    print("ALL_PASS")

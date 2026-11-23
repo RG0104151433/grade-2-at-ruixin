@@ -48,3 +48,78 @@
 # 保存后按 Ctrl+Shift+B 评测，或告诉我“检查第24题”。
 #
 # 请在下面写你的代码：
+
+import sys
+# 处理输入并进行转换、校错
+In_code, Out_code, Overnight, Pass_type, Coupon_text = input().split()
+overnight = Overnight.lower()
+pass_type = Pass_type.lower()
+coupon = int(Coupon_text)
+valid = True
+try :
+    in_code = int(In_code)
+    out_code = int(Out_code)
+    if in_code // 100 > 23 or out_code // 100 > 23 or in_code % 100 >= 60 or out_code % 100 >= 60 :
+        print("INVALID_RECORD") # 范围不合法
+        valid = False
+    if overnight == "no" and in_code > out_code :
+        print("INVALID_RECORD") # 时间不合法
+        valid = False
+    if coupon < 0 or coupon > 50 :
+        print("INVALID_RECORD") # 券不合法
+        valid = False
+except ValueError :
+    print("INVALID_RECORD") # 数字解析失败
+    valid = False
+
+if not valid :
+    sys.exit(0)
+
+# 计算分钟数
+if overnight == "no" :
+    mins = 60 * (out_code // 100 - in_code // 100) + out_code % 100 - in_code % 100
+else :
+    mins = out_code // 100 * 60 + out_code % 100 + (1440 - in_code // 100 * 60 - in_code % 100)
+
+# 计算计时单位数
+if mins <= 15 :
+    units = 0
+else :
+    units = (mins + 29) // 30
+
+# 计算原始金额
+if units == 0 :
+    raw_fee = 0
+    final = 0
+    condition = "FREE"
+elif units < 3 :
+    raw_fee = 4.00 * units
+elif units < 7 :
+    raw_fee = 2.00 + 3.00 * units
+else :
+    raw_fee = 8.00 + 2.00 * units
+
+# 处理特殊情况
+card_used = False
+if units > 0 :
+    if pass_type == "night" and in_code >= 2000 and (overnight == "no" and out_code >= 2000 or overnight == "yes" and out_code <= 800):
+        card_used = True
+        condition = "NIGHT_PASS"
+        final = raw_fee if raw_fee <= 10.0 else 10.0
+    elif pass_type == "vip" :
+        card_used = True
+        condition = "VIP_PASS"
+        mid = raw_fee * 0.8
+        final = mid if mid < 36.0 else 36.0
+    else :
+        if not card_used :
+            final = raw_fee if raw_fee <= 50.0 else 50.0
+    if not card_used and coupon > 0 and coupon <= 50 and raw_fee >= 20.0 :
+        final = final - coupon if final - coupon >= 0.0 else 0.0
+        card_used = True
+        condition = "COUPON"
+    if not card_used :
+        condition = "STANDARD"
+
+# 最终输出
+print(f"{mins} {units}\n{raw_fee:.2f} {final:.2f}\n{condition}")

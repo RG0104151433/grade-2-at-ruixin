@@ -10,7 +10,9 @@
 # 2. 复数开方与带填充对齐格式化：
 #    - 求 `a` 的平方根时，若用 `math.sqrt(a)` 遇到负数会报 `ValueError`；改用 `pow(a, 0.5)`，负数会自动得到 `complex`。
 #    - 格式化规格 `{:+>30.3f}` 表示：宽度 30、右对齐、空白填 `+`、保留 3 位小数（复数会同时把实部和虚部保留 3 位小数）。
-#    - 嵌套槽动态格式：`"{:{ch}^{w}}".format(val, ch=fill, w=width)` 可由变量控制填充字符与宽度。
+#    - 嵌套槽动态格式（.format() 与 f-string 通用）：
+#      * `"{:{ch}^{w}}".format(val, ch=fill, w=width)` 与 `f"{val:{ch}^{w}}"` 都可用变量控制填充字符与宽度；
+#      * 常见疑问：`f"{pow(num, 0.5):{ch}>30.3f}"` 把 `+` 换成 `{ch}` 在语法上**完全可行**（Python 会先取变量 `ch` 的单字符作填充符），但绝不能省掉内层花括号写成 `:ch>30.3f`（会把 `'c'`, `'h'` 当格式符报 `ValueError`）；且 `ch` 必须是单字符（2 个及以上字符报 `ValueError`）。在本题第 2 行按题意需固定用 `+`。
 #
 # 输入（两行，勿打印输入提示）：
 # 第 1 行：带单位金额字符串 `money`（不含空白，如 `123RMB`、`999EUR`、`10Euro`、`10CNY`）
@@ -40,3 +42,60 @@
 # 评测：10 组测试集中在 评测/题库/25.json。保存后按 Ctrl+Shift+B 评测，或说“检查第25题”。
 #
 # 请在下面写你的代码：
+
+money = input().strip()
+Num, ch, Width = input().split()
+num = int(Num)
+width = int(Width)
+
+error = False
+if money.endswith("Euro") :
+    try :
+        amount = float(money[:-4]) * 7.8942
+        unit = "RMB"
+        if amount < 0 :
+            print("format error")
+            error = True
+    except ValueError :
+        print("format error")
+        error = True
+elif money.endswith("RMB") :
+    try :
+        amount = float(money[:-3]) / 7.8942
+        unit = "Euro"
+        if amount < 0 :
+            print("format error")
+            error = True
+    except ValueError :
+        print("format error")
+        error = True
+elif money.endswith("EUR") :
+    try :
+        amount = float(money[:-3]) * 7.8942
+        unit = "CNY"
+        if amount < 0 :
+            print("format error")
+            error = True
+    except ValueError :
+        print("format error")
+        error = True
+elif money.endswith("CNY") :
+    try :
+        amount = float(money[:-3]) / 7.8942
+        unit = "EUR"
+        if amount < 0 :
+            print("format error")
+            error = True
+    except ValueError :
+        print("format error")
+        error = True
+else :
+    print("format error")
+    error = True
+if not error :
+    print(f"{amount:.2f}{unit}")
+
+print(f"{pow(num, 0.5):+>30.3f}") # 将+的位置改成{ch}可以吗？
+print("{:{c}^{w}}".format(num ** 3, c=ch, w=width))
+# 思考1：4种货币后缀长度不统一（"Euro"为4个字符，而"RMB"/"CNY"/"EUR"为3个字符），若统一只用[-3:]和[:-3]会把"10Euro"误切成"10E"和"uro"，导致数值转换报错。
+# 思考2：math.sqrt() 仅支持实数域，传入负数会直接抛出 ValueError；而 pow(a, 0.5) 支持复数运算会自动返回 complex，配合 :.3f 可同时保留实部与虚部各 3 位小数。

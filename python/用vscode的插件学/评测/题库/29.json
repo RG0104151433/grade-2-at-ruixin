@@ -1,0 +1,58 @@
+{
+  "title": "while迭代与random模拟",
+  "solution": "../../基础题/列表与循环/29_while迭代与random模拟.py",
+  "comparison": "exact",
+  "timeout_seconds": 2,
+  "cases": [
+    {
+      "name": "01 样例两鼠第3天停与混合奇偶",
+      "input": "5 8\n25\n34\n14\n13\n\n",
+      "expected": "3 7.00 1.75\n34-14\n25+13\niZayU25h 70\n"
+    },
+    {
+      "name": "02 wall=1第一天即打穿",
+      "input": "1 1\n10\n\n",
+      "expected": "1 1.00 1.00\n10\nNONE\nS47pzDan 10\n"
+    },
+    {
+      "name": "03 wall=2恰好第一天相等打穿",
+      "input": "2 2\n-3\n0\n7\n\n",
+      "expected": "1 1.00 1.00\n0\n-3+7\n15XIgbvN 70\n"
+    },
+    {
+      "name": "04 只有偶数无奇数NONE",
+      "input": "42 5\n2\n4\n-6\n0\n\n",
+      "expected": "3 7.00 1.75\n2-4--6-0\nNONE\n0HE89b1H 90\n"
+    },
+    {
+      "name": "05 只有奇数无偶数NONE",
+      "input": "17 10\n1\n3\n-5\n\n",
+      "expected": "4 15.00 1.88\nNONE\n1+3+-5\nnLFvD3xi 90\n"
+    },
+    {
+      "name": "06 空行直接结束全部NONE",
+      "input": "100 20\n\n",
+      "expected": "5 31.00 1.94\nNONE\nNONE\nOyWxNz81 80\n"
+    },
+    {
+      "name": "07 较大墙厚100",
+      "input": "2026 100\n11\n22\n33\n44\n\n",
+      "expected": "7 127.00 1.98\n22-44\n11+33\n5q3tnryo 45\n"
+    },
+    {
+      "name": "08 负整数与零奇偶判定",
+      "input": "99 4\n0\n-1\n-2\n-9\n\n",
+      "expected": "2 3.00 1.50\n0--2\n-1+-9\nmTHE4qcp 40\n"
+    },
+    {
+      "name": "09 多行带首尾空格输入",
+      "input": "7 15\n  8 \n 9\n  12\n\n",
+      "expected": "4 15.00 1.88\n8-12\n9\nEu1dS8B6 75\n"
+    },
+    {
+      "name": "10 极值种子10000与wall=9",
+      "input": "10000 9\n100\n101\n\n",
+      "expected": "4 15.00 1.88\n100\n101\nyB04kDm4 10\n"
+    }
+  ]
+}

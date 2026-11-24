@@ -42,10 +42,50 @@
 # -------- 请仅补全下方函数体，并在分割线下方继续完成第 2～4 行逻辑 --------
 def digit_sum(x):
     # 请在下面写你的代码（返回 x 各位数字之和，勿在此打印）：
-    pass
+    n = x
+    sum = 0
+    while n > 0 :
+        sum += n % 10
+        n //= 10
+    return sum
 
 # -------- 以下调用框架请勿删改 --------
 _x = int(input())
 print(digit_sum(_x))
 
 # 请在下面继续写第 2～4 行输入与输出逻辑：
+
+S, K = input().split(",")
+s = S.strip()
+k = int(K)
+error = False
+if not s or k < 1 or k > len(s) :
+    print("ERROR")
+elif s[k-1] == s[-1] :
+    print("True")
+else :
+    print("False")
+
+moves = input().strip()
+if moves.count("E") == moves.count("W") and moves.count("N") == moves.count("S") :
+    print("YES")
+else :
+    print("NO")
+
+Num = input().strip()
+try :
+    num = int(Num)
+    print(f"{int(pow(num, 2))}")
+except ValueError :
+    try :
+        num = float(Num)
+        print(f"{pow(num, 2)}")
+    except ValueError :
+        try :
+            num = complex(Num)
+            print(f"{pow(num, 2)}")
+        except ValueError :
+            print("输入有误")
+
+# 如果用 eval("10**2") 会直接把它当 Python 表达式算出 100（还会执行任意代码），无法识别“非纯数字”；按 int -> float -> complex 顺序只做字面数值解析，遇到 "10**2"、"0b10" 或文本都会触发 ValueError 从而准确拦截。
+# 必须首先检验下标范围，不然会溢出

@@ -42,6 +42,43 @@
 # -------- 请仅补全下方函数体，并在下方作答区继续完成主程序 --------
 def is_prime(n):
     # 请在下面写你的代码（用 for / else 判断并返回 True 或 False）：
-    pass
+    if n < 2 :
+        return False
+    m = int(pow(n, 0.5)) + 1
+    for i in range(2, m) :
+        if n % i == 0 :
+            return False
+    return True
 
 # 请在下面继续写主程序（读取输入并输出第 1～3 行）：
+
+A, B, Step = input().split()
+a, b, step = int(A), int(B), int(Step)
+prime = []
+for i in range(b, a - 1, -step) :
+    if is_prime(i) :
+        prime.append(i)
+if len(prime) == 0 :
+    print("NONE\n0")
+else :
+    print(*prime)
+    print(sum(prime))
+p = 0.0
+k = int(input())
+for i in range(0, k) :
+    p += (-1) ** i / (2 * i + 1)
+p *= 4
+print(f"{p:.6f}")
+
+# 思考1：不会。break 只跳出当前最内层循环；for/else 的原理就是“循环体把所有元素完整跑完且一次也没触发 break 时才执行 else”，一旦中途 break 就会连同 else 一起跳过。
+# 思考2：range() 只接收整数，传浮点数会报 TypeError；定积分应先算步长 dx = (b - a) / n，再用 for i in range(n): 遍历整数段号，由 x = a + i * dx 计算小段坐标。
+#
+# 不用 list 的对照写法片段（对应第 57～65 行，用字符串与累加器替代列表）：
+# primes_str = ""
+# prime_sum = 0
+# for i in range(b, a - 1, -step):
+#     if is_prime(i):
+#         primes_str = str(i) if not primes_str else f"{primes_str} {i}"
+#         prime_sum += i
+# print(primes_str if primes_str else "NONE")
+# print(prime_sum)

@@ -55,3 +55,48 @@
 # 保存后按 Ctrl+Shift+B 评测，或告诉我“检查第29题”。
 #
 # 请在下面写你的代码：
+
+import random
+Seed_val, Wall = input().split()
+seed_val, wall = int(Seed_val), int(Wall)
+big, small = 1.0, 1.0
+big_total, small_total = 0.0, 0.0
+day = 0
+while wall > 0 :
+    wall -= (big + small)
+    big_total += big
+    small_total += small
+    big *= 2.0
+    small /= 2.0
+    day += 1
+print(f"{day} {big_total:.2f} {small_total:.2f}")
+
+odd_str = ""
+even_str = ""
+while True :
+    Cur = input().strip()
+    if not Cur :
+            break
+    else :
+        cur = int(Cur)
+    if cur % 2 != 0 :
+        odd_str = str(cur) if not odd_str else f"{odd_str}+{cur}"
+    else :
+        even_str = str(cur) if not even_str else f"{even_str}-{cur}"
+print(even_str if even_str else "NONE")
+print(odd_str if odd_str else "NONE")
+
+random.seed(seed_val)
+rand_list = []
+for i in range(8) :
+    a = random.randint(1,5)
+    if a == 1 :
+        rand_list.append(str(random.randint(0, 9)))
+    elif a == 2 or a == 3 :
+        rand_list.append(chr(random.randint(ord('A'), ord('Z'))))
+    else :
+        rand_list.append(chr(random.randint(ord('a'), ord('z'))))
+print(f"{"".join(rand_list)} {random.randrange(10, 100, 5)}") # 对于字符串的基本操作你打算什么时候讲？
+
+# 思考1：只写 `while True:` 没有停机条件会导致死循环；必须先 `.strip()` 判断 `if not line: break`，这样读到末尾空行（""）才会跳出，同时不会像 `if not int(line):` 那样把合法数字 `0` 误判成退出，直接 `int("")` 还会报 ValueError。在评测中死循环（或忘记推进循环变量使条件始终为真）会耗尽限时，触发 `TLE`（运行超时）。
+# 思考2：`random.randint(1, 10)` 是左闭右闭区间 `[1, 10]`，可能抽到 `10`；`random.randrange(1, 10)` 是左闭右开区间 `[1, 10)`，最大只到 `9`（还支持第 3 个步长参数）。`random.seed(seed_val)` 用于固定伪随机数生成器的初始状态，使同一 `seed_val` 下每次运行得到的随机序列完全一致、可复现。

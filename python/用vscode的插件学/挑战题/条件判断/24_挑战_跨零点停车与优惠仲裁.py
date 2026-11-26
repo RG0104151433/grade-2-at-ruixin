@@ -54,19 +54,19 @@ import sys
 In_code, Out_code, Overnight, Pass_type, Coupon_text = input().split()
 overnight = Overnight.lower()
 pass_type = Pass_type.lower()
-coupon = int(Coupon_text)
 valid = True
 try :
     in_code = int(In_code)
     out_code = int(Out_code)
-    if in_code // 100 > 23 or out_code // 100 > 23 or in_code % 100 >= 60 or out_code % 100 >= 60 :
-        print("INVALID_RECORD") # 范围不合法
-        valid = False
-    if overnight == "no" and in_code > out_code :
-        print("INVALID_RECORD") # 时间不合法
-        valid = False
-    if coupon < 0 or coupon > 50 :
-        print("INVALID_RECORD") # 券不合法
+    coupon = int(Coupon_text)
+    if (in_code < 0 or out_code < 0
+            or in_code // 100 > 23 or out_code // 100 > 23
+            or in_code % 100 >= 60 or out_code % 100 >= 60
+            or overnight not in ("yes", "no")
+            or pass_type not in ("none", "vip", "night")
+            or (overnight == "no" and in_code > out_code)
+            or coupon < 0 or coupon > 50) :
+        print("INVALID_RECORD")
         valid = False
 except ValueError :
     print("INVALID_RECORD") # 数字解析失败
@@ -123,3 +123,6 @@ if units > 0 :
 
 # 最终输出
 print(f"{mins} {units}\n{raw_fee:.2f} {final:.2f}\n{condition}")
+
+# 思考1：因为持 `NIGHT` 卡但在非夜间窗口入场或次日超时出场时，卡并不会实际生效，需要回退按普通规则结算并仍允许使用现金券；所以不能只看输入 `pass_type == "NONE"`，必须单设布尔标志记录卡是否真正生效。
+# 思考2：`None` 是全局唯一单例，`x is None` 直接比较对象身份、最准确且不会被自定义类干扰；而整数 `1000` 是值对象，不同地方创建的两个 `1000` 可能不是同一内存地址（`a is b` 可能为 `False`），比较数值是否相等必须用 `==`。

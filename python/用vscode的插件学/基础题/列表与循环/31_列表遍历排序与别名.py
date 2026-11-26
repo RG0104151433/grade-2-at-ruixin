@@ -79,3 +79,31 @@
 # 保存后按 Ctrl+Shift+B 评测，或告诉我“检查第31题”。
 #
 # 请在下面写你的代码：
+
+ori = [int(s) for s in input().split()]
+
+even = [i for i in ori if i >= 0 and i % 2 == 0]
+l, sum_, mx, mn = len(even), 0, even[0] if even else "NONE", even[0] if even else "NONE"
+if even :
+    sum_ = sum(even)
+    mx = max(even)
+    mn = min(even)
+print(f"{l} {sum_} {mn} {mx}")
+
+nums = sorted(ori, key = lambda x : (abs(x), -x))
+print(*nums)
+
+snap = ori[:]
+snap[0] += 100
+print(ori[0], snap[0], '|', *ori)
+
+name = [s for s in input().split()]
+score = [int(i) for i in input().split()]
+stu = sorted(zip(name, score), key = lambda s : (-s[1], s[0]))
+out = []
+for i, (n, scr) in enumerate(stu, start = 1) :
+    out.append(f"{i}:{n}({scr})")
+print(*out)
+
+# 思考1：会改变原列表（Python 中称为列表 list）。因为 `lt = ls` 只是绑定了同一份内存引用别名，调 `lt.sort()` 会同步原地修改 `ls`。想保住 `ls` 不变有两种做法：① 直接用内置函数 `sorted(ls)` 返回排好序的新列表；② 先浅拷贝副本 `lt = ls.copy()` 或 `lt = ls[:]`，再对 `lt` 调用 `lt.sort()`。
+# 思考2：会留下第二个 `2`（最终 `a` 变成 `[2, 3, 4]`）。因为删掉下标 `0` 的第一个 `2` 后，后面元素整体左移一格，第二个 `2` 滑到了下标 `0`，但 `for` 循环的迭代下标下一轮会继续推进到下标 `1`（即 `3`），从而把第二个 `2` 跳过。安全做法是用推导式 `[x for x in a if x != 2]` 重建，或遍历副本 `a[:]`。

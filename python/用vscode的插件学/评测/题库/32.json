@@ -1,0 +1,68 @@
+{
+  "title": "统计分析与二维流水线",
+  "solution": "../../综合题/列表与循环/32_综合_统计分析与二维流水线.py",
+  "comparison": "exact",
+  "timeout_seconds": 2,
+  "cases": [
+    {
+      "name": "01 样例混合过滤去重与2x3矩阵",
+      "input": "10\nabc\n20\n10\n3.5\n30\n\n2 3\n1 5 2\n4 3 6\n",
+      "expected": "3 bad=2 | 10,20,30\nmean=20.00 std=10.00 med=20.00\n18 13\n4 5 6\n"
+    },
+    {
+      "name": "02 仅有1个有效整数std应为0.00",
+      "input": "42\n42\nhello\n\n2 2\n1 2\n3 4\n",
+      "expected": "1 bad=1 | 42\nmean=42.00 std=0.00 med=42.00\n13 7\n3 4\n"
+    },
+    {
+      "name": "03 偶数个有效整数中位数与保序",
+      "input": "50\n10\n20\n40\n10\n\n1 3\n-5 0 7\n",
+      "expected": "4 bad=0 | 50,10,20,40\nmean=30.00 std=18.26 med=30.00\n12\n-5 0 7\n"
+    },
+    {
+      "name": "04 全非法输入有效为0输出NONE",
+      "input": "abc\n12.34\n--\n\n2 2\n-1 -2\n-3 -4\n",
+      "expected": "0 bad=3 | NONE\nNONE\n7 -7\n-1 -2\n"
+    },
+    {
+      "name": "05 直接空行无有效输入与1x1矩阵",
+      "input": "\n1 1\n99\n",
+      "expected": "0 bad=0 | NONE\nNONE\n109\n99\n"
+    },
+    {
+      "name": "06 全负整数列表与多行带空格输入",
+      "input": "  -10 \n -20\n-10\n -5 \n\n3 2\n-10 -2\n-5 -8\n-1 -9\n",
+      "expected": "3 bad=0 | -10,-20,-5\nmean=-11.67 std=7.64 med=-10.00\n-2 -13 -10\n-1 -2\n"
+    },
+    {
+      "name": "07 包含0与正负混合偶数个数",
+      "input": "0\n-4\n4\n0\n8\nerr\n\n3 3\n0 0 0\n1 2 3\n-1 -2 -3\n",
+      "expected": "4 bad=1 | 0,-4,4,8\nmean=2.00 std=5.16 med=2.00\n10 6 -6\n1 2 3\n"
+    },
+    {
+      "name": "08 恰2个不同整数检验n-1分母",
+      "input": "10\n20\n\n2 4\n1 2 3 4\n5 6 7 8\n",
+      "expected": "2 bad=0 | 10,20\nmean=15.00 std=7.07 med=15.00\n20 26\n5 6 7 8\n"
+    },
+    {
+      "name": "09 大量重复值与1列矩阵",
+      "input": "7\n7\n7\n2\n7\n2\n\n4 1\n-3\n0\n8\n5\n",
+      "expected": "2 bad=0 | 7,2\nmean=4.50 std=3.54 med=4.50\n7 0 8 5\n8\n"
+    },
+    {
+      "name": "10 浮点科学计数法文本应判非法",
+      "input": "1e2\n100\n50\n0.0\n\n2 2\n10 20\n30 40\n",
+      "expected": "2 bad=2 | 100,50\nmean=75.00 std=35.36 med=75.00\n40 70\n30 40\n"
+    },
+    {
+      "name": "11 较长未排序列表检验中位数不漏排序",
+      "input": "90\n10\n80\n20\n70\n\n2 3\n9 1 4\n3 8 2\n",
+      "expected": "5 bad=0 | 90,10,80,20,70\nmean=54.00 std=36.47 med=70.00\n24 13\n9 8 4\n"
+    },
+    {
+      "name": "12 矩阵行多于列检验独立副本与列极值",
+      "input": "3\n6\n9\n12\n\n4 2\n-10 5\n20 -3\n0 9\n7 7\n",
+      "expected": "4 bad=0 | 3,6,9,12\nmean=7.50 std=3.87 med=7.50\n5 17 9 14\n20 9\n"
+    }
+  ]
+}

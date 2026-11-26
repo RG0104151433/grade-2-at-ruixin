@@ -128,3 +128,6 @@ elif dom != "Healthy" :
     print("DIET_ADVICE")
 else :
     print("ALL_PASS")
+
+# 思考1：`if/elif/else` 自上而下判断且命中第一条即止；走到 `elif bmi < 24:` 时前面的 `bmi < 18.5` 必然已为假，即已隐含 `bmi >= 18.5`，无需重复写左端点。若打乱分支顺序（如把 `< 28` 放到 `< 24` 前面），较小数值会被宽区间提前拦截导致错档。
+# 思考2：必须把 `CHECK_RETRY` 放在最前面；若先查 `elif condition != "NORMAL":`，当体温转换失败但 BMI 有效时，`condition` 变量尚未赋值就会触发 `NameError`，同时也违背了“任一无效优先复检”的规则。

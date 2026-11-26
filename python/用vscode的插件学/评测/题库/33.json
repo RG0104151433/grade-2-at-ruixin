@@ -1,0 +1,68 @@
+{
+  "title": "双序列算法与边界仲裁",
+  "solution": "../../挑战题/列表与循环/33_挑战_双序列算法与边界仲裁.py",
+  "comparison": "exact",
+  "timeout_seconds": 2,
+  "cases": [
+    {
+      "name": "01 样例TwoSum重复配对与连续递增与子序列",
+      "input": "3 2 4 3 5 7 1\n2 4 7\n6\n",
+      "expected": "0 3\n3 3\nYES\n1 7 5\n"
+    },
+    {
+      "name": "02 两数之和无解返回-1且pattern为空",
+      "input": "1 2 3 4\n\n10\n",
+      "expected": "-1\n4 0\nYES\n4 3 2\n"
+    },
+    {
+      "name": "03 主序列nums为空与pattern非空",
+      "input": "\n1 2\n0\n",
+      "expected": "-1\n0 -1\nNO\nEMPTY\n"
+    },
+    {
+      "name": "04 nums与pattern均为空",
+      "input": "\n\n5\n",
+      "expected": "-1\n0 -1\nYES\nEMPTY\n"
+    },
+    {
+      "name": "05 单元素列表",
+      "input": "5\n5\n10\n",
+      "expected": "-1\n1 0\nYES\n5\n"
+    },
+    {
+      "name": "06 全相等元素严格递增长为1且同元素配对",
+      "input": "4 4 4 4\n4 4\n8\n",
+      "expected": "0 1\n1 0\nYES\n4 4 4\n"
+    },
+    {
+      "name": "07 全严格递减无解",
+      "input": "9 7 5 3 1\n9 3 1\n0\n",
+      "expected": "-1\n1 0\nYES\n1 3 5\n"
+    },
+    {
+      "name": "08 并列最长递增取最早起点",
+      "input": "1 2 3 2 4 6 0 1 2\n1 4 2\n5\n",
+      "expected": "0 4\n3 0\nYES\n2 1 0\n"
+    },
+    {
+      "name": "09 顺序颠倒不是保序子序列",
+      "input": "1 2 3 4 5\n5 3 1\n9\n",
+      "expected": "3 4\n5 0\nNO\n5 4 3\n"
+    },
+    {
+      "name": "10 元素次数不足不构成子序列",
+      "input": "1 2 3\n1 2 2\n5\n",
+      "expected": "1 2\n3 0\nNO\n3 2 1\n"
+    },
+    {
+      "name": "11 不足3元素反转与负数配对",
+      "input": "-5 10\n10\n5\n",
+      "expected": "0 1\n2 0\nYES\n10 -5\n"
+    },
+    {
+      "name": "12 多组解取i最小再j最小与结尾递增",
+      "input": "0 -3 8 5 1 2 3 4 5\n0 5 3 5\n5\n",
+      "expected": "0 3\n5 4\nYES\n5 4 3\n"
+    }
+  ]
+}

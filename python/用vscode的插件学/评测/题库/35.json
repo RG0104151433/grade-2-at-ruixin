@@ -1,0 +1,58 @@
+{
+  "title": "字符判定与映射替换",
+  "solution": "../../基础题/字符串处理/35_字符判定与映射替换.py",
+  "comparison": "exact",
+  "timeout_seconds": 2,
+  "cases": [
+    {
+      "name": "01 样例混合文本后缀与映射删标点",
+      "input": "Hello, World! 2026\na.py Note.MD 3.5 -7 008 readme.TXT\naeo 123\n",
+      "expected": "2 8 4 2 2\nH2ll3 W3rld 2026\n3 1 | 008\nFalse\n"
+    },
+    {
+      "name": "02 互换字符映射a<->b与多标点清洗",
+      "input": "ab-ba!! [ab]\nmain.PY app.tx demo.md 42\nab ba\n",
+      "expected": "0 6 0 1 5\nbaab ba\n2 1 | 42\nFalse\n"
+    },
+    {
+      "name": "03 含上标数字2²检验isdecimal严格性",
+      "input": "  Leading & Trailing  \n2² -0 +9 100 3.14\nLn __\n",
+      "expected": "2 13 0 6 1\n  _eadi_g  Traili_g  \n0 1 | 100\nFalse\n"
+    },
+    {
+      "name": "04 第1行全标点与无纯数字输出NONE",
+      "input": "!@#$%^&*()\na.py b.txt c.c\na x\n",
+      "expected": "0 0 0 0 10\n\n2 0 | NONE\nFalse\n"
+    },
+    {
+      "name": "05 单字符line长度不足2下标1判False",
+      "input": "a\n0 1 999 a.txt\na b\n",
+      "expected": "0 1 0 0 0\nb\n1 3 | 0,1,999\nFalse\n"
+    },
+    {
+      "name": "06 下标1恰好为src[0]返回True",
+      "input": "ba-test\nf.TXT g.Md\na *\n",
+      "expected": "0 6 0 0 1\nb*test\n2 0 | NONE\nTrue\n"
+    },
+    {
+      "name": "07 下标1恰好为'-'返回True",
+      "input": "x-99_code!\n12345\ny Y\n",
+      "expected": "0 5 2 0 3\nx99code\n0 1 | 12345\nTrue\n"
+    },
+    {
+      "name": "08 保留第1行首尾空格勿整行strip",
+      "input": "  A1 b2!  \ndoc.md 000\nAb 98\n",
+      "expected": "1 1 2 5 1\n  91 82  \n1 1 | 000\nFalse\n"
+    },
+    {
+      "name": "09 大写与小写混杂数字全统计",
+      "input": "PyThOn3.14-OK?\n123 x.py y.TXT 0\nPO 01\n",
+      "expected": "5 3 3 0 3\n0yTh1n3141K\n2 2 | 123,0\nFalse\n"
+    },
+    {
+      "name": "10 无任何目标后缀仅纯数字",
+      "input": "Code123!\na.c b.java 7 8 9\nCe cE\n",
+      "expected": "1 3 3 0 1\ncodE123\n0 3 | 7,8,9\nFalse\n"
+    }
+  ]
+}

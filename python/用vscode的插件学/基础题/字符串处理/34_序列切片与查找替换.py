@@ -14,7 +14,12 @@
 #      * step < 0（如 -1、-2）：从右向左切，start 省略默认末尾，stop 省略默认越过索引 0（到达最左端前）；
 #        例：text = "abracadabra"，text[::-2] 从末位开始每跳 2 步向左取，得到 "abdcra"；text[5:1:-1] 从下标 5（含）向左取到下标 1（不含），即取下标 5,4,3,2。
 #      * 越界与方向不符（如正步长时 start >= stop，或负步长时 s[1:5:-1]）都不会报错，而是安全返回空序列；但 step == 0 会报 ValueError。
-#    - 序列比较与极值：字符串按逐字符 Unicode 码值 ord() 比较大小；min(s) / max(s) 返回序列中编码最小 / 最大的单个元素。
+#    - 序列比较与 Unicode 编码极值：
+#      * 计算机中每个字符都对应一个唯一整数编号，即 Unicode 码值（可通过 ord(字符) 查看，其中 ASCII 区间按数值从小到大排为：'0'~'9'(48~57) < 'A'~'Z'(65~90) < 'a'~'z'(97~122) < 汉字(上万)）；
+#      * 字符串对比大小、以及取极值时，都是逐个比较字符的 ord() 数值；
+#      * “编码最小/最大的单个字符”就是整串中 ord(ch) 数值最小/最大的那个字符本身：
+#        例1："abracadabra" 含 'a'(97)、'b'(98)、'c'(99)、'd'(100)、'r'(114)，故编码最小字符是 'a'、最大字符是 'r'；
+#        例2："ZzAa09" 中 '0'(48) < '9'(57) < 'A'(65) < 'Z'(90) < 'a'(97) < 'z'(122)，故最小是 '0'、最大是 'z'（注意小写字母编码比大写字母大）。
 #
 # 2. 查找、计数与替换方法（均不修改原串）：
 #    - s.find(sub, start=0, end=len(s)) 与 s.rfind(sub, start=0, end=len(s))：
@@ -47,11 +52,11 @@
 # 1. 第 1 行（步长切片与极值）：依次输出 4 项（空格分隔）——
 #    ① 从 text 末位起从右向左每隔 1 个取 1 个字符得到的序列；
 #    ② 从下标 5（含）倒序切到下标 1（不含）得到的片段；
-#    ③ text 中编码最小的单个字符；
-#    ④ text 中编码最大的单个字符。
+#    ③ text 中 Unicode 编码值（即 ord(字符)）最小的单个字符；
+#    ④ text 中 Unicode 编码值（即 ord(字符)）最大的单个字符。
 # 2. 第 2 行（查找与计数）：依次输出 4 个整数（空格分隔）——
 #    ① sub 在整个 text 中从左首次出现的下标（找不到记 -1，不可报错）；
-#    ② sub 在整个 text 中从右最后一次出现的下标（找不到记 -1）；
+#    ② sub 在整个 text 中从右往左首次出现（即整串最靠右那次匹配）的下标（找不到记 -1）；
 #    ③ sub 在 text 下标区间 [1, len(text) - 1) 内从左首次出现的下标（找不到记 -1）；
 #    ④ sub 在整个 text 中互不重叠出现的总次数。
 # 3. 第 3 行（限次替换与不可变性）：仅将 text 中从左数前 2 次出现的 old_s 替换为 new_s（不足 2 次则全部替换），按 <替换后新串> | <未改变的原 text> 输出。
@@ -68,7 +73,7 @@
 # 0 7 7 2
 # @br@cadabra | abracadabra
 # user | admin:host=db:port=5432 || port=5432
-# 说明：text[::-2]="abdcra"，text[5:1:-1]="acar"；第2行区间[1,10)跳过索引0的"ab"故从左首次为7；第3行只换前2个a；第4行左右各切1刀。
+# 说明：text[::-2]="abdcra"，text[5:1:-1]="acar"，在 "abracadabra" 中 ord('a')=97 最小、ord('r')=114 最大；第2行区间[1,10)跳过索引0的"ab"故从左首次为7；第3行只换前2个a；第4行左右各切1刀。
 #
 # 末尾思考（请用 # 注释写两句，检查时审阅）：
 # 1. 为什么在判断或定位一个可能不存在的子串时优先用 find() 而不是 index()？
@@ -78,3 +83,37 @@
 # 保存后按 Ctrl+Shift+B 评测，或告诉我“检查第34题”。
 #
 # 请在下面写你的代码：
+
+text = input().strip()
+sub = input().strip()
+old, new = input().split()
+log = input().strip()
+
+seq_1 = text[-1::-2]
+seq_2 = text[5:1:-1]
+ord_min = ord(text[0])
+ord_max = ord(text[0])
+for ch in text :
+    ord_min = min(ord_min, ord(ch))
+    ord_max = max(ord_max, ord(ch))
+ch_min = chr(ord_min)
+ch_max = chr(ord_max)
+# ch_min = min(text)
+# ch_max = max(text)
+print(seq_1, seq_2, ch_min, ch_max)
+
+pos_1 = text.find(sub)
+pos_2 = text.rfind(sub)
+pos_3 = text.find(sub, 1, len(text) - 1)
+cnt = text.count(sub)
+print(pos_1, pos_2, pos_3, cnt)
+
+rep = text.replace(old, new, 2)
+print(rep, "|", text)
+
+left_head, left_tail = log.split(sep = ':', maxsplit = 1)
+right_head, right_tail = log.rsplit(sep = ':', maxsplit = 1)
+print(left_head, "|", left_tail, "||", right_tail)
+
+# 思考1：find() 找不到子串时会安全返回 -1，便于用 if pos == -1: 判断分支；而 index() 找不到会直接抛出 ValueError 异常，若未写 try/except 会导致程序崩溃。
+# 思考2："a,,b".split(",") 返回 ['a', '', 'b']，"a  b".split() 返回 ['a', 'b']。原因是：显式传入 sep="," 时按“严格定界符”切分——每遇到 1 个逗号就切一刀（两个相邻逗号中间夹着空文本，或首尾紧贴逗号），因此会保留空字符串 "" 以免丢失空字段位置；而无参 split()（即 sep=None）会将任意个连续空白折叠成同一块分隔符并自动忽略首尾空白，故不会产生空字符串。

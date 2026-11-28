@@ -10,15 +10,17 @@
 #      * prefix / suffix 可以是**单个字符串**，也可以是**由多个字符串组成的元组**（如 s.endswith((".py", ".txt", ".md"))，匹配元组中任一项即返回 True；注意**不能传列表**，会报 TypeError）；
 #      * 可选参数 start、end 指定只检查切片区间 s[start:end] 是否以指定前后缀开头或结尾（例如 line.startswith(('-', '+'), 1) 检查从下标 1 起是否以 '-' 或 '+' 开头）。
 #
-# 2. 字符分类方法全家桶（⚠️ 共性：空串 "" 调用下列所有方法一律返回 False！）：
-#    - s.isalpha()：至少 1 个字符且全为字母（含英文字母与中文等 Unicode 字母），不含空格、数字、标点；
-#    - s.isdigit() vs s.isdecimal()：
-#      * s.isdecimal() 最严格：只认可十进制数字字符（'0'～'9' 等纯数字码）；
-#      * s.isdigit() 范围稍宽：还会把上标数字（如 "²".isdigit() == True）也算作数字；
-#      * ⚠️ 两者遇到负号 "-12"、小数点 "3.5" 或空格 " 5" 时均返回 False！
-#    - s.isalnum()：至少 1 个字符且全为字母或数字；
-#    - s.isspace()：至少 1 个字符且全为空白字符（空格、\t、\n、\r）；
-#    - s.isupper() / s.islower() / s.istitle()：至少含 1 个区分大小写的字母且全部满足对应大小写规则（纯数字 "123" 调用它们均返回 False）。
+# 2. 字符分类方法全家桶（无参数；返回值全部是布尔值 bool：True 或 False！）：
+#    - 调用方式：直接跟在字符串或单个字符后（如 if ch.isupper(): count += 1 或 if item.isdecimal(): ...）；
+#    - 返回值含义：非空且“全部字符都满足该条件”返回 True，否则（含空串 ""）返回 False：
+#      * s.isalpha() -> bool：非空且全为字母（含英文与汉字等 Unicode 字母），不含空格/数字/标点；
+#      * s.isdigit() vs s.isdecimal() -> bool：
+#        - s.isdecimal() 最严格：非空且只认十进制数字字符（'0'～'9' 等纯数字码）；
+#        - s.isdigit() 范围稍宽：还会把上标数字（如 "²".isdigit() == True）也算作数字；
+#        - ⚠️ 两者遇到负号 "-12"、小数点 "3.5" 或空格 " 5" 时均返回 False！
+#      * s.isalnum() -> bool：非空且全为字母或数字；
+#      * s.isspace() -> bool：非空且全为空白字符（空格、\t、\n、\r）；
+#      * s.isupper() / s.islower() / s.istitle() -> bool：至少含 1 个区分大小写的字母且全部满足对应大小写规则（纯数字 "123" 调用它们均返回 False）。
 #
 # 3. string 模块常用常量与 str.maketrans + translate 批量映射：
 #    - import string 后可直接使用常见标准常量：
@@ -27,11 +29,16 @@
 #      * string.ascii_letters（大小写全 52 个字母）
 #      * string.digits（"0123456789"）
 #      * string.punctuation（全部常见英文标点符号，如 !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~）
-#    - 批量字符一对一替换与删除（比写很多个 replace() 更简洁高效）：
-#      * 第 1 步造映射表：table = str.maketrans(x, y, z)
-#        - x 和 y 必须是**长度严格相等**的字符串，表示把 x 中每个字符一对一替换成 y 同位置字符（不等长报 ValueError）；
-#        - 可选第 3 参数 z 为字符串，表示把 z 中包含的所有字符**直接删掉**（若只删不换，前两参传空串即可：str.maketrans("", "", del_chars)）。
-#      * 第 2 步执行变换：new_s = s.translate(table) —— 返回变换后的新字符串，原 s 不变。
+#    - 批量字符一对一替换与删除（str.maketrans + translate，只扫描一遍原串）：
+#      * 第 1 步造“翻译词典”：table = str.maketrans(x, y, z)
+#        - 本质原理：返回一个 Unicode 编码字典（如 str.maketrans("aeo", "123", ",!") -> {97: 49, 101: 50, 111: 51, 44: None, 33: None}），替换字符映射到目标编码，要删除的字符直接映射到 None。
+#        - 三种传参方式：
+#          ① 只替换不删除（2 参）：str.maketrans("aeo", "123") —— x 与 y 长度必须严格相等，不等长报 ValueError；
+#          ② 只删除不替换（3 参前两参空串）：str.maketrans("", "", ",!?") —— 第 3 参 z 中出现的所有字符都会被删掉；
+#          ③ 同时替换 + 批量删除（3 参全用）：str.maketrans("aeo", "123", ",!?") —— 若同一字符既在替换里又在删除里，第 3 参“删除”优先；第 3 参也可直接传 string.punctuation 一次性删光全部常见英文标点。
+#      * 第 2 步应用词典：new_s = s.translate(table)
+#        - 拿 table 对 s 从头到尾只扫描一遍（新字符就替换、None 就跳过删除、其余保留），返回新字符串且不改原串 s。
+#        - 例如 s = "Hello, World! 2026"，经 table = str.maketrans("aeo", "123", ",!") 后得 "H2ll3 W3rld 2026"；且因为只扫一遍，像 'a'<->'b' 互换不会像两次 .replace() 那样把刚改好的字符又改回去。
 #
 # 输入（3 行，勿打印输入提示）：
 # 第 1 行：一行非空混合文本 line（可含英文字母、数字、空格与标点符号，允许前后有空格，**请保留原样勿整行 strip**）。
@@ -67,3 +74,44 @@
 # 保存后按 Ctrl+Shift+B 评测，或告诉我“检查第35题”。
 #
 # 请在下面写你的代码：
+import string
+
+line = input()
+items = input().split()
+src, dst = input().split()
+
+big, small, dec, space, other = 0, 0, 0, 0, 0
+for ch in line :
+    if ch.isupper() :
+        big +=1
+    elif ch.islower() :
+        small += 1
+    elif ch.isdecimal() :
+        dec += 1
+    elif ch.isspace() :
+        space += 1
+    else :
+        other += 1
+print(big, small, dec, space, other)
+
+table = str.maketrans(src, dst, string.punctuation)
+new_line = line.translate(table)
+print(new_line)
+
+doc_cnt, num_cnt = 0, 0
+num = []
+for item in items :
+    if item.lower().endswith((".md", ".txt", ".py")) :
+        doc_cnt += 1
+    elif item.isdecimal() :
+        num_cnt += 1
+        num.append(item)
+print(doc_cnt, num_cnt, "|", ",".join(num) if num_cnt else "NONE")
+
+begin = False
+if line.startswith((src[0], '-'), 1) :
+    begin = True
+print(begin)
+
+# 思考1：isdecimal() 只认可真正的十进制数字字符（'0'~'9' 等，能安全传给 int()）；而 isdigit() 还会把上标数字如 '²'（如 "2²"）判定为 True，若直接 int("2²") 会报 ValueError，所以过滤纯非负整数串时 isdecimal() 更严格。两者遇到负号 "-5" 或小数点 "3.5" 时都会返回 False（只能识别无符号纯数字）。
+# 思考2：如果 x 与 y 长度不一致，str.maketrans(x, y, z) 会直接抛出 ValueError。因为 translate() 只拿翻译表从头到尾一次性扫描原串、对每个原字符只查表替换一次，所以 'a'<->'b' 互换能一步到位；而连续两次 .replace() 会让第二步误把第一步刚改好的字符又改回来（例如 "ab".replace("a","b").replace("b","a") 会全变成 "aa"）。

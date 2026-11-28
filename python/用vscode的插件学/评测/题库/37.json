@@ -1,0 +1,68 @@
+{
+  "title": "一维记录解析与密码报表",
+  "solution": "../../综合题/字符串处理/37_综合_一维记录解析与密码报表.py",
+  "comparison": "exact",
+  "timeout_seconds": 2,
+  "cases": [
+    {
+      "name": "01 样例Tuesday移位7与2有效2无效",
+      "input": "Tuesday\n  Alice | dev-01 | 95  \nBob | ops9 | bad\nCarol | qa-2 | 95\n  | sec1 | 80\n\n",
+      "expected": "SHIFT=7 VALID=2 BAD=2\n[Alice     |  dev-**  |  95|Hspjl]\n[Carol     |   qa-*   |  95|Jhyvs]\nAVG=95.00 NAMES=Alice/Carol\n"
+    },
+    {
+      "name": "02 全无效与直接空行输出EMPTY_REPORT",
+      "input": "Monday\nbad_row\na|b\n\n",
+      "expected": "SHIFT=18 VALID=0 BAD=2\nEMPTY_REPORT\n"
+    },
+    {
+      "name": "03 直接空行0记录",
+      "input": "Friday\n\n",
+      "expected": "SHIFT=9 VALID=0 BAD=0\nEMPTY_REPORT\n"
+    },
+    {
+      "name": "04 0分与100分边界及负数101拦截",
+      "input": "Wednesday\nZoe | a0 | 0\nAmy | b9 | 100\nBad1 | c1 | -1\nBad2 | d2 | 101\nBad3 | e3 | 99.5\n\n",
+      "expected": "SHIFT=22 VALID=2 BAD=3\n[Amy       |    b*    | 100|Wiu]\n[Zoe       |    a*    |   0|Vka]\nAVG=50.00 NAMES=Amy/Zoe\n"
+    },
+    {
+      "name": "05 shift=0特殊密钥与多竖线拦截",
+      "input": "aa\nTom | r123 | 88\nJerry |   | 70\nExtra | x1 | 90 | 1\n\n",
+      "expected": "SHIFT=12 VALID=1 BAD=2\n[Tom       |   r***   |  88|Fay]\nAVG=88.00 NAMES=Tom\n"
+    },
+    {
+      "name": "06 跨字母表边界Z/z移位环绕",
+      "input": "Sunday\nZelda | dep1 | 75\nzzz | dep2 | 85\n\n",
+      "expected": "SHIFT=4 VALID=2 BAD=0\n[zzz       |   dep*   |  85|ddd]\n[Zelda     |   dep*   |  75|Diphe]\nAVG=80.00 NAMES=zzz/Zelda\n"
+    },
+    {
+      "name": "07 部门不含数字与全数字脱敏",
+      "input": "Thursday\nBen | core | 60\nAda | 2026 | 60\n\n",
+      "expected": "SHIFT=20 VALID=2 BAD=0\n[Ada       |   ****   |  60|Uxu]\n[Ben       |   core   |  60|Vyh]\nAVG=60.00 NAMES=Ada/Ben\n"
+    },
+    {
+      "name": "08 奇数宽度居中left<=right检验",
+      "input": "Saturday\nDan | x12y | 72\nEve | ab | 72\n\n",
+      "expected": "SHIFT=13 VALID=2 BAD=0\n[Dan       |   x**y   |  72|Qna]\n[Eve       |    ab    |  72|Rir]\nAVG=72.00 NAMES=Dan/Eve\n"
+    },
+    {
+      "name": "09 单条记录均值精确两位小数",
+      "input": "Monday\nMia | s0 | 83\n\n",
+      "expected": "SHIFT=18 VALID=1 BAD=0\n[Mia       |    s*    |  83|Eas]\nAVG=83.00 NAMES=Mia\n"
+    },
+    {
+      "name": "10 带连字符与下划线部门名与同分排序",
+      "input": "Tuesday\nBob-2 | hr_01 | 80\nBob-1 | hr_02 | 80\n\n",
+      "expected": "SHIFT=7 VALID=2 BAD=0\n[Bob-1     |  hr_**   |  80|Ivi-1]\n[Bob-2     |  hr_**   |  80|Ivi-2]\nAVG=80.00 NAMES=Bob-1/Bob-2\n"
+    },
+    {
+      "name": "11 首尾大量空格清理检验",
+      "input": "Wednesday\n  Leo  |   fin99   |   66  \n\n",
+      "expected": "SHIFT=22 VALID=1 BAD=0\n[Leo       |  fin**   |  66|Hak]\nAVG=66.00 NAMES=Leo\n"
+    },
+    {
+      "name": "12 多人混合分数浮点均值检验",
+      "input": "Friday\nU1 | d1 | 71\nU2 | d2 | 82\nU3 | d3 | 90\n\n",
+      "expected": "SHIFT=9 VALID=3 BAD=0\n[U3        |    d*    |  90|D3]\n[U2        |    d*    |  82|D2]\n[U1        |    d*    |  71|D1]\nAVG=81.00 NAMES=U3/U2/U1\n"
+    }
+  ]
+}

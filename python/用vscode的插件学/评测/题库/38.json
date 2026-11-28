@@ -1,0 +1,68 @@
+{
+  "title": "文本算法与极端边界仲裁",
+  "solution": "../../挑战题/字符串处理/38_挑战_文本算法与极端边界仲裁.py",
+  "comparison": "exact",
+  "timeout_seconds": 2,
+  "cases": [
+    {
+      "name": "01 样例Panama回文RLE罗马1904与偏移3",
+      "input": "A man, a plan, a canal: Panama!\naaabcc\nMCMIV\nabc def\n",
+      "expected": "YES amanaplanacanalpanama\na3b1c2\n1904\n3\n"
+    },
+    {
+      "name": "02 空行回文单字符RLE与罗马XL与0偏移",
+      "input": "\nX\nXL\npython python\n",
+      "expected": "YES EMPTY\nX1\n40\n0\n"
+    },
+    {
+      "name": "03 全标点空格回文与大小写混合RLE",
+      "input": "!!!   ...\naAAaBbb\nIX\nxyz zab\n",
+      "expected": "YES EMPTY\na1A2a1B1b2\n9\n2\n"
+    },
+    {
+      "name": "04 非回文与单调不重复RLE与罗马3999",
+      "input": "hello2026\nabcdef\nMMMCMXCIX\nhello jgnnq\n",
+      "expected": "NO hello2026\na1b1c1d1e1f1\n3999\n2\n"
+    },
+    {
+      "name": "05 数字混合回文与长连续RLE",
+      "input": "1a2, 2a1\nzzzzzzzzzz\nCDXLIV\nhello ifmmp\n",
+      "expected": "YES 1a22a1\nz10\n444\n1\n"
+    },
+    {
+      "name": "06 单字符字母回文与罗马最小值1",
+      "input": "Z\nA\nI\na z\n",
+      "expected": "YES z\nA1\n1\n25\n"
+    },
+    {
+      "name": "07 偏移不一致返回-1",
+      "input": "noon\naa\nLVIII\nabc deg\n",
+      "expected": "YES noon\na2\n58\n-1\n"
+    },
+    {
+      "name": "08 跨越z到a回绕偏移25",
+      "input": "RaceCar!\n112211\nXCIV\nabc zab\n",
+      "expected": "YES racecar\n122212\n94\n25\n"
+    },
+    {
+      "name": "09 罗马数字400与900与末尾无重复收尾",
+      "input": "0P\naabbccdd\nCMXC\ncode eqfg\n",
+      "expected": "NO 0p\na2b2c2d2\n990\n2\n"
+    },
+    {
+      "name": "10 长短一致单字符凯撒偏移0与25",
+      "input": "Madam, I'm Adam.\nxyyzzz\nMMXXVI\nz y\n",
+      "expected": "YES madamimadam\nx1y2z3\n2026\n25\n"
+    },
+    {
+      "name": "11 带数字非回文与连续大小写混杂",
+      "input": "123a\nAaAa\nDCCCXC\nabcdef ghijkl\n",
+      "expected": "NO 123a\nA1a1A1a1\n890\n6\n"
+    },
+    {
+      "name": "12 全数字回文与罗马58与不同偏移检验",
+      "input": "909\n00001\nLVIII\naaa bbc\n",
+      "expected": "YES 909\n0411\n58\n-1\n"
+    }
+  ]
+}
